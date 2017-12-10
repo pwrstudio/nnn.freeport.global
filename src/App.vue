@@ -199,7 +199,7 @@ html {
   left: 0;
   height: 100vh;
   width: 50px;
-  background: darksgrey;
+  background: darkgrey;
 }
 
 #nav-right {

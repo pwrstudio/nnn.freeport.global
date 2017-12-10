@@ -129,7 +129,7 @@ export default {
   }
 
   &__image {
-    opacity: 1;
+    opacity: 0;
     mix-blend-mode: lighten;
     max-height: 90%;
     max-width: 90%;
