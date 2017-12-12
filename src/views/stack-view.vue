@@ -1,11 +1,13 @@
 <template>
   <div class='stack'>
+    <!-- <div class='headr'>NNN.FREEPORT.GLOBAL</div> -->
     <work v-for='(work, index) in main.container.works'
           :key='work.title'
           :size='sizes[index % 3]'
           :hash='main.rootHash'
           :slug='work.slug'
           :title='work.title'
+          :artists='work.artists'
           :date='work.date'
           :image='mockImages[index % 4]'
           :active='mockActive[index % 4]'
@@ -54,5 +56,17 @@ export default {
 .stack {
   display: flex;
   flex-wrap: wrap;
+}
+
+.headr {
+  width: 100%;
+  height: 30vh;
+  background: #333333;
+  // background: orangered;
+  text-align: center;
+  font-family: 'helvetica', 'arial', 'roboto', sans-serif;
+  font-size: 7vw;
+  line-height: 30vh;
+  font-weight: 900;
 }
 </style>

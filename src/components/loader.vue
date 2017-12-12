@@ -33,8 +33,13 @@ export default {
   width: 160px;
   height: 160px;
   cursor: pointer;
+  position: absolute;
+  top: -30px;
+  left: -30px;
+  z-index: 10000;
+  opacity: 0.7;
 
-  @include center;
+  // @include center;
 
   svg {
     width: 160px;
@@ -53,14 +58,14 @@ export default {
       // transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
       transform: rotate(0deg);
       transform-origin: 50% 50%;
-      // animation: pulse2 5s infinite linear;
+      animation: pulse2 15s infinite linear;
     }
 
     .outer-square {
       // transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1);
       transform: rotate(0deg);
       transform-origin: 50% 50%;
-      // animation: pulse 10s infinite linear;
+      animation: pulse 20s infinite linear;
     }
 
     @keyframes pulse {

@@ -1,27 +1,34 @@
 <template>
-  <router-link :to='{name: "singleWork", params: {exhibition: "territories-of-complicity", work: slug}}'
-               class='work'
-               :class='[{"active": active}, sizeClass]'>
+  <div @click='goToWork({name: "singleWork", params: {exhibition: "territories-of-complicity", work: slug}})'
+       class='work'
+       :class='[{"active": active}, sizeClass]'>
     <div v-if='!active'
          class='mesh' />
-    <!-- <loader/> -->
+    <!-- <loader v-if='active' /> -->
+
     <div v-if='active'
-         class='work__title'
-         v-html='title' />
+         class='work__counter'
+         v-html='counter' />
+
+    <div v-if='active'
+         class='work__stats'>
+
+      <div class='work__stats__title'
+           v-html='title' />
+      <div class='work__stats__artists'
+           v-html='artists[0]' />
+    </div>
     <img :src='image'
          class='work__image'>
-    <vue-typer v-if='active'
-               :text='hash'
-               erase-style='clear'
-               class='work__hash' />
+    <!-- <div v-if='active'
+         v-text='hash'
+         class='work__hash' /> -->
     <vue-countdown-2 v-if='date && !active'
                      :deadline="date"
                      format="%Dd %hh %mm %ss"
                      class='work__timer' />
-    <div v-if='active'
-         class='work__counter'
-         v-html='counter' />
-  </router-link>
+
+  </div>
 </template>
 
 <script>
@@ -39,6 +46,11 @@ export default {
     },
     slug: {
       type: String,
+      required: false,
+      default: 'xxxx'
+    },
+    artists: {
+      type: Array,
       required: false,
       default: 'xxxx'
     },
@@ -87,6 +99,20 @@ export default {
       }
     }
   },
+  methods: {
+    goToWork(target) {
+      if (this.active) {
+        this.$router.push(target)
+      } else {
+        this.$notify({
+          group: 'global',
+          type: 'warning',
+          title: 'Access denied',
+          text: 'Unlocked on ' + this.date
+        })
+      }
+    }
+  },
   components: {
     VueCountdown2,
     VueTyper,
@@ -105,28 +131,58 @@ export default {
   position: relative;
   padding: 40px;
   margin: 40px;
-  cursor: normal;
-  // border: 1px solid white;
+  color: white;
+  cursor: url('../assets/img/cross-small.png') 26 30;
+  border: 1px solid transparent;
 
   .mesh {
     background-image: url('../assets/img/grid.png');
+    opacity: 1;
     position: absolute;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
+    // z-index: 10;
   }
+
+  &__image {
+    mix-blend-mode: lighten;
+    max-height: 80%;
+    max-width: 70%;
+    object-fit: cover;
+    will-change: opacity;
+    transition: opacity 0.4s ease-out;
+    @include center;
+  }
+
+  &.active &__image {
+    width: 100%;
+    height: 100%;
+    max-height: 100%;
+    max-width: 100%;
+  }
+
+  // &.active &__title {
+  //   bottom: 0;
+  //   @include center;
+  // }
 
   &.active {
     cursor: pointer;
 
     &:hover {
-      background: orangered;
+      border: 1px solid white;
+      // border: 2px solid orangered;
     }
 
     &:active {
-      background: orangered;
+      background: black;
     }
+  }
+
+  &.active:active &__image {
+    opacity: 0;
   }
 
   &--small {
@@ -141,28 +197,21 @@ export default {
     flex: 1 1 700px;
   }
 
-  &__image {
-    mix-blend-mode: lighten;
-    max-height: 80%;
-    max-width: 70%;
-    object-fit: cover;
-    will-change: opacity;
-    transition: opacity 0.4s ease-out;
-    @include center;
-  }
+  // &:hover &__title {
+  //   border: 2px solid black !important;
+  // }
 
-  &:hover {
-    &__image {
-      opacity: 1;
-    }
-  }
+  // &:hover &__counter {
+  //   border: 2px solid black !important;
+  // }
 
   &__timer {
     // background: white;
-    color: white;
+    // color: white;
     padding: 20px;
     word-break: break-all;
-    font-size: 18px;
+    font-size: 48px;
+    opacity: 0.7;
     line-height: 20px;
     text-align: center;
     position: absolute;
@@ -171,13 +220,10 @@ export default {
     border: 2px solid white;
     white-space: nowrap;
     overflow: hidden;
-    // font-size: 32px;
-    // @include center-vertical;
     @include center;
   }
 
   &__hash {
-    color: white !important;
     padding: 20px;
     word-break: break-all;
     font-size: 14px;
@@ -185,13 +231,13 @@ export default {
     text-align: center;
     position: absolute;
     z-index: 1000;
-    top: 20px;
-    left: 20px;
+    top: 30px;
+    right: 30px;
     // top: 20px;
     // right: 20px;
     // transform-origin: top right;
     // transform: rotateZ(90deg) translateX(100%);
-    border: 1px solid white;
+    background: rgba(0, 0, 0, 0.8);
     width: 400px;
     // width: 100%;
     white-space: nowrap;
@@ -214,36 +260,65 @@ export default {
     }
   }
 
-  &__title {
-    color: white !important;
-    padding: 20px;
-    word-break: break-all;
-    font-size: 18px;
-    line-height: 20px;
-    text-align: center;
-    position: absolute;
-    z-index: 10;
-    bottom: 20px;
-    left: 100px;
-    border: 1px solid white;
-    white-space: nowrap;
-    overflow: hidden;
-  }
+  // &:hover &__hash {
+  //   border: 2px solid black !important;
+
+  //   .char {
+  //     color: black !important;
+  //     .typed {
+  //       color: black !important;
+  //     }
+  //   }
+  // }
 
   &__counter {
-    color: white !important;
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 10000;
+    display: inline-block;
     padding: 20px;
     word-break: break-all;
     font-size: 14px;
     line-height: 20px;
     text-align: center;
-    position: absolute;
     z-index: 10;
-    bottom: 20px;
-    left: 20px;
-    border: 1px solid white;
+    background: rgba(0, 0, 0, 0.8);
     white-space: nowrap;
     overflow: hidden;
+  }
+
+  &__stats {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    z-index: 100000000;
+
+    &__title {
+      display: inline-block;
+      padding: 20px;
+      word-break: break-all;
+      font-size: 18px;
+      line-height: 20px;
+      text-align: center;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.8);
+      white-space: nowrap;
+      overflow: hidden;
+    }
+
+    &__artists {
+      display: inline-block;
+      padding: 20px;
+      word-break: break-all;
+      font-size: 18px;
+      line-height: 20px;
+      text-align: center;
+      z-index: 10;
+      background: rgba(0, 0, 0, 0.8);
+      white-space: nowrap;
+      overflow: hidden;
+    }
   }
 }
 

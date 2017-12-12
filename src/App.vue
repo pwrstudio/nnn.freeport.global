@@ -255,7 +255,6 @@ body {
   margin-right: auto;
   margin-left: auto;
   min-height: 100vh;
-  transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 
 .fade-enter-active,
@@ -359,19 +358,19 @@ body {
 .global-notifications {
   background: orangered;
   margin: 10px;
-  padding: 10px;
+  padding: 20px;
   width: auto;
   font-size: 18px;
   line-height: 18px;
 
   .notification-title {
-    font-size: 14px;
-    line-height: 14px;
+    font-size: 16px;
+    line-height: 16px;
   }
 
   .notification-content {
-    font-size: 18px;
-    line-height: 18px;
+    font-size: 16px;
+    line-height: 16px;
   }
 
   &.network {
@@ -386,6 +385,15 @@ body {
     background: black;
     border: 5px solid white;
     color: white;
+    /*
+    Style for specific type of notification, will be applied when you
+    call notification with "type" parameter:
+    this.$notify({ type: 'my-type', message: 'Foo' })
+    */
+  }
+  &.warning {
+    background: red;
+    color: black;
     /*
     Style for specific type of notification, will be applied when you
     call notification with "type" parameter:

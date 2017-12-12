@@ -1,6 +1,15 @@
 <template>
   <div class='info'>
     <div class='info__main-text'>
+      <svg id="Layer_1"
+           data-name="Layer 1"
+           xmlns="http://www.w3.org/2000/svg"
+           width="808.5204"
+           height="378.3499"
+           viewBox="0 0 808.5204 378.3499">
+        <polygon class="cls-1"
+                 points="755.212 85.751 656.642 296.394 654.888 38.804 571.964 0 433.284 296.394 431.53 38.804 348.606 0 209.926 296.394 208.173 38.804 125.248 0 0 267.653 54.049 292.946 157.989 70.827 157.705 341.451 236.556 378.35 381.347 70.827 381.063 341.451 459.914 378.35 604.705 70.827 604.42 341.451 683.272 378.35 808.52 110.696 755.212 85.751" />
+      </svg>
       <p>NNN.FREEPORT.GLOBAL</p>
       <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent vitae ipsum ultricies, fermentum felis vitae, sollicitudin nibh. Nulla convallis ornare ipsum ac tristique. Suspendisse tristique semper ipsum ut consequat. Aenean ac turpis sapien. Morbi vestibulum, enim in elementum tristique, velit mauris pretium erat, et blandit neque ex ac nibh. Morbi malesuada vehicula eleifend. Mauris ultrices tempor quam vitae commodo. Pellentesque purus lectus, mollis sit amet semper in, tincidunt et odio. Pellentesque nec ligula urna. Integer sit amet ultricies leo, at efficitur felis. Aliquam mattis egestas ipsum in rutrum. Cras id tortor eget eros commodo pharetra eu id felis. Integer tempus lorem sed pharetra gravida.
       </p>
@@ -56,7 +65,13 @@ export default {
     width: 70ch;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 48px;
   }
+}
+
+svg {
+  width: 300px;
+}
+.cls-1 {
+  fill: #fff;
 }
 </style>

@@ -56,12 +56,12 @@ export default {
     }
   },
   mounted() {
-    this.$notify({
-      group: 'global',
-      type: 'content',
-      title: 'Loading from IPFS',
-      text: this.hash
-    })
+    // this.$notify({
+    //   group: 'global',
+    //   type: 'content',
+    //   title: 'Loading from IPFS',
+    //   text: this.hash
+    // })
     if (this.type === 'Text') {
       this.setIPFSText()
     }

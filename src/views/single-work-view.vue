@@ -19,6 +19,11 @@ export default {
   components: {
     contentAtom
   },
+  data() {
+    return {
+      data: {}
+    }
+  },
   computed: {
     ...mapState(['main']),
     matchedWork() {
@@ -37,13 +42,13 @@ export default {
       }
     }
   },
-  updated: function() {
-    this.$nextTick(function() {
-      // Code that will run only after the
-      // entire view has been re-rendered
+  mounted() {
+    this.$notify({
+      group: 'global',
+      type: 'content',
+      title: 'title – artist'
     })
-  },
-  methods: {}
+  }
 }
 </script>
 
@@ -55,5 +60,19 @@ export default {
 .work {
   display: flex;
   flex-wrap: wrap;
+
+  header {
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+    div {
+      margin-top: 40px;
+      text-align: center;
+      // background: red;
+      // font-size: 64px;
+      // line-height: 64px;
+      color: white;
+    }
+  }
 }
 </style>
