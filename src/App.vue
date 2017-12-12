@@ -1,13 +1,73 @@
 <template>
   <div class='app'>
-    <!-- <console /> -->
-    <!-- <logo @click.native='navigation.active = !navigation.active' /> -->
-    <navigation :active='navigation.active' />
-    <!-- <transition name="fade"> -->
-    <router-view id='main-view' />
-    <!-- </transition> -->
-    <div id='nav-right'></div>
-    <div id='nav-left'></div>
+    <notifications group="global"
+                   classes="global-notifications"
+                   width="500px" />
+    <div id='nav-left'
+         :class='{active: $route.name === "info"}'>
+      <router-link to='/info'
+                   class='sidebar-pattern'>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </router-link>
+    </div>
+    <transition name="fade">
+      <router-view id='main-view' />
+    </transition>
+    <div id='nav-right'
+         :class='{active: $route.name === "status"}'>
+      <router-link to='/status'
+                   class='sidebar-pattern'>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </router-link>
+    </div>
   </div>
 </template>
 
@@ -53,9 +113,23 @@ export default {
   watch: {
     $route(to, from) {
       this.navigation.active = false
+    },
+    'main.rootHash'() {
+      this.$notify({
+        group: 'global',
+        type: 'network',
+        title: 'Connected to IPFS',
+        text: 'IPFS root hash: ' + this.main.rootHash
+      })
     }
   },
   mounted() {
+    this.$notify({
+      group: 'global',
+      type: 'network',
+      title: 'Connecting to Ethereum: Rinkeby',
+      text: 'Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
+    })
     this.$_setMetaTags()
     this.$_fetchData()
   },
@@ -166,14 +240,16 @@ html {
   width: calc(100vw - 100px);
   margin-right: auto;
   margin-left: auto;
+  min-height: 100vh;
 }
 
 .fade-enter-active,
 .fade-leave-active {
-  transition: opacity 0.2s;
+  transition: opacity 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 .fade-enter,
 .fade-leave-to {
+  transition: opacity 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
   opacity: 0;
 }
 
@@ -194,20 +270,99 @@ html {
 }
 
 #nav-left {
+  display: block;
   position: fixed;
   top: 0;
   left: 0;
   height: 100vh;
-  width: 50px;
-  background: darkgrey;
+  width: 100vw;
+  z-index: 10000;
+  will-change: transform;
+  transform: translateX(calc(-100vw + 40px));
+  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  &.active {
+    transform: translateX(0);
+  }
+  .sidebar-pattern {
+    display: block;
+    z-index: 10000000;
+    width: 40px;
+    height: 100vh;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    right: 0;
+    div {
+      height: 4vh;
+      width: 100%;
+      &:nth-child(even) {
+        background: transparent;
+      }
+      &:nth-child(odd) {
+        background: #333333;
+      }
+    }
+  }
 }
 
 #nav-right {
+  display: block;
   position: fixed;
   top: 0;
   right: 0;
   height: 100vh;
-  width: 50px;
-  background: darkgrey;
+  width: 100vw;
+  // background: black;
+  will-change: transform;
+  transform: translateX(calc(100vw - 40px));
+  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  &.active {
+    transform: translateX(0);
+  }
+  .sidebar-pattern {
+    display: block;
+    z-index: 10000000;
+    width: 40px;
+    height: 100vh;
+    opacity: 1;
+    position: absolute;
+    top: 0;
+    left: 0;
+    div {
+      height: 4vh;
+      width: 100%;
+      &:nth-child(even) {
+        background: #333333;
+      }
+      &:nth-child(odd) {
+        background: transparent;
+      }
+    }
+  }
+}
+
+.global-notifications {
+  background: orangered;
+  margin: 10px;
+  padding: 20px;
+  width: auto;
+
+  .notification-title {
+    font-size: 32px;
+    line-height: 32px;
+  }
+
+  .notification-content {
+    // Style for content
+  }
+
+  &.network {
+    background: orangered;
+    /*
+    Style for specific type of notification, will be applied when you
+    call notification with "type" parameter:
+    this.$notify({ type: 'my-type', message: 'Foo' })
+    */
+  }
 }
 </style>

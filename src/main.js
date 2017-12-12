@@ -4,6 +4,8 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
+import Notifications from 'vue-notification'
+
 // --- GOOGLE ANALYTICS
 // import ga from 'vue-ga'
 // --- ERROR TRACKING
@@ -20,6 +22,7 @@ import VueHead from 'vue-head'
 Vue.config.productionTip = false
 
 Vue.use(VueHead)
+Vue.use(Notifications)
 
 /* eslint-disable no-new */
 new Vue({

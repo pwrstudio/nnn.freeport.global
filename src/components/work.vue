@@ -2,7 +2,7 @@
   <router-link :to='{name: "singleWork", params: {slug: slug}}'
                class='work'
                :class='sizeClass'>
-    <logo/>
+    <!-- <logo/> -->
     <div class='work__title'
          v-html='title' />
     <img :src='image'
@@ -129,7 +129,7 @@ export default {
   }
 
   &__image {
-    opacity: 0;
+    // opacity: 0;
     mix-blend-mode: lighten;
     max-height: 90%;
     max-width: 90%;

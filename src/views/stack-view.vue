@@ -1,8 +1,8 @@
 <template>
   <div class='stack'>
-    <work v-for='work in main.container.works'
+    <work v-for='(work, index) in main.container.works'
           :key='work.title'
-          size='medium'
+          :size='sizes[index % 3]'
           :hash='main.rootHash'
           :slug='work.slug'
           :title='work.title'
@@ -20,6 +20,11 @@ export default {
   props: [],
   components: {
     work
+  },
+  data() {
+    return {
+      sizes: ['large', 'small', 'medium']
+    }
   },
   computed: {
     ...mapState(['main'])
