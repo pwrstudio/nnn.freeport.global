@@ -1,11 +1,12 @@
 <template>
   <div class='work'>
-    <contentAtom v-for='work in main.container.exhibitions[0].works[0].content'
-                 :key='work.title'
-                 size='medium'
-                 :text='"ksksksksk"'
-                 :type='work.media'
-                 :title='work.title' />
+    <contentAtom v-for='content in matchedWork.content'
+                 :key='content.title'
+                 :size='"medium"'
+                 :type='content.media'
+                 :hash='content.ipfs[0].hash'
+                 :title='content.title'
+                 :slug='content.slug' />
   </div>
 </template>
 
@@ -19,7 +20,22 @@ export default {
     contentAtom
   },
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    matchedWork() {
+      let exhibition = this.main.container.exhibitions.find(
+        e => e.slug === this.$route.params.exhibition
+      )
+      if (exhibition) {
+        let work = exhibition.works.find(w => w.slug === this.$route.params.work)
+        if (work) {
+          return work
+        } else {
+          return []
+        }
+      } else {
+        return []
+      }
+    }
   },
   updated: function() {
     this.$nextTick(function() {

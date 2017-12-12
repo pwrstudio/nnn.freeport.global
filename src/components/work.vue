@@ -1,19 +1,25 @@
 <template>
-  <router-link :to='{name: "singleWork", params: {slug: slug}}'
+  <router-link :to='{name: "singleWork", params: {exhibition: "territories-of-complicity", work: slug}}'
                class='work'
-               :class='sizeClass'>
-    <!-- <logo/> -->
-    <div class='work__title'
+               :class='[{"active": active}, sizeClass]'>
+    <div v-if='!active'
+         class='mesh' />
+    <!-- <loader/> -->
+    <div v-if='active'
+         class='work__title'
          v-html='title' />
     <img :src='image'
          class='work__image'>
-    <vue-typer :text='hash'
+    <vue-typer v-if='active'
+               :text='hash'
                erase-style='clear'
                class='work__hash' />
-    <vue-countdown-2 :deadline="date"
+    <vue-countdown-2 v-if='date && !active'
+                     :deadline="date"
                      format="%Dd %hh %mm %ss"
                      class='work__timer' />
-    <div class='work__counter'
+    <div v-if='active'
+         class='work__counter'
          v-html='counter' />
   </router-link>
 </template>
@@ -21,7 +27,7 @@
 <script>
 import VueCountdown2 from 'vue-countdown-2'
 import {VueTyper} from 'vue-typer'
-import logo from '@/components/logo'
+import loader from '@/components/loader'
 
 export default {
   name: 'work',
@@ -42,8 +48,11 @@ export default {
     },
     image: {
       type: String,
-      required: false,
-      default: 'static/44.jpg'
+      required: true
+    },
+    active: {
+      type: Boolean,
+      required: true
     },
     date: {
       type: String,
@@ -81,7 +90,7 @@ export default {
   components: {
     VueCountdown2,
     VueTyper,
-    logo
+    loader
   }
 }
 </script>
@@ -96,43 +105,46 @@ export default {
   position: relative;
   padding: 40px;
   margin: 40px;
-  cursor: pointer;
-  // background: grey;
-  background-image: url('../assets/img/grid.png');
+  cursor: normal;
+  // border: 1px solid white;
 
-  &:active {
-    background: darkgrey;
+  .mesh {
+    background-image: url('../assets/img/grid.png');
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+  }
+
+  &.active {
+    cursor: pointer;
+
+    &:hover {
+      background: orangered;
+    }
+
+    &:active {
+      background: orangered;
+    }
   }
 
   &--small {
-    flex: 1 1 500px;
-
-    time {
-      font-size: 22px;
-    }
+    flex: 1 1 400px;
   }
 
   &--medium {
-    flex: 1 1 700px;
-
-    time {
-      font-size: 32px;
-    }
+    flex: 1 1 500px;
   }
 
   &--large {
-    flex: 1 1 1000px;
-
-    time {
-      font-size: 52px;
-    }
+    flex: 1 1 700px;
   }
 
   &__image {
-    // opacity: 0;
     mix-blend-mode: lighten;
-    max-height: 90%;
-    max-width: 90%;
+    max-height: 80%;
+    max-width: 70%;
     object-fit: cover;
     will-change: opacity;
     transition: opacity 0.4s ease-out;
@@ -146,11 +158,21 @@ export default {
   }
 
   &__timer {
+    // background: white;
     color: white;
-    width: 100%;
+    padding: 20px;
+    word-break: break-all;
+    font-size: 18px;
+    line-height: 20px;
     text-align: center;
-    z-index: 1000;
-
+    position: absolute;
+    z-index: 10;
+    left: 20px;
+    border: 2px solid white;
+    white-space: nowrap;
+    overflow: hidden;
+    // font-size: 32px;
+    // @include center-vertical;
     @include center;
   }
 
@@ -164,11 +186,14 @@ export default {
     position: absolute;
     z-index: 1000;
     top: 20px;
-    right: 20px;
-    transform-origin: top right;
-    transform: rotateZ(90deg) translateX(100%);
+    left: 20px;
+    // top: 20px;
+    // right: 20px;
+    // transform-origin: top right;
+    // transform: rotateZ(90deg) translateX(100%);
     border: 1px solid white;
-    width: calc(40vh - 40px);
+    width: 400px;
+    // width: 100%;
     white-space: nowrap;
     overflow: hidden;
 

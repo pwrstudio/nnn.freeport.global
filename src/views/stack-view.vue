@@ -7,6 +7,8 @@
           :slug='work.slug'
           :title='work.title'
           :date='work.date'
+          :image='mockImages[index % 4]'
+          :active='mockActive[index % 4]'
           :counter='work.content.length'
           :content='work.content' />
   </div>
@@ -23,7 +25,9 @@ export default {
   },
   data() {
     return {
-      sizes: ['large', 'small', 'medium']
+      sizes: ['large', 'small', 'medium'],
+      mockImages: ['static/sprawl.jpg', 'static/44.jpg', 'static/clipse.jpg', 'static/salaya1.jpg'],
+      mockActive: [true, false, false, true]
     }
   },
   computed: {

@@ -3,6 +3,7 @@ import Router from 'vue-router'
 // Views
 import stackView from '@/views/stack-view'
 import singleWorkView from '@/views/single-work-view'
+import singleContentView from '@/views/single-content-view'
 import statusView from '@/views/status-view'
 import infoView from '@/views/info-view'
 
@@ -27,9 +28,14 @@ export default new Router({
       component: infoView
     },
     {
-      path: '/:slug',
+      path: '/:exhibition/:work',
       name: 'singleWork',
       component: singleWorkView
+    },
+    {
+      path: '/:exhibition/:work/:content',
+      name: 'singleContent',
+      component: singleContentView
     }
   ]
 })

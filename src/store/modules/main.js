@@ -3,7 +3,7 @@ import * as actionTypes from '../actionTypes'
 import * as mutationTypes from '../mutationTypes'
 
 const state = {
-  rootHash: 'Loafing root hash...',
+  rootHash: 'Loading root hash...',
   container: {
     exhibitions: [
       {
@@ -14,28 +14,6 @@ const state = {
         ]
       }
     ]
-  },
-  singleExhibition: {
-    title: '',
-    description: '',
-    start_date: new Date(),
-    end_date: new Date(),
-    festival: '',
-    venue: '',
-    city: '',
-    country: '',
-    location: {},
-    works: []
-  },
-  singleWork: {
-    title: '',
-    artists: [],
-    publication_time: '', // time
-    content: []
-  },
-  singleContent: {
-    type: '',
-    hash: ''
   }
 }
 

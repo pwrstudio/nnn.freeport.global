@@ -1,38 +1,91 @@
 <template>
-  <router-link :to='{name: "singleContent", params: {slug: slug}}'
+  <router-link :to='{name: "singleContent", params: {exhibition:  $route.params.exhibition, work: $route.params.work, content: slug}}'
                class='atom'
-               :class='sizeClass'>
+               :class='[sizeClass, hash]'>
     <div class='atom__title'
          v-html='title' />
     <div v-if='type === "Text"'
          class='atom__text'
          v-html='text' />
+    <img v-else-if='type === "Image"'
+         :src='"https://ipfs.io/ipfs/" + hash'
+         class='atom__image' />
+    <div v-else-if='type === "Audio"'
+         class='atom__audio'>
+      <audio :src='"https://ipfs.io/ipfs/" + hash'
+             controls/>
+    </div>
+    <div v-else-if='type === "Video"'
+         class='atom__audio'>
+      <video :src='"https://ipfs.io/ipfs/" + hash'
+             controls/>
+    </div>
   </router-link>
 </template>
 
 <script>
+import request from 'browser-request'
+
 export default {
   name: 'contentAtom',
+  data() {
+    return {
+      text: ''
+    }
+  },
   props: {
     title: {
       type: String,
-      required: false,
-      default: 'Default title'
+      required: true
     },
     slug: {
       type: String,
-      required: false,
-      default: 'xxxx'
+      required: true
     },
     type: {
       type: String,
-      required: false,
-      default: 'Text'
+      required: true
     },
-    text: {
+    size: {
       type: String,
-      required: false,
-      default: 'xxxkskskskx'
+      required: true
+    },
+    hash: {
+      type: String,
+      required: false
+    }
+  },
+  mounted() {
+    this.$notify({
+      group: 'global',
+      type: 'content',
+      title: 'Loading from IPFS',
+      text: this.hash
+    })
+    if (this.type === 'Text') {
+      this.setIPFSText()
+    }
+  },
+  computed: {
+    sizeClass() {
+      switch (this.size) {
+        case 'large':
+          return 'atom--large'
+        case 'medium':
+          return 'atom--medium'
+        default:
+          return 'atom--small'
+      }
+    }
+  },
+  methods: {
+    setIPFSText() {
+      request('https://ipfs.io/ipfs/' + this.hash, (error, response, body) => {
+        if (error) {
+          throw error
+        }
+        this.text = body
+      })
     }
   }
 }
@@ -46,39 +99,27 @@ export default {
 .atom {
   height: 40vh;
   position: relative;
-  padding: 40px;
   margin: 40px;
   cursor: pointer;
-  background: red;
+  display: block;
+  text-decoration: none !important;
+  flex: 1 1 700px;
 
-  &--small {
-    flex: 1 1 500px;
+  // &--small {
+  //   flex: 1 1 500px;
+  // }
 
-    time {
-      font-size: 22px;
-    }
-  }
+  // &--medium {
+  //   flex: 1 1 700px;
+  // }
 
-  &--medium {
-    flex: 1 1 700px;
-
-    time {
-      font-size: 32px;
-    }
-  }
-
-  &--large {
-    flex: 1 1 1000px;
-
-    time {
-      font-size: 52px;
-    }
-  }
+  // &--large {
+  //   flex: 1 1 1000px;
+  // }
 
   &__image {
-    opacity: 0;
-    max-height: 90%;
-    max-width: 90%;
+    max-height: 100%;
+    max-width: 100%;
     object-fit: cover;
     will-change: opacity;
     transition: opacity 0.4s ease-out;
@@ -93,25 +134,6 @@ export default {
     z-index: 1000;
 
     @include center;
-  }
-
-  &__hash {
-    color: white !important;
-    padding: 20px;
-    word-break: break-all;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    position: absolute;
-    z-index: 1000;
-    top: 20px;
-    right: 20px;
-    transform-origin: top right;
-    transform: rotateZ(90deg) translateX(100%);
-    border: 1px solid white;
-    width: calc(40vh - 40px);
-    white-space: nowrap;
-    overflow: hidden;
   }
 
   &__title {
@@ -130,20 +152,12 @@ export default {
     overflow: hidden;
   }
 
-  &__counter {
-    color: white !important;
+  &__text {
     padding: 20px;
-    word-break: break-all;
-    font-size: 14px;
-    line-height: 20px;
-    text-align: center;
-    position: absolute;
-    z-index: 10;
-    top: 20px;
-    left: 20px;
-    border: 1px solid white;
-    white-space: nowrap;
-    overflow: hidden;
+    color: white !important;
+    font-size: 24px;
+    line-height: 24px;
+    text-decoration: none !important;
   }
 }
 </style>
