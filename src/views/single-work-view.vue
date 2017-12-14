@@ -43,6 +43,7 @@ export default {
     }
   },
   mounted() {
+    this.$socket.emit('view', 'xxxx')
     this.$notify({
       group: 'global',
       type: 'content',

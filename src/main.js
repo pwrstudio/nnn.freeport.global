@@ -26,7 +26,8 @@ Vue.config.productionTip = false
 Vue.use(VueHead)
 Vue.use(Notifications)
 Vue.use(VTooltip)
-Vue.use(VueSocketio, 'https://taf-socket-wodssemhbq.now.sh')
+Vue.use(VueSocketio, 'https://nnnfreeportrelay-rzuihnfxhh.now.sh')
+// Vue.use(VueSocketio, 'localhost:9090')
 
 /* eslint-disable no-new */
 new Vue({

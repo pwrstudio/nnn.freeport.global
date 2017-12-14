@@ -120,13 +120,31 @@ export default {
     }
   },
   sockets: {
-    list(data) {
+    enter(data) {
       // this.socket.userList = data.reverse()
       this.$notify({
         group: 'global',
         type: 'user',
-        title: 'User joined',
-        text: data
+        title: data.user + ' joined',
+        text: ''
+      })
+    },
+    leave(data) {
+      // this.socket.userList = data.reverse()
+      this.$notify({
+        group: 'global',
+        type: 'user',
+        title: data.user + ' left',
+        text: ''
+      })
+    },
+    view(data) {
+      // this.socket.userList = data.reverse()
+      this.$notify({
+        group: 'global',
+        type: 'user',
+        title: 'view',
+        text: 'xxx'
       })
     }
   },
