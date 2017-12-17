@@ -123,7 +123,7 @@ export default {
       this.$notify({
         group: 'global',
         type: 'user',
-        title: data.user + ' joined',
+        title: data.user.id + ' (' + data.user.geo.city + ', ' + data.user.geo.country + ') joined',
         text: ''
       })
     },
