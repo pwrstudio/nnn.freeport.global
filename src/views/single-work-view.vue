@@ -1,54 +1,49 @@
 <template>
   <div class='work'>
-    <contentAtom v-for='content in matchedWork.content'
-                 :key='content.title'
-                 :size='"medium"'
-                 :type='content.media'
-                 :hash='content.ipfs[0].hash'
-                 :title='content.title'
-                 :slug='content.slug' />
+    <contentAtom v-for='item in payload.content'
+                 :key='item.hash'
+                 :hash='item.hash' />
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import request from 'browser-request'
 import contentAtom from '@/components/content-atom'
 export default {
   name: 'singleWork',
-  props: [],
   components: {
     contentAtom
   },
   data() {
     return {
-      data: {}
-    }
-  },
-  computed: {
-    ...mapState(['main']),
-    matchedWork() {
-      let exhibition = this.main.container.exhibitions.find(
-        e => e.slug === this.$route.params.exhibition
-      )
-      if (exhibition) {
-        let work = exhibition.works.find(w => w.slug === this.$route.params.work)
-        if (work) {
-          return work
-        } else {
-          return []
-        }
-      } else {
-        return []
+      payload: {
+        content: [],
+        title: '',
+        artists: []
       }
     }
   },
   mounted() {
-    this.$socket.emit('view', 'xxxx')
-    this.$notify({
-      group: 'global',
-      type: 'content',
-      title: 'title – artist'
-    })
+    request(
+      {
+        method: 'GET',
+        url: 'https://ipfs.io/ipfs/' + this.$route.params.hash,
+        body: '{"relaxed":true}',
+        json: true
+      },
+      (error, response, body) => {
+        if (error) {
+          throw error
+        }
+        this.payload = body
+        this.$notify({
+          group: 'global',
+          type: 'content',
+          title: this.payload.title + ' – ' + this.payload.artists[0]
+        })
+      }
+    )
+    // this.$socket.emit('view', 'xxxx')
   }
 }
 </script>
@@ -69,9 +64,6 @@ export default {
     div {
       margin-top: 40px;
       text-align: center;
-      // background: red;
-      // font-size: 64px;
-      // line-height: 64px;
       color: white;
     }
   }

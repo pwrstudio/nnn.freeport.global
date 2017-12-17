@@ -1,6 +1,6 @@
 <template>
   <div class='status'>
-    STATUS
+    <pre>{{main.container}}</pre>
   </div>
 </template>
 
@@ -9,7 +9,6 @@ import {mapState} from 'vuex'
 import work from '@/components/work'
 export default {
   name: 'statusView',
-  props: [],
   components: {
     work
   },
@@ -37,5 +36,9 @@ export default {
 .status {
   display: flex;
   flex-wrap: wrap;
+}
+
+pre {
+  background: white;
 }
 </style>

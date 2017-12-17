@@ -5,7 +5,7 @@ import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
 import Notifications from 'vue-notification'
-import VueSocketio from 'vue-socket.io'
+// import VueSocketio from 'vue-socket.io'
 
 // --- GOOGLE ANALYTICS
 // import ga from 'vue-ga'
@@ -24,7 +24,7 @@ Vue.config.productionTip = false
 
 Vue.use(VueHead)
 Vue.use(Notifications)
-Vue.use(VueSocketio, 'https://nnnfreeportrelay-rzuihnfxhh.now.sh')
+// Vue.use(VueSocketio, 'https://nnnfreeportrelay-rzuihnfxhh.now.sh')
 // Vue.use(VueSocketio, 'localhost:9090')
 
 /* eslint-disable no-new */

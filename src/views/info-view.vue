@@ -30,23 +30,12 @@ import {mapState} from 'vuex'
 import work from '@/components/work'
 export default {
   name: 'infoView',
-  props: [],
   components: {
     work
   },
   computed: {
     ...mapState(['main'])
-  },
-  mounted() {
-    console.dir(this.main.container.exhibitions[0])
-  },
-  updated: function() {
-    this.$nextTick(function() {
-      // Code that will run only after the
-      // entire view has been re-rendered
-    })
-  },
-  methods: {}
+  }
 }
 </script>
 

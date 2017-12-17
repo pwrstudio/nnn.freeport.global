@@ -1,63 +1,64 @@
 <template>
   <div class='single-content'>
-    <div v-if='matchedContent.media === "Text"'
+    <div v-if='payload.media === "Text"'
          class='atom__text'
          v-html='text' />
-    <img v-else-if='matchedContent.media === "Image"'
-         :src='"https://ipfs.io/ipfs/" + matchedContent.ipfs[0].hash'
+    <img v-else-if='payload.media === "Image"'
+         :src='"https://ipfs.io/ipfs/" + payload.hash'
          class='atom__image' />
-    <div v-else-if='matchedContent.media === "Audio"'
+    <div v-else-if='payload.media === "Audio"'
          class='atom__audio'>
-      <audio :src='"https://ipfs.io/ipfs/" + matchedContent.ipfs[0].hash'
+      <audio :src='"https://ipfs.io/ipfs/" + payload.hash'
              controls/>
     </div>
-    <div v-else-if='matchedContent.media === "Video"'
+    <div v-else-if='payload.media === "Video"'
          class='atom__audio'>
-      <video :src='"https://ipfs.io/ipfs/" + matchedContent.ipfs[0].hash'
+      <video :src='"https://ipfs.io/ipfs/" + payload.hash'
              controls/>
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
 import request from 'browser-request'
 import work from '@/components/work'
 export default {
   name: 'singleContentView',
-  props: [],
   components: {
     work
   },
-  computed: {
-    ...mapState(['main']),
-    matchedContent() {
-      let exhibition = this.main.container.exhibitions.find(
-        e => e.slug === this.$route.params.exhibition
-      )
-      if (exhibition) {
-        let work = exhibition.works.find(w => w.slug === this.$route.params.work)
-        if (work) {
-          let content = work.content.find(c => c.slug === this.$route.params.content)
-          if (content) {
-            return content
-          } else {
-            return []
-          }
-        } else {
-          return []
-        }
-      } else {
-        return []
-      }
+  data() {
+    return {
+      payload: {
+        media: '',
+        hash: '',
+        title: ''
+      },
+      text: ''
     }
   },
   mounted() {
-    console.dir(this.main.container.exhibitions[0])
+    request(
+      {
+        method: 'GET',
+        url: 'https://ipfs.io/ipfs/' + this.$route.params.hash,
+        body: '{"relaxed":true}',
+        json: true
+      },
+      (error, response, body) => {
+        if (error) {
+          throw error
+        }
+        this.payload = body
+        if (this.payload.media === 'Text') {
+          this.setIPFSText()
+        }
+      }
+    )
   },
   methods: {
-    setIPFSText(hash) {
-      request('https://ipfs.io/ipfs/' + hash, (error, response, body) => {
+    setIPFSText() {
+      request('https://ipfs.io/ipfs/' + this.payload.hash, (error, response, body) => {
         if (error) {
           throw error
         }

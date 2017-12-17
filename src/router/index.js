@@ -28,12 +28,12 @@ export default new Router({
       component: infoView
     },
     {
-      path: '/:exhibition/:work',
+      path: '/w/:hash',
       name: 'singleWork',
       component: singleWorkView
     },
     {
-      path: '/:exhibition/:work/:content',
+      path: '/c/:hash',
       name: 'singleContent',
       component: singleContentView
     }

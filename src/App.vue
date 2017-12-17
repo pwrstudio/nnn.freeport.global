@@ -4,7 +4,6 @@
                    classes="global-notifications"
                    width="500px" />
     <div id='nav-left'
-         v-tooltip="'info'"
          :class='{active: $route.name === "info"}'>
       <router-link :to='$route.name === "info" || $route.name === "status" ? "/" : "/info"'
                    class='sidebar-pattern'>
@@ -39,7 +38,6 @@
       <router-view id='main-view' />
     </transition>
     <div id='nav-right'
-         v-tooltip="'status'"
          :class='{active: $route.name === "status"}'>
       <router-link to='/status'
                    class='sidebar-pattern'>
@@ -119,35 +117,35 @@ export default {
       })
     }
   },
-  sockets: {
-    enter(data) {
-      // this.socket.userList = data.reverse()
-      this.$notify({
-        group: 'global',
-        type: 'user',
-        title: data.user + ' joined',
-        text: ''
-      })
-    },
-    leave(data) {
-      // this.socket.userList = data.reverse()
-      this.$notify({
-        group: 'global',
-        type: 'user',
-        title: data.user + ' left',
-        text: ''
-      })
-    },
-    view(data) {
-      // this.socket.userList = data.reverse()
-      this.$notify({
-        group: 'global',
-        type: 'user',
-        title: 'view',
-        text: 'xxx'
-      })
-    }
-  },
+  // sockets: {
+  //   enter(data) {
+  //     // this.socket.userList = data.reverse()
+  //     this.$notify({
+  //       group: 'global',
+  //       type: 'user',
+  //       title: data.user + ' joined',
+  //       text: ''
+  //     })
+  //   },
+  //   leave(data) {
+  //     // this.socket.userList = data.reverse()
+  //     this.$notify({
+  //       group: 'global',
+  //       type: 'user',
+  //       title: data.user + ' left',
+  //       text: ''
+  //     })
+  //   },
+  //   view(data) {
+  //     // this.socket.userList = data.reverse()
+  //     this.$notify({
+  //       group: 'global',
+  //       type: 'user',
+  //       title: 'view',
+  //       text: 'xxx'
+  //     })
+  //   }
+  // },
   mounted() {
     this.$notify({
       group: 'global',

@@ -1,23 +1,23 @@
 <template>
-  <router-link :to='{name: "singleContent", params: {exhibition:  $route.params.exhibition, work: $route.params.work, content: slug}}'
+  <router-link :to='{name: "singleContent", params: {hash: hash}}'
                class='atom'
                :class='[sizeClass, hash]'>
     <div class='atom__title'
-         v-html='title' />
-    <div v-if='type === "Text"'
+         v-html='payload.title' />
+    <div v-if='payload.media === "Text"'
          class='atom__text'
          v-html='text' />
-    <img v-else-if='type === "Image"'
-         :src='"https://ipfs.io/ipfs/" + hash'
+    <img v-else-if='payload.media === "Image"'
+         :src='"https://ipfs.io/ipfs/" + payload.hash'
          class='atom__image' />
-    <div v-else-if='type === "Audio"'
+    <div v-else-if='payload.media === "Audio"'
          class='atom__audio'>
-      <audio :src='"https://ipfs.io/ipfs/" + hash'
+      <audio :src='"https://ipfs.io/ipfs/" + payload.hash'
              controls/>
     </div>
-    <div v-else-if='type === "Video"'
+    <div v-else-if='payload.media === "Video"'
          class='atom__audio'>
-      <video :src='"https://ipfs.io/ipfs/" + hash'
+      <video :src='"https://ipfs.io/ipfs/" + payload.hash'
              controls/>
     </div>
   </router-link>
@@ -30,41 +30,43 @@ export default {
   name: 'contentAtom',
   data() {
     return {
+      payload: {
+        media: '',
+        hash: '',
+        title: ''
+      },
       text: ''
     }
   },
   props: {
-    title: {
-      type: String,
-      required: true
-    },
-    slug: {
-      type: String,
-      required: true
-    },
-    type: {
-      type: String,
-      required: true
-    },
-    size: {
-      type: String,
-      required: true
-    },
     hash: {
       type: String,
       required: false
     }
   },
   mounted() {
-    // this.$notify({
-    //   group: 'global',
-    //   type: 'content',
-    //   title: 'Loading from IPFS',
-    //   text: this.hash
-    // })
-    if (this.type === 'Text') {
-      this.setIPFSText()
-    }
+    request(
+      {
+        method: 'GET',
+        url: 'https://ipfs.io/ipfs/' + this.hash,
+        body: '{"relaxed":true}',
+        json: true
+      },
+      (error, response, body) => {
+        if (error) {
+          throw error
+        }
+        this.payload = body
+        if (this.payload.media === 'Text') {
+          this.setIPFSText()
+        }
+        this.$notify({
+          group: 'global',
+          type: 'content',
+          title: this.payload.title + ' – ' + this.payload.artists[0]
+        })
+      }
+    )
   },
   computed: {
     sizeClass() {
@@ -80,7 +82,7 @@ export default {
   },
   methods: {
     setIPFSText() {
-      request('https://ipfs.io/ipfs/' + this.hash, (error, response, body) => {
+      request('https://ipfs.io/ipfs/' + this.payload.hash, (error, response, body) => {
         if (error) {
           throw error
         }

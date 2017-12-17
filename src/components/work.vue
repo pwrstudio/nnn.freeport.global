@@ -1,30 +1,27 @@
 <template>
-  <div @click='goToWork({name: "singleWork", params: {exhibition: "territories-of-complicity", work: slug}})'
-       class='work'
-       :class='[{"active": active}, sizeClass]'>
+  <div @click='goToWork({name: "singleWork", params: {hash: hash}})'
+       class='work active'
+       :class='[sizeClass]'>
     <div v-if='!active'
          class='mesh' />
     <!-- <loader v-if='active' /> -->
 
-    <div v-if='active'
-         class='work__counter'
-         v-html='counter' />
+    <div class='work__counter'
+         v-html='payload.content.length' />
 
-    <div v-if='active'
-         class='work__stats'>
+    <div class='work__stats'>
 
       <div class='work__stats__title'
-           v-html='title' />
+           v-html='payload.title' />
       <div class='work__stats__artists'
-           v-html='artists[0]' />
+           v-html='payload.artists[0]' />
     </div>
-    <img :src='image'
-         class='work__image'>
-    <!-- <div v-if='active'
-         v-text='hash'
-         class='work__hash' /> -->
-    <vue-countdown-2 v-if='date && !active'
-                     :deadline="date"
+    <!-- <img :src='image'
+         class='work__image'> -->
+    <div v-text='hash'
+         class='work__hash' />
+    <vue-countdown-2 v-if='payload.date'
+                     :deadline="payload.date"
                      format="%Dd %hh %mm %ss"
                      class='work__timer' />
 
@@ -33,59 +30,45 @@
 
 <script>
 import VueCountdown2 from 'vue-countdown-2'
+import request from 'browser-request'
 import {VueTyper} from 'vue-typer'
 import loader from '@/components/loader'
 
 export default {
   name: 'work',
   props: {
-    title: {
-      type: String,
-      required: false,
-      default: 'Default title'
-    },
-    slug: {
-      type: String,
-      required: false,
-      default: 'xxxx'
-    },
-    artists: {
-      type: Array,
-      required: false,
-      default: 'xxxx'
-    },
-    content: {
-      type: Array,
-      required: true
-    },
-    image: {
-      type: String,
-      required: true
-    },
-    active: {
-      type: Boolean,
-      required: true
-    },
-    date: {
-      type: String,
-      required: false,
-      default: '2018/02/29'
-    },
     hash: {
       type: String,
-      required: false,
-      default: '2018/02/29'
-    },
-    size: {
-      type: String,
-      required: false,
-      default: 'small'
-    },
-    counter: {
-      type: Number,
-      required: false,
-      default: 4
+      required: true
     }
+  },
+  data() {
+    return {
+      payload: {
+        artists: [],
+        content: [],
+        data: '',
+        title: '',
+        id: ''
+      },
+      active: true
+    }
+  },
+  mounted() {
+    request(
+      {
+        method: 'GET',
+        url: 'https://ipfs.io/ipfs/' + this.hash,
+        body: '{"relaxed":true}',
+        json: true
+      },
+      (error, response, body) => {
+        if (error) {
+          throw error
+        }
+        this.payload = body
+      }
+    )
   },
   computed: {
     sizeClass() {
