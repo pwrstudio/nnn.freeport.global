@@ -5,7 +5,6 @@ import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
 import Notifications from 'vue-notification'
-import VTooltip from 'v-tooltip'
 import VueSocketio from 'vue-socket.io'
 
 // --- GOOGLE ANALYTICS
@@ -25,7 +24,6 @@ Vue.config.productionTip = false
 
 Vue.use(VueHead)
 Vue.use(Notifications)
-Vue.use(VTooltip)
 Vue.use(VueSocketio, 'https://nnnfreeportrelay-rzuihnfxhh.now.sh')
 // Vue.use(VueSocketio, 'localhost:9090')
 
