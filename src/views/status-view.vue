@@ -44,6 +44,33 @@
         </tr>
       </tbody>
     </table>
+    <!-- Exhibitions -->
+    <div class='status__counter'>
+      <div class='status__counter__header'>
+        Exhibitions
+      </div>
+      <div class='status__counter__number'>
+        {{main.container.exhibitions.length}}
+      </div>
+    </div>
+    <!-- Works -->
+    <div class='status__counter'>
+      <div class='status__counter__header'>
+        Works
+      </div>
+      <div class='status__counter__number'>
+        {{main.container.works.length}}
+      </div>
+    </div>
+    <!-- Content units -->
+    <div class='status__counter'>
+      <div class='status__counter__header'>
+        Content units
+      </div>
+      <div class='status__counter__number'>
+        {{main.container.content.length}}
+      </div>
+    </div>
   </div>
 </template>
 
