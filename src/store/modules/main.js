@@ -14,12 +14,16 @@ const state = {
         ]
       }
     ]
-  }
+  },
+  userList: []
 }
 
 const actions = {
   async [actionTypes.GET_CONTAINER]({commit, state}) {
     commit(mutationTypes.SET_CONTAINER, await ipfs.getContainer())
+  },
+  [actionTypes.UPDATE_USERLIST]({commit, state}, data) {
+    commit(mutationTypes.SET_USERLIST, data)
   }
 }
 
@@ -27,6 +31,9 @@ const mutations = {
   [mutationTypes.SET_CONTAINER](state, data) {
     state.rootHash = data.rootHash
     state.container = data.container
+  },
+  [mutationTypes.SET_USERLIST](state, data) {
+    state.userList = data
   }
 }
 

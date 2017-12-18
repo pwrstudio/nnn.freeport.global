@@ -1,1 +1,2 @@
 export const GET_CONTAINER = 'GET_CONTAINER'
+export const UPDATE_USERLIST = 'UPDATE_USERLIST'

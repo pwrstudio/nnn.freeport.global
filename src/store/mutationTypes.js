@@ -1,1 +1,2 @@
 export const SET_CONTAINER = 'SET_CONTAINER'
+export const SET_USERLIST = 'SET_USERLIST'

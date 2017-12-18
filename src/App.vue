@@ -119,7 +119,7 @@ export default {
   },
   sockets: {
     enter(data) {
-      // this.socket.userList = data.reverse()
+      this.UPDATE_USERLIST(data.list)
       this.$notify({
         group: 'global',
         type: 'user',
@@ -128,7 +128,7 @@ export default {
       })
     },
     leave(data) {
-      // this.socket.userList = data.reverse()
+      this.UPDATE_USERLIST(data.list)
       this.$notify({
         group: 'global',
         type: 'user',
@@ -157,7 +157,7 @@ export default {
     this.$_fetchData()
   },
   methods: {
-    ...mapActions(['GET_CONTAINER']),
+    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST']),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
       this.meta.description = meta.description || this.meta.defaults.description
