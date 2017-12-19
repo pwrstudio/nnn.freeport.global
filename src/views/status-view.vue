@@ -39,7 +39,10 @@
             {{user.geo.city}}, {{user.geo.country}}
           </td>
           <td class='status__table__body__row__cell'>
-            0
+            {{user.time}}
+            <!-- <vue-countdown-2 v-if='user.time'
+                             :deadline="user.time"
+                             format="%ss" /> -->
           </td>
         </tr>
       </tbody>
@@ -76,6 +79,8 @@
 
 <script>
 import {mapState} from 'vuex'
+// import VueCountdown2 from 'vue-countdown-2'
+
 export default {
   name: 'statusView',
   components: {},

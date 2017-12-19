@@ -25,6 +25,7 @@
 
 <script>
 import request from 'browser-request'
+import ellipsize from 'ellipsize'
 
 export default {
   name: 'contentAtom',
@@ -86,7 +87,7 @@ export default {
         if (error) {
           throw error
         }
-        this.text = body
+        this.text = ellipsize(body, 280)
       })
     }
   }
@@ -157,8 +158,8 @@ export default {
   &__text {
     padding: 20px;
     color: white !important;
-    font-size: 24px;
-    line-height: 24px;
+    font-size: 34px;
+    line-height: 34px;
     text-decoration: none !important;
   }
 }
