@@ -39,8 +39,6 @@ export default {
   z-index: 10000;
   opacity: 0.7;
 
-  // @include center;
-
   svg {
     width: 160px;
     height: 160px;

@@ -1,30 +1,32 @@
 <template>
   <div @click='goToWork({name: "singleWork", params: {hash: hash}})'
-       class='work active'
-       :class='[sizeClass]'>
-    <div v-if='!active'
-         class='mesh' />
-    <!-- <loader v-if='active' /> -->
+       class='work active'>
 
     <div class='work__counter'
          v-html='payload.content.length' />
 
-    <div class='work__stats'>
-
-      <div class='work__stats__title'
-           v-html='payload.title' />
-      <div class='work__stats__artists'
-           v-html='payload.artists[0]' />
+    <div class='work__qr'>
+      <qrcode :value="hash"
+              :options="{ size: 600, foreground: '#ffffff', background: '#000000'  }" />
     </div>
-    <!-- <img :src='image'
-         class='work__image'> -->
-    <div v-text='hash'
-         class='work__hash' />
-    <vue-countdown-2 v-if='payload.date'
+
+    <img v-if='firstImage'
+         :src='firstImage'
+         class='work__image'>
+
+    <div class='work__title'>{{payload.title}} - {{payload.artists[0]}}</div>
+
+    <!-- <div class='work__stats'>
+    </div> -->
+
+    <div class='work__exhibition'>Territories of Complicity</div>
+
+    <!-- <div v-text='hash'
+         class='work__hash' /> -->
+    <!-- <vue-countdown-2 v-if='payload.date'
                      :deadline="payload.date"
                      format="%Dd %hh %mm %ss"
-                     class='work__timer' />
-
+                     class='work__timer' /> -->
   </div>
 </template>
 
@@ -32,7 +34,6 @@
 import VueCountdown2 from 'vue-countdown-2'
 import request from 'browser-request'
 import {VueTyper} from 'vue-typer'
-import loader from '@/components/loader'
 
 export default {
   name: 'work',
@@ -51,6 +52,7 @@ export default {
         title: '',
         id: ''
       },
+      content: [],
       active: true
     }
   },
@@ -67,18 +69,32 @@ export default {
           throw error
         }
         this.payload = body
+        this.payload.content.map(c => {
+          request(
+            {
+              method: 'GET',
+              url: 'https://ipfs.io/ipfs/' + c.hash,
+              body: '{"relaxed":true}',
+              json: true
+            },
+            (error, response, body) => {
+              if (error) {
+                throw error
+              }
+              this.content.push(body)
+            }
+          )
+        })
       }
     )
   },
   computed: {
-    sizeClass() {
-      switch (this.size) {
-        case 'large':
-          return 'work--large'
-        case 'medium':
-          return 'work--medium'
-        default:
-          return 'work--small'
+    firstImage() {
+      const img = this.content.find(c => c.media === 'Image')
+      if (img) {
+        return 'https://ipfs.io/ipfs/' + img.hash
+      } else {
+        return false
       }
     }
   },
@@ -98,8 +114,7 @@ export default {
   },
   components: {
     VueCountdown2,
-    VueTyper,
-    loader
+    VueTyper
   }
 }
 </script>
@@ -110,27 +125,24 @@ export default {
 @import '../style/_variables.scss';
 
 .work {
-  height: 40vh;
+  height: 100%;
+  width: 100vw;
   position: relative;
-  padding: 40px;
-  margin: 40px;
   color: white;
-  cursor: url('../assets/img/cross-small.png') 26 30;
-  border: 1px solid transparent;
+  background: $black;
 
-  .mesh {
-    background-image: url('../assets/img/grid.png');
-    opacity: 1;
+  &__qr {
     position: absolute;
-    width: 100%;
-    height: 100%;
-    top: 0;
-    left: 0;
-    // z-index: 10;
+    top: 20px;
+    left: 20px;
+    width: 100px;
+    canvas {
+      max-width: 100%;
+    }
   }
 
   &__image {
-    mix-blend-mode: lighten;
+    // mix-blend-mode: lighten;
     max-height: 80%;
     max-width: 70%;
     object-fit: cover;
@@ -139,58 +151,29 @@ export default {
     @include center;
   }
 
-  &.active &__image {
-    width: 100%;
-    height: 100%;
-    max-height: 100%;
-    max-width: 100%;
-  }
-
-  // &.active &__title {
-  //   bottom: 0;
-  //   @include center;
+  // &.active &__image {
+  //   width: 100%;
+  //   height: 100%;
+  //   max-height: 100%;
+  //   max-width: 100%;
   // }
 
-  &.active {
-    cursor: pointer;
+  // &.active {
+  //   cursor: pointer;
 
-    &:hover {
-      border: 1px solid white;
-      // border: 2px solid orangered;
-    }
+  //   &:hover {
+  //   }
 
-    &:active {
-      background: black;
-    }
-  }
-
-  &.active:active &__image {
-    opacity: 0;
-  }
-
-  &--small {
-    flex: 1 1 400px;
-  }
-
-  &--medium {
-    flex: 1 1 500px;
-  }
-
-  &--large {
-    flex: 1 1 700px;
-  }
-
-  // &:hover &__title {
-  //   border: 2px solid black !important;
+  //   &:active {
+  //     background: black;
+  //   }
   // }
 
-  // &:hover &__counter {
-  //   border: 2px solid black !important;
+  // &.active:active &__image {
+  //   opacity: 0;
   // }
 
   &__timer {
-    // background: white;
-    // color: white;
     padding: 20px;
     word-break: break-all;
     font-size: 48px;
@@ -200,7 +183,7 @@ export default {
     position: absolute;
     z-index: 10;
     left: 20px;
-    border: 2px solid white;
+    // border: 2px solid white;
     white-space: nowrap;
     overflow: hidden;
     @include center;
@@ -209,19 +192,17 @@ export default {
   &__hash {
     padding: 20px;
     word-break: break-all;
-    font-size: 14px;
+    font-size: 24px;
     line-height: 20px;
     text-align: center;
     position: absolute;
     z-index: 1000;
-    top: 30px;
-    right: 30px;
-    // top: 20px;
-    // right: 20px;
+    top: 20px;
+    left: 20px;
     // transform-origin: top right;
     // transform: rotateZ(90deg) translateX(100%);
-    background: rgba(0, 0, 0, 0.8);
-    width: 400px;
+    // background: rgba(0, 0, 0, 0.8);
+    width: 70vh;
     // width: 100%;
     white-space: nowrap;
     overflow: hidden;
@@ -236,23 +217,12 @@ export default {
     }
 
     .char {
-      color: white !important;
+      color: $white !important;
       .typed {
-        color: white !important;
+        color: $white !important;
       }
     }
   }
-
-  // &:hover &__hash {
-  //   border: 2px solid black !important;
-
-  //   .char {
-  //     color: black !important;
-  //     .typed {
-  //       color: black !important;
-  //     }
-  //   }
-  // }
 
   &__counter {
     position: absolute;
@@ -260,48 +230,41 @@ export default {
     right: 20px;
     z-index: 10000;
     display: inline-block;
-    padding: 20px;
+    padding: 40px;
     word-break: break-all;
     font-size: 14px;
     line-height: 20px;
     text-align: center;
     z-index: 10;
-    background: rgba(0, 0, 0, 0.8);
     white-space: nowrap;
     overflow: hidden;
+    color: white;
+    font-size: 48px;
+    border: 1px solid white;
   }
 
-  &__stats {
+  &__exhibition {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    padding: 20px;
+    border: 1px solid white;
+  }
+
+  &__title {
+    // display: inline-block;
+    padding: 20px;
+    // word-break: break-all;
+
+    text-align: center;
+    z-index: 10;
+    // white-space: nowrap;
+    overflow: hidden;
     position: absolute;
     bottom: 20px;
     left: 20px;
-    z-index: 100000000;
-
-    &__title {
-      display: inline-block;
-      padding: 20px;
-      word-break: break-all;
-      font-size: 18px;
-      line-height: 20px;
-      text-align: center;
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.8);
-      white-space: nowrap;
-      overflow: hidden;
-    }
-
-    &__artists {
-      display: inline-block;
-      padding: 20px;
-      word-break: break-all;
-      font-size: 18px;
-      line-height: 20px;
-      text-align: center;
-      z-index: 10;
-      background: rgba(0, 0, 0, 0.8);
-      white-space: nowrap;
-      overflow: hidden;
-    }
+    padding: 20px;
+    border: 1px solid white;
   }
 }
 

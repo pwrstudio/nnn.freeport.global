@@ -43,7 +43,6 @@ export default {
         })
       }
     )
-    // this.$socket.emit('view', 'xxxx')
   }
 }
 </script>
@@ -64,7 +63,7 @@ export default {
     div {
       margin-top: 40px;
       text-align: center;
-      color: white;
+      color: $white;
     }
   }
 }

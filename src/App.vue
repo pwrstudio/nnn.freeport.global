@@ -3,7 +3,7 @@
     <notifications group="global"
                    classes="global-notifications"
                    width="500px" />
-    <div id='nav-left'
+    <!-- <div id='nav-left'
          :class='{active: $route.name === "info"}'>
       <router-link :to='$route.name === "info" || $route.name === "status" ? "/" : "/info"'
                    class='sidebar-pattern'>
@@ -33,11 +33,11 @@
         <div></div>
         <div></div>
       </router-link>
-    </div>
+    </div> -->
     <transition name="fade">
       <router-view id='main-view' />
     </transition>
-    <div id='nav-right'
+    <!-- <div id='nav-right'
          :class='{active: $route.name === "status"}'>
       <router-link to='/status'
                    class='sidebar-pattern'>
@@ -67,7 +67,7 @@
         <div></div>
         <div></div>
       </router-link>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -243,7 +243,7 @@ export default {
 html {
   margin: 0;
   overflow-x: hidden;
-  background-color: #333333;
+  background-color: $black;
 
   @include hide-scroll;
 }
@@ -267,10 +267,8 @@ body {
 }
 
 #main-view {
-  width: calc(100vw - 100px);
-  margin-right: auto;
-  margin-left: auto;
-  min-height: 100vh;
+  width: 100vw;
+  height: 100vh;
 }
 
 .fade-enter-active,
@@ -293,9 +291,9 @@ body {
 }
 
 .char {
-  color: white !important;
+  color: $white !important;
   .typed {
-    color: white !important;
+    color: $white !important;
   }
 }
 
@@ -342,7 +340,6 @@ body {
   right: 0;
   height: 100vh;
   width: 100vw;
-  // background: black;
   will-change: transform;
   transform: translateX(calc(100vw - 40px));
   transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
@@ -399,9 +396,9 @@ body {
     */
   }
   &.user {
-    background: black;
-    border: 5px solid white;
-    color: white;
+    background: $black;
+    border: 5px solid $white;
+    color: $white;
     /*
     Style for specific type of notification, will be applied when you
     call notification with "type" parameter:
