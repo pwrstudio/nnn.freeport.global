@@ -2,8 +2,8 @@
 $line-height: 26px;
 $serif-stack: 'times new roman', times, georgia, serif;
 $sans-serif-stack: helvetica, arial, sans-serif;
-$font-size: 26px;
-$line-height: 20px;
+$font-size: 22px;
+$line-height: 22px;
 /* Color */
 $background-color: #fff;
 /* Space */
@@ -22,3 +22,24 @@ $breakpoints: (
   'large': (max-width: 1600px),
   'short': (max-height: 700px)
 );
+
+@mixin nav {
+  position: fixed;
+  width: 50vw;
+  height: $bar-height;
+  background: rgba(30, 30, 30, 1);
+  background: $black;
+  margin-top: 0;
+  text-align: center;
+  line-height: $bar-height;
+  color: $white;
+  user-select: none;
+  // font-size: 12px;
+  text-decoration: none;
+  &:hover {
+    background: $green;
+  }
+  &:active {
+    background: $white;
+  }
+}

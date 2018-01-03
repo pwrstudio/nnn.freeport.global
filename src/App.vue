@@ -7,9 +7,15 @@
                  to='/info'>
       nnn.freeport.global
     </router-link>
-    <router-link class='nav-button nav-button__right'
+    <router-link v-if='$route.name === "stackView"'
+                 class='nav-button nav-button__right'
                  to='/status'>
       <i class="material-icons">trending_up</i>
+    </router-link>
+    <router-link v-else
+                 class='nav-button nav-button__right'
+                 to='/'>
+      <i class="material-icons">arrow_back</i>
     </router-link>
     <transition name="fade">
       <router-view id='main-view' />
@@ -68,7 +74,7 @@ export default {
       this.UPDATE_USERLIST(data.list)
       this.$notify({
         group: 'global',
-        type: 'user',
+        type: 'positive',
         title: data.user.id + ' (' + data.user.geo.city + ', ' + data.user.geo.country + ') joined',
         text: ''
       })
@@ -77,8 +83,8 @@ export default {
       this.UPDATE_USERLIST(data.list)
       this.$notify({
         group: 'global',
-        type: 'user',
-        title: data.user + ' left',
+        type: 'negative',
+        title: data.user.id + ' (' + data.user.geo.city + ', ' + data.user.geo.country + ') joined',
         text: ''
       })
     },
@@ -186,25 +192,6 @@ export default {
 @import './style/_variables.scss';
 @import url('https://fonts.googleapis.com/css?family=Space+Mono');
 
-@mixin nav {
-  position: fixed;
-  width: 50vw;
-  height: $bar-height;
-  background: rgba(30, 30, 30, 1);
-  margin-top: 0;
-  text-align: center;
-  line-height: $bar-height;
-  color: $white;
-  user-select: none;
-  text-decoration: none;
-  &:hover {
-    background: $green;
-  }
-  &:active {
-    background: $white;
-  }
-}
-
 html,
 body {
   margin: 0;
@@ -215,7 +202,7 @@ body {
 }
 
 .app {
-  font-family: 'droid sans mono', 'space mono', $sans-serif-stack;
+  font-family: 'space mono', $sans-serif-stack;
   font-size: $font-size;
   line-height: $line-height;
   color: $black;
@@ -244,7 +231,7 @@ body {
   top: 0;
   z-index: 100;
   &:hover {
-    background: $black;
+    background: rgba(30, 30, 30, 1);
   }
   &__left {
     left: 0;
@@ -284,12 +271,12 @@ body {
     border: 2px solid $white;
     color: $white;
   }
-  &.user {
-    background: $black;
+  &.positive {
+    background: $green;
     border: 2px solid $white;
     color: $white;
   }
-  &.warning {
+  &.negative {
     background: $red;
     border: 2px solid $white;
     color: $black;

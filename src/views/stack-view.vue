@@ -72,26 +72,6 @@ export default {
 @import '../style/_variables.scss';
 @import '../style/vendor/swiper.css';
 
-@mixin nav {
-  position: fixed;
-  width: 50vw;
-  height: $bar-height;
-  background: rgba(30, 30, 30, 1);
-  margin-top: 0;
-  text-align: center;
-  line-height: $bar-height;
-  color: $white;
-  user-select: none;
-  // font-size: 12px;
-  text-decoration: none;
-  &:hover {
-    background: $green;
-  }
-  &:active {
-    background: $white;
-  }
-}
-
 .stack {
   background: $black;
   position: fixed;

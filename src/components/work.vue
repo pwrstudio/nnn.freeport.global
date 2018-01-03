@@ -238,7 +238,8 @@ export default {
     overflow: hidden;
     color: white;
     font-size: 48px;
-    background: $green;
+    // background: $green;
+    border: 1px solid $white;
   }
 
   &__exhibition {

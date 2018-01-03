@@ -27,12 +27,8 @@
 
 <script>
 import {mapState} from 'vuex'
-import work from '@/components/work'
 export default {
   name: 'infoView',
-  components: {
-    work
-  },
   computed: {
     ...mapState(['main'])
   }
