@@ -30,7 +30,7 @@
           </thead>
           <tbody class='status__users__table__body'>
             <!-- <transition-group name="list"> -->
-            <tr v-for='user in main.userList.reverse()'
+            <tr v-for='user in main.userList'
                 :key='user.id'
                 class='status__users__table__body__row'>
               <td class='status__users__table__body__row__cell'>
@@ -50,6 +50,7 @@
           </tbody>
         </table>
       </div>
+      <div id='map'></div>
     </div>
     <!-- Content -->
     <div class='status__content'>
@@ -98,8 +99,7 @@
             </th>
           </thead>
           <tbody class='status__content__table__body'>
-            <!-- <transition-group name="list"> -->
-            <tr v-for='user in main.userList.reverse()'
+            <tr v-for='user in main.userList'
                 :key='user.id'
                 class='status__content__table__body__row'>
               <td class='status__content__table__body__row__cell'>
@@ -115,7 +115,6 @@
                 132s
               </td>
             </tr>
-            <!-- </transition-group> -->
           </tbody>
         </table>
       </div>
@@ -125,17 +124,33 @@
 
 <script>
 import {mapState} from 'vuex'
+import mapboxgl from 'mapbox-gl'
 
 export default {
   name: 'statusView',
   components: {},
   data() {
-    return {}
+    return {
+      map: {}
+    }
   },
   computed: {
     ...mapState(['main'])
   },
-  mounted() {},
+  mounted() {
+    // or "const mapboxgl = require('mapbox-gl');"
+    this.$nextTick(() => {
+      mapboxgl.accessToken =
+        'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNqYnpodnNrcjBmeTYyd3FwbGF5YzBrZmoifQ.ToAF7-pnMxqPA0ZH8ItEjQ'
+      this.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/mapbox/dark-v9',
+        center: [13.404954, 52.520008],
+        zoom: 0
+      })
+      let marker = new mapboxgl.Marker().setLngLat([13.404954, 52.520008]).addTo(this.map)
+    })
+  },
   updated() {
     this.$nextTick(function() {
       // Code that will run only after the
@@ -174,6 +189,12 @@ export default {
 .list-leave-to {
   transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   opacity: 0;
+}
+
+#map {
+  padding: 10px;
+  height: calc(100% -20px);
+  width: 20vw;
 }
 
 .status {
@@ -283,5 +304,9 @@ export default {
       }
     }
   }
+}
+
+.mapboxgl-control-container {
+  display: none !important;
 }
 </style>
