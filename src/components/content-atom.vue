@@ -1,9 +1,9 @@
 <template>
   <router-link :to='{name: "singleContent", params: {hash: hash}}'
                class='atom'
-               :class='[sizeClass, hash]'>
-    <div class='atom__title'
-         v-html='payload.title' />
+               :id='hash'>
+    <!-- <div class='atom__title'
+         v-html='payload.title' /> -->
     <div v-if='payload.media === "Text"'
          class='atom__text'
          v-html='text' />
@@ -87,7 +87,7 @@ export default {
         if (error) {
           throw error
         }
-        this.text = ellipsize(body, 280)
+        this.text = ellipsize(body, 480)
       })
     }
   }
@@ -100,66 +100,39 @@ export default {
 @import '../style/_variables.scss';
 
 .atom {
-  height: 40vh;
   position: relative;
-  margin: 40px;
   cursor: pointer;
   display: block;
   text-decoration: none !important;
-  flex: 1 1 700px;
-
-  // &--small {
-  //   flex: 1 1 500px;
-  // }
-
-  // &--medium {
-  //   flex: 1 1 700px;
-  // }
-
-  // &--large {
-  //   flex: 1 1 1000px;
-  // }
+  margin: 20px;
+  background: red;
+  float: left;
 
   &__image {
-    max-height: 100%;
-    max-width: 100%;
-    object-fit: cover;
-    will-change: opacity;
-    transition: opacity 0.4s ease-out;
-
-    @include center;
+    height: 400px;
   }
 
-  &__timer {
-    color: white;
-    width: 100%;
-    text-align: center;
-    z-index: 1000;
-
-    @include center;
-  }
-
-  &__title {
-    color: white !important;
-    padding: 20px;
-    word-break: break-all;
-    font-size: 18px;
-    line-height: 20px;
-    text-align: center;
-    position: absolute;
-    z-index: 10;
-    bottom: 20px;
-    left: 20px;
-    border: 1px solid white;
-    white-space: nowrap;
-    overflow: hidden;
-  }
+  // &__title {
+  //   color: white !important;
+  //   padding: 20px;
+  //   word-break: break-all;
+  //   font-size: 18px;
+  //   line-height: 20px;
+  //   text-align: center;
+  //   position: absolute;
+  //   z-index: 10;
+  //   bottom: 20px;
+  //   left: 20px;
+  //   border: 1px solid white;
+  //   white-space: nowrap;
+  //   overflow: hidden;
+  // }
 
   &__text {
     padding: 20px;
     color: white !important;
-    font-size: 34px;
-    line-height: 34px;
+    font-size: 16px;
+    line-height: 18px;
     text-decoration: none !important;
   }
 }

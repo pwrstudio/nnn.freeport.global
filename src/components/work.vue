@@ -6,23 +6,47 @@
          v-html='payload.content.length' />
 
     <div class='work__qr'>
-      <qrcode :value="hash"
+      <qrcode :value="'https://nnn.freeport.global/w/' + hash"
               :options="{ size: 600, foreground: '#ffffff', background: '#000000'  }" />
     </div>
 
-    <img v-if='firstImage'
-         :src='firstImage'
-         class='work__image'>
+    <div class='work__info'>
 
-    <div class='work__title'>{{payload.title}} - {{payload.artists[0]}}</div>
+      <div class='work__hash'>
+        <span class='work__hash__label'
+              v-html='"hash"' />
+        <span v-html='hash' />
+      </div>
 
-    <!-- <div class='work__stats'>
-    </div> -->
+      <div class='work__title'>
+        <span class='work__title__label'
+              v-html='"title"' />
+        <span v-html='payload.title' />
+      </div>
 
-    <div class='work__exhibition'>Territories of Complicity</div>
+      <div class='work__artist'>
+        <span class='work__artist__label'
+              v-html='"artist"' />
+        <span v-html='payload.artists[0]' />
+      </div>
 
-    <!-- <div v-text='hash'
-         class='work__hash' /> -->
+      <div class='work__exhibition'>
+        <span class='work__exhibition__label'
+              v-html='"exhibition"' />
+        <span v-html='"Territories of Complicity"' />
+      </div>
+
+      <div v-text=''
+           class='work__location'>
+        <span class='work__title__label'
+              v-html='"location"' />
+        <span v-html='"Berlin, Germany"' />
+      </div>
+
+      <!-- <div class='work__signature' /> -->
+
+    </div>
+
     <!-- <vue-countdown-2 v-if='payload.date'
                      :deadline="payload.date"
                      format="%Dd %hh %mm %ss"
@@ -124,66 +148,64 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
+@mixin box {
+  padding: 20px;
+  border: 1px solid white;
+  margin-bottom: 20px;
+  &:hover {
+    background: $green;
+    border: 1px solid $green;
+    cursor: pointer;
+  }
+}
+
+@mixin label {
+  font-size: 14px;
+  text-transform: uppercase;
+  width: 12ch;
+  display: inline-block;
+}
+
 .work {
   height: 100%;
-  width: 100vw;
+  width: 100%;
   position: relative;
   color: white;
-  background: $black;
+  padding-top: 40px;
+  padding-bottom: 40px;
 
   &__qr {
     position: absolute;
-    top: 20px;
-    left: 20px;
-    width: 100px;
+    top: 260px;
+    right: 0px;
+    width: 200px;
     canvas {
       max-width: 100%;
     }
   }
 
+  &__info {
+    width: calc(100% - 220px);
+  }
+
   &__image {
-    // mix-blend-mode: lighten;
-    max-height: 80%;
-    max-width: 70%;
+    height: 100%;
+    width: 100%;
     object-fit: cover;
     will-change: opacity;
     transition: opacity 0.4s ease-out;
     @include center;
   }
 
-  // &.active &__image {
-  //   width: 100%;
-  //   height: 100%;
-  //   max-height: 100%;
-  //   max-width: 100%;
-  // }
-
-  // &.active {
-  //   cursor: pointer;
-
-  //   &:hover {
-  //   }
-
-  //   &:active {
-  //     background: black;
-  //   }
-  // }
-
-  // &.active:active &__image {
-  //   opacity: 0;
-  // }
-
   &__timer {
     padding: 20px;
     word-break: break-all;
-    font-size: 48px;
     opacity: 0.7;
     line-height: 20px;
     text-align: center;
     position: absolute;
     z-index: 10;
     left: 20px;
-    // border: 2px solid white;
     white-space: nowrap;
     overflow: hidden;
     @include center;
@@ -192,79 +214,67 @@ export default {
   &__hash {
     padding: 20px;
     word-break: break-all;
-    font-size: 24px;
-    line-height: 20px;
-    text-align: center;
-    position: absolute;
-    z-index: 1000;
-    top: 20px;
-    left: 20px;
-    // transform-origin: top right;
-    // transform: rotateZ(90deg) translateX(100%);
-    // background: rgba(0, 0, 0, 0.8);
-    width: 70vh;
-    // width: 100%;
     white-space: nowrap;
     overflow: hidden;
-
-    .caret {
-      opacity: 0 !important;
-      visibility: hidden !important;
-
-      &.typing {
-        opacity: 0 !important;
-      }
-    }
-
-    .char {
-      color: $white !important;
-      .typed {
-        color: $white !important;
-      }
+    @include box;
+    &__label {
+      @include label;
     }
   }
 
   &__counter {
     position: absolute;
-    top: 20px;
-    right: 20px;
+    top: 40px;
+    right: 0px;
     z-index: 10000;
     display: inline-block;
-    padding: 40px;
+    width: 200px;
+    height: 200px;
     word-break: break-all;
-    font-size: 14px;
-    line-height: 20px;
+    line-height: 200px;
     text-align: center;
     z-index: 10;
     white-space: nowrap;
     overflow: hidden;
     color: white;
     font-size: 48px;
-    border: 1px solid white;
+    background: $green;
   }
 
   &__exhibition {
-    position: absolute;
-    bottom: 20px;
-    right: 20px;
-    padding: 20px;
-    border: 1px solid white;
+    @include box;
+    &__label {
+      @include label;
+    }
+  }
+
+  &__location {
+    @include box;
+    &__label {
+      @include label;
+    }
+  }
+
+  &__artist {
+    @include box;
+    &__label {
+      @include label;
+    }
   }
 
   &__title {
-    // display: inline-block;
-    padding: 20px;
-    // word-break: break-all;
+    @include box;
+    &__label {
+      @include label;
+    }
+  }
 
-    text-align: center;
-    z-index: 10;
-    // white-space: nowrap;
-    overflow: hidden;
-    position: absolute;
-    bottom: 20px;
-    left: 20px;
-    padding: 20px;
-    border: 1px solid white;
+  &__signature {
+    @include box;
+    width: 50%;
+    float: right;
+    height: 100px;
+    background: $yellow;
   }
 }
 

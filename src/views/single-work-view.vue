@@ -53,9 +53,6 @@ export default {
 @import '../style/_variables.scss';
 
 .work {
-  display: flex;
-  flex-wrap: wrap;
-
   header {
     width: 100%;
     justify-content: center;

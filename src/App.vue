@@ -3,71 +3,17 @@
     <notifications group="global"
                    classes="global-notifications"
                    width="500px" />
-    <!-- <div id='nav-left'
-         :class='{active: $route.name === "info"}'>
-      <router-link :to='$route.name === "info" || $route.name === "status" ? "/" : "/info"'
-                   class='sidebar-pattern'>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </router-link>
-    </div> -->
+    <router-link class='nav-button nav-button__left'
+                 to='/info'>
+      nnn.freeport.global
+    </router-link>
+    <router-link class='nav-button nav-button__right'
+                 to='/status'>
+      <i class="material-icons">trending_up</i>
+    </router-link>
     <transition name="fade">
       <router-view id='main-view' />
     </transition>
-    <!-- <div id='nav-right'
-         :class='{active: $route.name === "status"}'>
-      <router-link to='/status'
-                   class='sidebar-pattern'>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-        <div></div>
-      </router-link>
-    </div> -->
   </div>
 </template>
 
@@ -240,14 +186,26 @@ export default {
 @import './style/_variables.scss';
 @import url('https://fonts.googleapis.com/css?family=Space+Mono');
 
-html {
-  margin: 0;
-  overflow-x: hidden;
-  background-color: $black;
-
-  @include hide-scroll;
+@mixin nav {
+  position: fixed;
+  width: 50vw;
+  height: $bar-height;
+  background: rgba(30, 30, 30, 1);
+  margin-top: 0;
+  text-align: center;
+  line-height: $bar-height;
+  color: $white;
+  user-select: none;
+  text-decoration: none;
+  &:hover {
+    background: $green;
+  }
+  &:active {
+    background: $white;
+  }
 }
 
+html,
 body {
   margin: 0;
   overflow-x: hidden;
@@ -257,7 +215,7 @@ body {
 }
 
 .app {
-  font-family: 'space mono', $sans-serif-stack;
+  font-family: 'droid sans mono', 'space mono', $sans-serif-stack;
   font-size: $font-size;
   line-height: $line-height;
   color: $black;
@@ -281,100 +239,34 @@ body {
   opacity: 0;
 }
 
-.caret {
-  opacity: 0 !important;
-  visibility: hidden !important;
-
-  &.typing {
-    opacity: 0 !important;
-  }
-}
-
-.char {
-  color: $white !important;
-  .typed {
-    color: $white !important;
-  }
-}
-
-#nav-left {
-  display: block;
-  position: fixed;
+.nav-button {
+  @include nav;
   top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 10000;
-  will-change: transform;
-  transform: translateX(calc(-100vw + 40px));
-  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  &.active {
-    transform: translateX(0);
+  z-index: 100;
+  &:hover {
+    background: $black;
   }
-  .sidebar-pattern {
-    display: block;
-    z-index: 10000000;
-    width: 40px;
-    height: 100vh;
-    opacity: 1;
-    position: absolute;
-    top: 0;
-    right: 0;
-    div {
-      height: 4vh;
-      width: 100%;
-      &:nth-child(even) {
-        background: transparent;
-      }
-      &:nth-child(odd) {
-        background: #777777;
-      }
-    }
-  }
-}
-
-#nav-right {
-  display: block;
-  position: fixed;
-  top: 0;
-  right: 0;
-  height: 100vh;
-  width: 100vw;
-  will-change: transform;
-  transform: translateX(calc(100vw - 40px));
-  transition: transform 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  &.active {
-    transform: translateX(0);
-    pointer-events: none;
-  }
-  .sidebar-pattern {
-    display: block;
-    z-index: 10000000;
-    width: 40px;
-    height: 100vh;
-    opacity: 1;
-    position: absolute;
-    top: 0;
+  &__left {
     left: 0;
-    div {
-      height: 4vh;
-      width: 100%;
-      &:nth-child(even) {
-        background: #555555;
-      }
-      &:nth-child(odd) {
-        background: transparent;
-      }
-    }
   }
+  &__right {
+    right: 0;
+  }
+}
+.material-icons {
+  font-size: 48px;
+  line-height: 60px;
 }
 
 .global-notifications {
-  background: orangered;
+  background: $black;
+  border: 2px solid $white;
+  color: $white;
   margin: 10px;
   padding: 20px;
   width: auto;
   font-size: 18px;
+  font-weight: normal;
   line-height: 18px;
 
   .notification-title {
@@ -388,31 +280,19 @@ body {
   }
 
   &.network {
-    background: orangered;
-    /*
-    Style for specific type of notification, will be applied when you
-    call notification with "type" parameter:
-    this.$notify({ type: 'my-type', message: 'Foo' })
-    */
+    background: $black;
+    border: 2px solid $white;
+    color: $white;
   }
   &.user {
     background: $black;
-    border: 5px solid $white;
+    border: 2px solid $white;
     color: $white;
-    /*
-    Style for specific type of notification, will be applied when you
-    call notification with "type" parameter:
-    this.$notify({ type: 'my-type', message: 'Foo' })
-    */
   }
   &.warning {
-    background: red;
-    color: black;
-    /*
-    Style for specific type of notification, will be applied when you
-    call notification with "type" parameter:
-    this.$notify({ type: 'my-type', message: 'Foo' })
-    */
+    background: $red;
+    border: 2px solid $white;
+    color: $black;
   }
 }
 </style>
