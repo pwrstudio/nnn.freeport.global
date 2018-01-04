@@ -1,26 +1,39 @@
 <template>
-  <router-link :to='{name: "singleContent", params: {hash: hash}}'
-               class='atom'
-               :id='hash'>
-    <!-- <div class='atom__title'
-         v-html='payload.title' /> -->
+  <div class='atom'>
+
     <div v-if='payload.media === "Text"'
          class='atom__text'
-         v-html='text' />
-    <img v-else-if='payload.media === "Image"'
-         :src='"https://ipfs.io/ipfs/" + payload.hash'
-         class='atom__image' />
-    <div v-else-if='payload.media === "Audio"'
-         class='atom__audio'>
+         :id='hash'>
+      <span v-html='text' />
+      <router-link class='atom__text__link'
+                   :to='{name: "singleContent", params: {hash: hash}}'>
+        <i class="material-icons">arrow_forward</i>
+      </router-link>
+    </div>
+
+    <router-link v-else-if='payload.media === "Image"'
+                 class='atom__image'
+                 :to='{name: "singleContent", params: {hash: hash}}'
+                 :id='hash'>
+      <img :src='"https://ipfs.io/ipfs/" + payload.hash'>
+    </router-link>
+
+    <router-link v-else-if='payload.media === "Audio"'
+                 class='atom__audio'
+                 :to='{name: "singleContent", params: {hash: hash}}'
+                 :id='hash'>
       <audio :src='"https://ipfs.io/ipfs/" + payload.hash'
              controls/>
-    </div>
-    <div v-else-if='payload.media === "Video"'
-         class='atom__audio'>
+    </router-link>
+
+    <router-link v-else-if='payload.media === "Video"'
+                 class='atom__audio'
+                 :to='{name: "singleContent", params: {hash: hash}}'
+                 :id='hash'>
       <video :src='"https://ipfs.io/ipfs/" + payload.hash'
              controls/>
-    </div>
-  </router-link>
+    </router-link>
+  </div>
 </template>
 
 <script>
@@ -100,40 +113,42 @@ export default {
 @import '../style/_variables.scss';
 
 .atom {
-  position: relative;
   cursor: pointer;
   display: block;
-  text-decoration: none !important;
+  flex: 2 2 800px;
   margin: 20px;
-  background: red;
-  float: left;
+  position: relative;
+  text-decoration: none !important;
 
   &__image {
-    height: 400px;
+    max-width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    img {
+      max-width: 100%;
+      max-height: 100%;
+    }
   }
-
-  // &__title {
-  //   color: white !important;
-  //   padding: 20px;
-  //   word-break: break-all;
-  //   font-size: 18px;
-  //   line-height: 20px;
-  //   text-align: center;
-  //   position: absolute;
-  //   z-index: 10;
-  //   bottom: 20px;
-  //   left: 20px;
-  //   border: 1px solid white;
-  //   white-space: nowrap;
-  //   overflow: hidden;
-  // }
 
   &__text {
     padding: 20px;
     color: white !important;
-    font-size: 16px;
-    line-height: 18px;
     text-decoration: none !important;
+    &__link {
+      border: 1px solid $white;
+      color: $white;
+      display: block;
+      padding: 20px;
+      margin: 20px;
+      text-align: center;
+      max-width: 200px;
+      float: right;
+      &:hover {
+        background: $green;
+        color: $white;
+      }
+    }
   }
 }
 </style>

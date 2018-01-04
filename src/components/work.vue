@@ -28,7 +28,7 @@
       <div class='work__artist'>
         <span class='work__artist__label'
               v-html='"artist"' />
-        <span v-html='payload.artists[0]' />
+        <span v-html='artistList' />
       </div>
 
       <div class='work__exhibition'>
@@ -76,7 +76,7 @@ export default {
   data() {
     return {
       payload: {
-        artists: [],
+        artists: [''],
         content: [],
         data: '',
         title: '',
@@ -126,6 +126,11 @@ export default {
       } else {
         return false
       }
+    },
+    artistList() {
+      return this.payload.artists.reduce(
+        (accumulator, currentValue) => accumulator + ', ' + currentValue
+      )
     }
   },
   methods: {

@@ -50,6 +50,7 @@ export default {
     margin-left: auto;
     margin-right: auto;
     width: 70ch;
+    max-width: 90%;
     @include screen-size('small') {
       width: 90vw;
       font-size: 18px;

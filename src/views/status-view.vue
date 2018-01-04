@@ -305,4 +305,12 @@ export default {
 .mapboxgl-control-container {
   display: none !important;
 }
+
+.mapboxgl-marker {
+  svg {
+    g {
+      fill: $red !important;
+    }
+  }
+}
 </style>

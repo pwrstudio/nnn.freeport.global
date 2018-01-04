@@ -1,18 +1,18 @@
 <template>
   <div class='single-content'>
     <div v-if='payload.media === "Text"'
-         class='atom__text'
+         class='single-content__text'
          v-html='text' />
     <img v-else-if='payload.media === "Image"'
          :src='"https://ipfs.io/ipfs/" + payload.hash'
-         class='atom__image' />
+         class='single-content__image' />
     <div v-else-if='payload.media === "Audio"'
-         class='atom__audio'>
+         class='single-content__audio'>
       <audio :src='"https://ipfs.io/ipfs/" + payload.hash'
              controls/>
     </div>
     <div v-else-if='payload.media === "Video"'
-         class='atom__audio'>
+         class='single-content__audio'>
       <video :src='"https://ipfs.io/ipfs/" + payload.hash'
              controls/>
     </div>
@@ -79,5 +79,10 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+  &__text {
+    color: $white;
+    width: 70ch;
+    max-width: 90%;
+  }
 }
 </style>

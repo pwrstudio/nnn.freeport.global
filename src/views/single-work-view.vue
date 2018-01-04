@@ -53,15 +53,10 @@ export default {
 @import '../style/_variables.scss';
 
 .work {
-  header {
-    width: 100%;
-    justify-content: center;
-    align-items: center;
-    div {
-      margin-top: 40px;
-      text-align: center;
-      color: $white;
-    }
-  }
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+  padding-top: 60px;
 }
 </style>
