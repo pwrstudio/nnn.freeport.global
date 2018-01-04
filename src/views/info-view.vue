@@ -63,6 +63,6 @@ svg {
   width: 300px;
 }
 .cls-1 {
-  fill: #fff;
+  fill: $green;
 }
 </style>

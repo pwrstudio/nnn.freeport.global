@@ -8,7 +8,7 @@
                  to='/'>
       nnn.freeport.global
     </router-link>
-    <router-link v-else
+    <router-link v-else-if='$route.name === "status" || $route.name === "stackView"'
                  class='nav-button nav-button__left'
                  to='/info'>
       nnn.freeport.global
@@ -31,7 +31,7 @@
 
 <script>
 import {mapState, mapActions} from 'vuex'
-import logo from '@/components/logo'
+// import logo from '@/components/logo'
 
 export default {
   name: 'app',
@@ -52,18 +52,15 @@ export default {
           image: 'http://nnn.freeport.global',
           type: 'website'
         }
-      },
-      socket: {
-        userList: []
       }
     }
   },
   computed: {
     ...mapState(['main'])
   },
-  components: {
-    logo
-  },
+  // components: {
+  //   logo
+  // },
   watch: {
     $route(to, from) {},
     'main.rootHash'() {
@@ -90,12 +87,11 @@ export default {
       this.$notify({
         group: 'global',
         type: 'negative',
-        title: data.user.id + ' (' + data.user.geo.city + ', ' + data.user.geo.country + ') joined',
+        title: data.user.id + ' left',
         text: ''
       })
     },
     view(data) {
-      // this.socket.userList = data.reverse()
       this.$notify({
         group: 'global',
         type: 'user',
@@ -126,10 +122,6 @@ export default {
     },
     $_fetchData(routeName) {
       this.GET_CONTAINER()
-      // All requests for data from the server originates from this function
-      // if (routeName === 'home') {
-      //   this.GET_CONTAINER()
-      // }
     }
   },
   head: {

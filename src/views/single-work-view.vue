@@ -1,8 +1,14 @@
 <template>
-  <div class='work'>
-    <contentAtom v-for='item in payload.content'
-                 :key='item.hash'
-                 :hash='item.hash' />
+  <div>
+    <router-link class='nav-button nav-button__left'
+                 to=''>
+      {{payload.title}}
+    </router-link>
+    <div class='work'>
+      <contentAtom v-for='item in payload.content'
+                   :key='item.hash'
+                   :hash='item.hash' />
+    </div>
   </div>
 </template>
 
@@ -36,11 +42,6 @@ export default {
           throw error
         }
         this.payload = body
-        this.$notify({
-          group: 'global',
-          type: 'content',
-          title: this.payload.title + ' – ' + this.payload.artists[0]
-        })
       }
     )
   }

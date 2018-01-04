@@ -328,6 +328,13 @@ export default {
     font-size: 68px;
     &:hover {
       background: $green;
+      border: 1px solid $green;
+    }
+    @include screen-size('medium') {
+      height: 60px;
+    }
+    @include screen-size('short') {
+      height: 60px;
     }
     @include screen-size('small') {
       width: 100%;
