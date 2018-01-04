@@ -210,6 +210,10 @@ body {
 .app {
   font-family: 'space mono', $sans-serif-stack;
   font-size: $font-size;
+  @include screen-size('small') {
+    font-size: 16px;
+    line-height: 16px;
+  }
   line-height: $line-height;
   color: $black;
   -webkit-font-smoothing: antialiased;
@@ -246,6 +250,7 @@ body {
     right: 0;
   }
 }
+
 .material-icons {
   font-size: 48px;
   line-height: 60px;

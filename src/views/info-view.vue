@@ -47,9 +47,14 @@ export default {
     color: white;
     font-size: 24px;
     line-height: 24px;
-    width: 70ch;
     margin-left: auto;
     margin-right: auto;
+    width: 70ch;
+    @include screen-size('small') {
+      width: 90vw;
+      font-size: 18px;
+      line-height: 20px;
+    }
   }
 }
 

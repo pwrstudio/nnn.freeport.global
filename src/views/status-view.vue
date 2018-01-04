@@ -7,7 +7,8 @@
         <div class='status__users__counter__header'>
           Active users
         </div>
-        <div class='status__users__counter__number'>
+        <div v-if='main.userList'
+             class='status__users__counter__number'>
           {{main.userList.length}}
         </div>
       </div>
@@ -59,7 +60,8 @@
         <div class='status__content__counter__header'>
           Exhibitions
         </div>
-        <div class='status__content__counter__number'>
+        <div v-if='main.container.exhibitions'
+             class='status__content__counter__number'>
           {{main.container.exhibitions.length}}
         </div>
       </div>
@@ -68,16 +70,18 @@
         <div class='status__content__counter__header'>
           Works
         </div>
-        <div class='status__content__counter__number'>
+        <div v-if='main.container.works'
+             class='status__content__counter__number'>
           {{main.container.works.length}}
         </div>
       </div>
       <!-- Content units -->
       <div class='status__content__counter'>
         <div class='status__content__counter__header'>
-          Content units
+          Content
         </div>
-        <div class='status__content__counter__number'>
+        <div v-if='main.container.content'
+             class='status__content__counter__number'>
           {{main.container.content.length}}
         </div>
       </div>

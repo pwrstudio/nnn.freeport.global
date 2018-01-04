@@ -6,7 +6,7 @@
 
     <div class='work__qr'>
       <qrcode :value="'https://nnn.freeport.global/w/' + hash"
-              :options="{ size: 600, foreground: '#ffffff', background: '#000000'  }" />
+              :options="{ size: 500, foreground: '#ffffff', background: '#000000'  }" />
     </div>
 
     <div class='work__info'>
@@ -156,10 +156,10 @@ export default {
   padding: 20px;
   border: 1px solid white;
   margin-bottom: 20px;
-  &:hover {
-    // background: $green;
-    // border: 1px solid $green;
-    // cursor: pointer;
+  @include screen-size('medium') {
+    font-size: 18px;
+    line-height: 18px;
+    padding: 10px;
   }
 }
 
@@ -168,6 +168,10 @@ export default {
   text-transform: uppercase;
   width: 12ch;
   display: inline-block;
+  letter-spacing: 1px;
+  @include screen-size('medium') {
+    font-size: 12px;
+  }
 }
 
 .work {
@@ -186,10 +190,18 @@ export default {
     canvas {
       max-width: 100%;
     }
+    @include screen-size('small') {
+      top: 160px;
+      width: 100px;
+      height: 100px;
+    }
   }
 
   &__info {
     width: calc(100% - 220px);
+    @include screen-size('medium') {
+      width: calc(100% - 120px);
+    }
   }
 
   &__image {
@@ -220,6 +232,7 @@ export default {
     word-break: break-all;
     white-space: nowrap;
     overflow: hidden;
+    text-overflow: ellipsis;
     @include box;
     &__label {
       @include label;
@@ -242,8 +255,14 @@ export default {
     overflow: hidden;
     color: white;
     font-size: 48px;
-    // background: $green;
     border: 1px solid $white;
+    @include screen-size('small') {
+      font-size: 38px;
+      top: 40px;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+    }
   }
 
   &__exhibition {
@@ -287,22 +306,6 @@ export default {
     &:hover {
       background: $green;
     }
-  }
-}
-
-.caret {
-  opacity: 0 !important;
-  visibility: hidden !important;
-
-  &.typing {
-    opacity: 0 !important;
-  }
-}
-
-.char {
-  color: white !important;
-  .typed {
-    color: white !important;
   }
 }
 </style>
