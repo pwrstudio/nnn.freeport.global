@@ -3,7 +3,13 @@
     <notifications group="global"
                    classes="global-notifications"
                    width="500px" />
-    <router-link class='nav-button nav-button__left'
+    <router-link v-if='$route.name === "info"'
+                 class='nav-button nav-button__left'
+                 to='/'>
+      nnn.freeport.global
+    </router-link>
+    <router-link v-else
+                 class='nav-button nav-button__left'
                  to='/info'>
       nnn.freeport.global
     </router-link>

@@ -1,6 +1,5 @@
 <template>
-  <div @click='goToWork({name: "singleWork", params: {hash: hash}})'
-       class='work active'>
+  <div class='work active'>
 
     <div class='work__counter'
          v-html='payload.content.length' />
@@ -41,6 +40,11 @@
         <span class='work__title__label'
               v-html='"location"' />
         <span v-html='"Berlin, Germany"' />
+      </div>
+
+      <div class='work__link'
+           @click='goToWork({name: "singleWork", params: {hash: hash}})'>
+        <i class="material-icons">arrow_forward</i>
       </div>
 
       <!-- <div class='work__signature' /> -->
@@ -153,9 +157,9 @@ export default {
   border: 1px solid white;
   margin-bottom: 20px;
   &:hover {
-    background: $green;
-    border: 1px solid $green;
-    cursor: pointer;
+    // background: $green;
+    // border: 1px solid $green;
+    // cursor: pointer;
   }
 }
 
@@ -270,12 +274,19 @@ export default {
     }
   }
 
-  &__signature {
+  &__link {
     @include box;
     width: 50%;
     float: right;
     height: 100px;
-    background: $yellow;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 68px;
+    &:hover {
+      background: $green;
+    }
   }
 }
 

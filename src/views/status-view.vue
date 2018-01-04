@@ -148,7 +148,7 @@ export default {
         center: [13.404954, 52.520008],
         zoom: 0
       })
-      let marker = new mapboxgl.Marker().setLngLat([13.404954, 52.520008]).addTo(this.map)
+      // let marker = new mapboxgl.Marker().setLngLat([13.404954, 52.520008]).addTo(this.map)
     })
   },
   updated() {
