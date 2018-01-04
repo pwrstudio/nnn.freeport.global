@@ -153,10 +153,15 @@ export default {
 @import '../style/_variables.scss';
 
 @mixin box {
-  padding: 20px;
+  padding: 15px;
   border: 1px solid white;
   margin-bottom: 20px;
   @include screen-size('medium') {
+    font-size: 18px;
+    line-height: 18px;
+    padding: 10px;
+  }
+  @include screen-size('short') {
     font-size: 18px;
     line-height: 18px;
     padding: 10px;
@@ -190,7 +195,7 @@ export default {
     canvas {
       max-width: 100%;
     }
-    @include screen-size('small') {
+    @include screen-size('medium') {
       top: 160px;
       width: 100px;
       height: 100px;
@@ -256,7 +261,7 @@ export default {
     color: white;
     font-size: 48px;
     border: 1px solid $white;
-    @include screen-size('small') {
+    @include screen-size('medium') {
       font-size: 38px;
       top: 40px;
       width: 100px;

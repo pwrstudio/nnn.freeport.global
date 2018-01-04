@@ -51,7 +51,8 @@
           </tbody>
         </table>
       </div>
-      <div id='map'></div>
+      <div id='map'
+           class='status__users__map' />
     </div>
     <!-- Content -->
     <div class='status__content'>
@@ -135,14 +136,14 @@ export default {
   components: {},
   data() {
     return {
-      map: {}
+      map: {},
+      markers: []
     }
   },
   computed: {
     ...mapState(['main'])
   },
   mounted() {
-    // or "const mapboxgl = require('mapbox-gl');"
     this.$nextTick(() => {
       mapboxgl.accessToken =
         'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNqYnpodnNrcjBmeTYyd3FwbGF5YzBrZmoifQ.ToAF7-pnMxqPA0ZH8ItEjQ'
@@ -152,7 +153,10 @@ export default {
         center: [13.404954, 52.520008],
         zoom: 0
       })
-      // let marker = new mapboxgl.Marker().setLngLat([13.404954, 52.520008]).addTo(this.map)
+      this.main.userList.map(user => {
+        this.markers.push(new mapboxgl.Marker().setLngLat([13.404954, 52.520008]).addTo(this.map))
+        this.markers[this.markers.length - 1].user = user.id
+      })
     })
   },
   updated() {
@@ -161,7 +165,18 @@ export default {
       // entire view has been re-rendered
     })
   },
-  methods: {}
+  methods: {},
+  watch: {
+    'main.userList'() {
+      if (this.main.userList.length > this.markers.length) {
+        // Not working
+        // this.markers.map(marker => marker.remove())
+        this.main.userList.map(user => {
+          this.markers.push(new mapboxgl.Marker().setLngLat([13.404954, 52.520008]).addTo(this.map))
+        })
+      }
+    }
+  }
 }
 </script>
 
@@ -171,10 +186,11 @@ export default {
 @import '../style/_variables.scss';
 
 @mixin quad {
-  width: 50%;
-  height: 50%;
+  align-content: stretch;
   display: flex;
-  flex-wrap: wrap;
+  // flex-wrap: wrap;
+  height: 50%;
+  width: 50%;
 }
 
 @mixin small-type {
@@ -183,6 +199,58 @@ export default {
 
 @mixin large-type {
   font-size: 48px;
+}
+
+@mixin counter {
+  flex: 1 2 200px;
+  background: $black;
+  border: 1px solid $white;
+  padding: 20px;
+  margin: 10px;
+  position: relative;
+
+  &__header {
+    @include small-type;
+    text-align: center;
+  }
+  &__number {
+    text-align: center;
+    @include large-type;
+    @include center;
+  }
+}
+
+@mixin table {
+  border: 1px solid $white;
+  flex: 1 2 800px;
+  margin: 10px;
+  max-height: 100%;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 10px;
+
+  table {
+    width: 100%;
+  }
+
+  @include small-type;
+  @include hide-scroll;
+
+  &__header {
+    &__cell {
+      border-bottom: 1px solid $white;
+      padding: 10px;
+    }
+  }
+
+  &__body {
+    &__row {
+      &__cell {
+        border-bottom: 1px solid $white;
+        padding: 10px;
+      }
+    }
+  }
 }
 
 .list-enter-active,
@@ -195,67 +263,24 @@ export default {
   opacity: 0;
 }
 
-#map {
-  padding: 10px;
-  height: calc(100% -20px);
-  width: 20vw;
-}
-
 .status {
-  padding-top: 60px;
-  padding-bottom: 20px;
-  height: calc(100vh - 80px) !important;
+  color: $white;
   display: flex;
   flex-wrap: wrap;
-  color: $white;
+  height: calc(100vh - 80px) !important;
   overflow: hidden;
+  padding-top: 60px;
+  padding-bottom: 20px;
 
   &__content {
     @include quad;
     width: 100%;
     &__table {
-      border: 1px solid $white;
-      padding: 10px;
-      margin: 10px;
-      max-height: 100%;
-      @include small-type;
-      overflow-x: hidden;
-      overflow-y: scroll;
-      @include hide-scroll;
-
-      &__header {
-        &__cell {
-          padding: 10px;
-          border-bottom: 1px solid $white;
-        }
-      }
-
-      &__body {
-        &__row {
-          &__cell {
-            padding: 10px;
-            border-bottom: 1px solid $white;
-          }
-        }
-      }
+      @include table;
     }
 
     &__counter {
-      background: $black;
-      border: 1px solid $white;
-      padding: 20px;
-      margin: 10px;
-      position: relative;
-
-      &__header {
-        @include small-type;
-        text-align: center;
-      }
-      &__number {
-        text-align: center;
-        @include large-type;
-        @include center;
-      }
+      @include counter;
     }
   }
 
@@ -264,48 +289,17 @@ export default {
     width: 100%;
 
     &__table {
-      border: 1px solid $white;
-      padding: 20px;
-      margin: 10px;
-      max-height: 100%;
-      @include small-type;
-      overflow-x: hidden;
-      overflow-y: scroll;
-      @include hide-scroll;
-
-      &__header {
-        &__cell {
-          padding: 10px;
-          border-bottom: 1px solid $white;
-        }
-      }
-
-      &__body {
-        &__row {
-          &__cell {
-            padding: 10px;
-            border-bottom: 1px solid $white;
-          }
-        }
-      }
+      @include table;
     }
 
     &__counter {
-      border: 1px solid $white;
-      padding: 20px;
-      margin: 10px;
-      display: inline-block;
-      position: relative;
+      @include counter;
+    }
 
-      &__header {
-        @include small-type;
-        text-align: center;
-      }
-      &__number {
-        text-align: center;
-        @include large-type;
-        @include center;
-      }
+    &__map {
+      flex: 2 2 400px;
+      padding: 10px;
+      overflow: hidden;
     }
   }
 }
