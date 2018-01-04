@@ -1,12 +1,14 @@
 <template>
   <div class='work active'>
 
-    <div class='work__counter'
-         v-html='payload.content.length' />
+    <div class='work__sidebar'>
+      <div class='work__counter'
+           v-html='payload.content.length' />
 
-    <div class='work__qr'>
-      <qrcode :value="'https://nnn.freeport.global/w/' + hash"
-              :options="{ size: 500, foreground: '#ffffff', background: '#000000'  }" />
+      <div class='work__qr'>
+        <qrcode :value="'https://nnn.freeport.global/w/' + hash"
+                :options="{ size: 500, foreground: '#ffffff', background: '#000000'  }" />
+      </div>
     </div>
 
     <div class='work__info'>
@@ -35,8 +37,8 @@
         <span v-html='"Territories of Complicity"' />
       </div>
 
-      <div v-text=''
-           class='work__location'>
+      <div class='work__location'
+           v-text=''>
         <span class='work__title__label'
               v-html='"location"' />
         <span v-html='"Berlin, Germany"' />
@@ -187,11 +189,17 @@ export default {
   padding-top: 40px;
   padding-bottom: 40px;
 
+  &__sidebar {
+    float: right;
+    @include screen-size('small') {
+      float: left;
+      width: 100%;
+    }
+  }
+
   &__qr {
-    position: absolute;
-    top: 260px;
-    right: 0px;
     width: 200px;
+    margin-bottom: 20px;
     canvas {
       max-width: 100%;
     }
@@ -200,12 +208,43 @@ export default {
       width: 100px;
       height: 100px;
     }
+    @include screen-size('small') {
+      display: none;
+    }
+  }
+
+  &__counter {
+    width: 200px;
+    height: 200px;
+    word-break: break-all;
+    line-height: 200px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    color: white;
+    font-size: 48px;
+    border: 1px solid $white;
+    margin-bottom: 20px;
+    @include screen-size('medium') {
+      font-size: 38px;
+      width: 100px;
+      height: 100px;
+      line-height: 100px;
+    }
+    @include screen-size('small') {
+      float: left;
+      width: calc(100% - 4px);
+    }
   }
 
   &__info {
     width: calc(100% - 220px);
+    float: left;
     @include screen-size('medium') {
       width: calc(100% - 120px);
+    }
+    @include screen-size('small') {
+      width: 100%;
     }
   }
 
@@ -241,32 +280,6 @@ export default {
     @include box;
     &__label {
       @include label;
-    }
-  }
-
-  &__counter {
-    position: absolute;
-    top: 40px;
-    right: 0px;
-    z-index: 10000;
-    display: inline-block;
-    width: 200px;
-    height: 200px;
-    word-break: break-all;
-    line-height: 200px;
-    text-align: center;
-    z-index: 10;
-    white-space: nowrap;
-    overflow: hidden;
-    color: white;
-    font-size: 48px;
-    border: 1px solid $white;
-    @include screen-size('medium') {
-      font-size: 38px;
-      top: 40px;
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
     }
   }
 
@@ -310,6 +323,9 @@ export default {
     font-size: 68px;
     &:hover {
       background: $green;
+    }
+    @include screen-size('small') {
+      width: 100%;
     }
   }
 }
