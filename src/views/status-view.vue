@@ -30,7 +30,6 @@
             </th>
           </thead>
           <tbody class='status__users__table__body'>
-            <!-- <transition-group name="list"> -->
             <tr v-for='user in main.userList'
                 :key='user.id'
                 class='status__users__table__body__row'>
@@ -41,13 +40,13 @@
                 {{user.ip}}
               </td>
               <td class='status__users__table__body__row__cell'>
-                {{user.geo.city}}, {{user.geo.country}}
+                <span v-if='user.geo.city'>{{user.geo.city}}, </span>
+                <span v-if='user.geo.country'>{{user.geo.country}}</span>
               </td>
               <td class='status__users__table__body__row__cell'>
                 132s
               </td>
             </tr>
-            <!-- </transition-group> -->
           </tbody>
         </table>
       </div>
@@ -91,16 +90,10 @@
         <table>
           <thead class='status__content__table__header'>
             <th class='status__content__table__header__cell'>
-              ID
+              Time
             </th>
             <th class='status__content__table__header__cell'>
-              IP
-            </th>
-            <th class='status__content__table__header__cell'>
-              Location
-            </th>
-            <th class='status__content__table__header__cell'>
-              Time on Site
+              Activity
             </th>
           </thead>
           <tbody class='status__content__table__body'>
@@ -112,12 +105,6 @@
               </td>
               <td class='status__content__table__body__row__cell'>
                 {{user.ip}}
-              </td>
-              <td class='status__content__table__body__row__cell'>
-                {{user.geo.city}}, {{user.geo.country}}
-              </td>
-              <td class='status__content__table__body__row__cell'>
-                132s
               </td>
             </tr>
           </tbody>
@@ -143,6 +130,16 @@ export default {
   computed: {
     ...mapState(['main'])
   },
+  methods: {
+    clearMarkers() {
+      // TODO
+      this.markers.map(marker => {
+        console.log('marker', marker)
+        marker.remove()
+      })
+      this.markers = []
+    }
+  },
   mounted() {
     this.$nextTick(() => {
       mapboxgl.accessToken =
@@ -154,25 +151,25 @@ export default {
         zoom: 0
       })
       this.main.userList.map(user => {
-        this.markers.push(new mapboxgl.Marker().setLngLat([13.404954, 52.520008]).addTo(this.map))
-        this.markers[this.markers.length - 1].user = user.id
+        new mapboxgl.Marker().setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
+        // if (this.markers.length > 0) {
+        //   this.markers[this.markers.length - 1].user = user.id
+        // } else {
+        //   this.markers[0].user = user.id
+        // }
       })
     })
   },
-  updated() {
-    this.$nextTick(function() {
-      // Code that will run only after the
-      // entire view has been re-rendered
-    })
-  },
-  methods: {},
   watch: {
     'main.userList'() {
+      // TODO
+      this.clearMarkers()
+      // TODO
       if (this.main.userList.length > this.markers.length) {
-        // Not working
-        // this.markers.map(marker => marker.remove())
         this.main.userList.map(user => {
-          this.markers.push(new mapboxgl.Marker().setLngLat([13.404954, 52.520008]).addTo(this.map))
+          this.markers.push(
+            new mapboxgl.Marker().setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
+          )
         })
       }
     }
@@ -299,6 +296,7 @@ export default {
     &__map {
       flex: 2 2 400px;
       padding: 10px;
+      margin-right: 10px;
       overflow: hidden;
     }
   }
