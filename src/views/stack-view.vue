@@ -20,6 +20,7 @@
 </template>
 
 <script>
+// import Vue from 'vue'
 import {mapState} from 'vuex'
 import work from '@/components/work'
 import Swiper from 'swiper'
@@ -54,8 +55,26 @@ export default {
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
+        },
+        on: {
+          slideChangeTransitionEnd: this.test,
+          init: this.setSlide
         }
       })
+    },
+    test() {
+      let id = document.getElementsByClassName('swiper-slide-active')[0].id
+      this.$router.push({name: 'stack', params: {unit: id}})
+    },
+    setSlide() {
+      if (this.$route.params.unit) {
+        // TODO
+        // this.stackSwiper.slideTo(
+        //   console.log(this.main.container.works.map(e => e.hash).indexOf(this.$route.params.unit))
+        // )
+      } else {
+        // this.$router.push({name: 'stack', params: {unit: this.main.container.works[0].hash}})
+      }
     }
   },
   watch: {

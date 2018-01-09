@@ -18,7 +18,7 @@ export default new Router({
       component: statusView
     },
     {
-      path: '/stack',
+      path: '/stack/:unit?',
       name: 'stack',
       component: stackView
     },
