@@ -2,41 +2,50 @@
   <div class='work active'>
 
     <div class='work__sidebar'>
-      <div class='work__counter'
+      <!-- COUNTER -->
+      <div v-if='open'
+           class='work__counter'
            v-html='payload.content.length' />
-
-      <div class='work__qr'>
+      <!-- QR -->
+      <div v-if='open'
+           class='work__qr'>
         <qrcode :value="'https://nnn.freeport.global/w/' + hash"
                 :options="{ size: 500, foreground: '#ffffff', background: '#000000'  }" />
       </div>
     </div>
 
-    <div class='work__info'>
+    <div v-if='open'
+         class='work__info'>
 
+      <!-- HASH -->
       <div class='work__hash'>
         <span class='work__hash__label'
               v-html='"hash"' />
         <span v-html='hash' />
       </div>
 
+      <!-- TITLE -->
       <div class='work__title'>
         <span class='work__title__label'
               v-html='"title"' />
         <span v-html='payload.title' />
       </div>
 
+      <!-- ARTIST(S) -->
       <div class='work__artist'>
         <span class='work__artist__label'
               v-html='"artist"' />
         <span v-html='artistList' />
       </div>
 
+      <!-- EXHIBITON -->
       <div class='work__exhibition'>
         <span class='work__exhibition__label'
               v-html='"exhibition"' />
         <span v-html='"Territories of Complicity"' />
       </div>
 
+      <!-- LOCATION -->
       <div class='work__location'
            v-text=''>
         <span class='work__title__label'
@@ -44,24 +53,34 @@
         <span v-html='"Berlin, Germany"' />
       </div>
 
-      <div class='work__link'
+      <!-- LINK -->
+      <div v-if='open'
+           class='work__link work__link--open'
            @click='goToWork({name: "singleWork", params: {hash: hash}})'>
         <i class="material-icons">arrow_forward</i>
+
+      </div>
+      <div v-else
+           class='work__link work__link--closed'>
+        <i class="material-icons">close</i>
       </div>
 
-      <!-- <div class='work__signature' /> -->
-
+    </div>
+    <!-- TODO: COUNTDOWN -->
+    <div v-if='!open'
+         class='work__timer'>
+      <div>
+        <div v-html='payload.title' />
+        <div v-html='timeToPublish' />
+      </div>
     </div>
 
-    <!-- <vue-countdown-2 v-if='payload.date'
-                     :deadline="payload.date"
-                     format="%Dd %hh %mm %ss"
-                     class='work__timer' /> -->
   </div>
 </template>
 
 <script>
-import VueCountdown2 from 'vue-countdown-2'
+import countdown from 'countdown'
+import {isPast, parse} from 'date-fns'
 import request from 'browser-request'
 import {VueTyper} from 'vue-typer'
 
@@ -78,12 +97,15 @@ export default {
       payload: {
         artists: [''],
         content: [],
-        data: '',
+        date: '',
         title: '',
         id: ''
       },
       content: [],
-      active: true
+      active: true,
+      timeToPublish: '',
+      timerId: {},
+      open: false
     }
   },
   mounted() {
@@ -99,22 +121,6 @@ export default {
           throw error
         }
         this.payload = body
-        this.payload.content.map(c => {
-          request(
-            {
-              method: 'GET',
-              url: 'https://ipfs.io/ipfs/' + c.hash,
-              body: '{"relaxed":true}',
-              json: true
-            },
-            (error, response, body) => {
-              if (error) {
-                throw error
-              }
-              this.content.push(body)
-            }
-          )
-        })
       }
     )
   },
@@ -148,8 +154,37 @@ export default {
     }
   },
   components: {
-    VueCountdown2,
     VueTyper
+  },
+  watch: {
+    'payload.date'() {
+      this.open = isPast(parse(this.payload.date))
+      this.timerId = countdown(
+        new Date(this.payload.date),
+        ts => {
+          this.timeToPublish = ts.toString()
+        },
+        countdown.SECONDS
+      )
+    },
+    'payload.content'() {
+      this.payload.content.map(c => {
+        request(
+          {
+            method: 'GET',
+            url: 'https://ipfs.io/ipfs/' + c.hash,
+            body: '{"relaxed":true}',
+            json: true
+          },
+          (error, response, body) => {
+            if (error) {
+              throw error
+            }
+            this.content.push(body)
+          }
+        )
+      })
+    }
   }
 }
 </script>
@@ -191,8 +226,6 @@ export default {
   width: 100%;
   position: relative;
   color: white;
-  padding-top: 40px;
-  padding-bottom: 40px;
 
   &__sidebar {
     float: right;
@@ -263,17 +296,14 @@ export default {
   }
 
   &__timer {
-    padding: 20px;
-    word-break: break-all;
-    opacity: 0.7;
-    line-height: 20px;
+    background: $red;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 64px !important;
+    line-height: 64px !important;
     text-align: center;
-    position: absolute;
-    z-index: 10;
-    left: 20px;
-    white-space: nowrap;
-    overflow: hidden;
-    @include center;
   }
 
   &__hash {
@@ -321,14 +351,22 @@ export default {
     width: 50%;
     float: right;
     height: 100px;
-    cursor: pointer;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 68px;
-    &:hover {
-      background: $green;
-      border: 1px solid $green;
+    &--open {
+      &:hover {
+        background: $green;
+        border: 1px solid $green;
+        cursor: pointer;
+      }
+    }
+    &--closed {
+      &:hover {
+        background: $red;
+        border: 1px solid $red;
+      }
     }
     @include screen-size('medium') {
       height: 60px;

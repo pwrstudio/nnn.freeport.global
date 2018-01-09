@@ -1,6 +1,7 @@
 <template>
   <div class='atom'>
 
+    <!-- TEXT -->
     <div v-if='payload.media === "Text"'
          class='atom__text'
          :id='hash'>
@@ -11,6 +12,7 @@
       </router-link>
     </div>
 
+    <!-- IMAGE -->
     <router-link v-else-if='payload.media === "Image"'
                  class='atom__image'
                  :to='{name: "singleContent", params: {hash: hash}}'
@@ -18,6 +20,7 @@
       <img :src='"https://ipfs.io/ipfs/" + payload.hash'>
     </router-link>
 
+    <!-- AUDIO -->
     <router-link v-else-if='payload.media === "Audio"'
                  class='atom__audio'
                  :to='{name: "singleContent", params: {hash: hash}}'
@@ -26,6 +29,7 @@
              controls/>
     </router-link>
 
+    <!-- VIDEO -->
     <router-link v-else-if='payload.media === "Video"'
                  class='atom__audio'
                  :to='{name: "singleContent", params: {hash: hash}}'
@@ -33,6 +37,9 @@
       <video :src='"https://ipfs.io/ipfs/" + payload.hash'
              controls/>
     </router-link>
+
+    <!-- TODO: FILE -->
+    <!-- TODO: LINK -->
   </div>
 </template>
 

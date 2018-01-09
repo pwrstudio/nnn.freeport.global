@@ -19,8 +19,7 @@
 
 <script>
 export default {
-  name: 'logo',
-  props: {}
+  name: 'logo'
 }
 </script>
 

@@ -8,20 +8,20 @@
                  to='/'>
       nnn.freeport.global
     </router-link>
-    <router-link v-else-if='$route.name === "status" || $route.name === "stackView"'
+    <router-link v-else
                  class='nav-button nav-button__left'
                  to='/info'>
       nnn.freeport.global
     </router-link>
-    <router-link v-if='$route.name === "stackView"'
+    <router-link v-if='$route.name === "status"'
                  class='nav-button nav-button__right'
-                 to='/status'>
-      <i class="material-icons">trending_up</i>
+                 to='/stack'>
+      <i class="material-icons">menu</i>
     </router-link>
     <router-link v-else
                  class='nav-button nav-button__right'
                  to='/'>
-      <i class="material-icons">arrow_back</i>
+      <i class="material-icons">trending_up</i>
     </router-link>
     <transition name="fade">
       <router-view id='main-view' />

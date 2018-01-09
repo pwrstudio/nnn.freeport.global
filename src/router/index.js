@@ -14,13 +14,13 @@ export default new Router({
   routes: [
     {
       path: '/',
-      name: 'stackView',
-      component: stackView
-    },
-    {
-      path: '/status',
       name: 'status',
       component: statusView
+    },
+    {
+      path: '/stack',
+      name: 'stack',
+      component: stackView
     },
     {
       path: '/info',
