@@ -45,7 +45,7 @@ export default {
   flex-wrap: wrap;
   &__main-text {
     color: white;
-    font-size: 24px;
+    font-size: 20px;
     line-height: 24px;
     margin-left: auto;
     margin-right: auto;

@@ -1,78 +1,31 @@
 <template>
-  <div class='work active'>
+  <div class='work'
+       :class='{"work--open": open, "work--closed": !open}'>
 
-    <div class='work__sidebar'>
-      <!-- COUNTER -->
-      <div v-if='open'
-           class='work__counter'
-           v-html='payload.content.length' />
-      <!-- QR -->
-      <div v-if='open'
-           class='work__qr'>
-        <qrcode :value="'https://nnn.freeport.global/w/' + hash"
-                :options="{ size: 500, foreground: '#ffffff', background: '#000000'  }" />
-      </div>
-    </div>
-
+    <!-- OPEN-->
     <div v-if='open'
-         class='work__info'>
-
-      <!-- HASH -->
-      <div class='work__hash'>
-        <span class='work__hash__label'
-              v-html='"hash"' />
-        <span v-html='hash' />
-      </div>
-
-      <!-- TITLE -->
-      <div class='work__title'>
-        <span class='work__title__label'
-              v-html='"title"' />
-        <span v-html='payload.title' />
-      </div>
-
-      <!-- ARTIST(S) -->
-      <div class='work__artist'>
-        <span class='work__artist__label'
-              v-html='"artist"' />
-        <span v-html='artistList' />
-      </div>
-
-      <!-- EXHIBITON -->
-      <div class='work__exhibition'>
-        <span class='work__exhibition__label'
-              v-html='"exhibition"' />
-        <span v-html='"Territories of Complicity"' />
-      </div>
-
-      <!-- LOCATION -->
-      <div class='work__location'
-           v-text=''>
-        <span class='work__title__label'
-              v-html='"location"' />
-        <span v-html='"Berlin, Germany"' />
-      </div>
-
-      <!-- LINK -->
-      <div v-if='open'
-           class='work__link work__link--open'
-           @click='goToWork({name: "singleWork", params: {hash: hash}})'>
-        <i class="material-icons">arrow_forward</i>
-
-      </div>
-      <div v-else
-           class='work__link work__link--closed'>
-        <i class="material-icons">close</i>
-      </div>
-
+         @click='goToWork({name: "singleWork", params: {hash: hash}})'
+         class='work__timer'>
+      <section>
+        <div v-html='payload.title' />
+        <div v-html='artistList' />
+      </section>
+      <!-- <i class="material-icons material-icons--large">done</i> -->
+      <i class="material-icons material-icons--large">arrow_forward</i>
+      <!-- <i class="material-icons material-icons--large">open_with</i> -->
+      <!-- <i class="material-icons material-icons--large">launch</i> -->
+      <!-- <i class="material-icons material-icons--large">lock_open</i> -->
     </div>
-    <!-- TODO: COUNTDOWN -->
+
+    <!--CLOSED -->
     <div v-if='!open'
          class='work__timer'>
-      <div>
+      <section>
         <div v-html='payload.title' />
+        <div v-html='artistList' />
         <div v-html='timeToPublish' />
-      </div>
+      </section>
+      <i class="material-icons material-icons--large">close</i>
     </div>
 
   </div>
@@ -226,6 +179,35 @@ export default {
   width: 100%;
   position: relative;
   color: white;
+  transition: background 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+  &--open {
+    cursor: pointer;
+    i {
+      color: $green;
+    }
+    &:hover {
+      transition: background 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+      background: $green;
+      i {
+        color: $black;
+      }
+    }
+  }
+
+  &--closed {
+    i {
+      color: $red;
+    }
+    &:hover {
+      transition: background 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+
+      background: $red;
+      i {
+        color: $black;
+      }
+    }
+  }
 
   &__sidebar {
     float: right;
@@ -296,7 +278,6 @@ export default {
   }
 
   &__timer {
-    background: $red;
     height: 100%;
     display: flex;
     justify-content: center;
@@ -304,6 +285,11 @@ export default {
     font-size: 64px !important;
     line-height: 64px !important;
     text-align: center;
+    z-index: 1000;
+    section {
+      @include center;
+      z-index: 10;
+    }
   }
 
   &__hash {
@@ -355,19 +341,19 @@ export default {
     justify-content: center;
     align-items: center;
     font-size: 68px;
-    &--open {
-      &:hover {
-        background: $green;
-        border: 1px solid $green;
-        cursor: pointer;
-      }
-    }
-    &--closed {
-      &:hover {
-        background: $red;
-        border: 1px solid $red;
-      }
-    }
+    // &--open {
+    //   &:hover {
+    //     background: $green;
+    //     border: 1px solid $green;
+    //     cursor: pointer;
+    //   }
+    // }
+    // &--closed {
+    //   &:hover {
+    //     background: $red;
+    //     border: 1px solid $red;
+    //   }
+    // }
     @include screen-size('medium') {
       height: 60px;
     }
@@ -378,5 +364,11 @@ export default {
       width: 100%;
     }
   }
+}
+
+.material-icons--large {
+  font-size: 100vh;
+  @include center;
+  z-index: 5;
 }
 </style>

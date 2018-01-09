@@ -11,10 +11,12 @@
       </div>
     </div>
     <div class="swiper-button-prev">
-      <i class="material-icons">keyboard_arrow_up</i>
+      <i class="material-icons material-icons--on">keyboard_arrow_up</i>
+      <i class="material-icons material-icons--off">close</i>
     </div>
     <div class="swiper-button-next">
-      <i class="material-icons">keyboard_arrow_down</i>
+      <i class="material-icons material-icons--on">keyboard_arrow_down</i>
+      <i class="material-icons material-icons--off">close</i>
     </div>
   </div>
 </template>
@@ -117,16 +119,27 @@ export default {
 }
 
 .swiper-container {
-  top: $bar-height;
-  height: calc(100vh - #{$bar-height * 2});
-  width: calc(100vw - 40px);
+  top: 0;
+  height: 100vh;
+  // height: calc(100vh - #{$bar-height * 2});
+  width: 100vw;
   margin: auto;
+}
+
+.material-icons--off {
+  display: none;
 }
 
 .swiper-button-disabled {
   pointer-events: all !important;
   &:hover {
-    background: $red;
+    color: darkgrey;
+  }
+  .material-icons--off {
+    display: block;
+  }
+  .material-icons--on {
+    display: none;
   }
 }
 

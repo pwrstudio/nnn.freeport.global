@@ -8,12 +8,12 @@
                  to='/'>
       nnn.freeport.global
     </router-link>
-    <router-link v-else
+    <router-link v-else-if='$route.name !== "singleWork"'
                  class='nav-button nav-button__left'
                  to='/info'>
       nnn.freeport.global
     </router-link>
-    <router-link v-if='$route.name === "status"'
+    <router-link v-if='$route.name === "status" || $route.name === "singleWork"'
                  class='nav-button nav-button__right'
                  to='/stack'>
       <i class="material-icons">menu</i>
@@ -58,9 +58,6 @@ export default {
   computed: {
     ...mapState(['main'])
   },
-  // components: {
-  //   logo
-  // },
   watch: {
     $route(to, from) {},
     'main.rootHash'() {
@@ -230,10 +227,11 @@ body {
 
 .nav-button {
   @include nav;
+  background: transparent;
   top: 0;
   z-index: 100;
   &:hover {
-    background: rgba(30, 30, 30, 1);
+    // background: rgba(30, 30, 30, 1);
   }
   &__left {
     left: 0;

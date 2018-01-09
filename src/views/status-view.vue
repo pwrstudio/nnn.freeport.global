@@ -266,7 +266,7 @@ export default {
   flex-wrap: wrap;
   height: calc(100vh - 80px) !important;
   overflow: hidden;
-  padding-top: 60px;
+  padding-top: 70px;
   padding-bottom: 20px;
 
   &__content {
