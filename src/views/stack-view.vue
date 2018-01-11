@@ -54,6 +54,7 @@ export default {
         speed: 400,
         direction: 'vertical',
         keyboard: true,
+        spaceBetween: 200,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
@@ -106,6 +107,8 @@ export default {
 
 .swiper-button-prev {
   @include nav;
+  // height: 100px;
+  // line-height: 100px;
   top: auto;
   bottom: 0;
   left: 0;
@@ -113,6 +116,8 @@ export default {
 
 .swiper-button-next {
   @include nav;
+  // height: 100px;
+  // line-height: 100px;
   top: auto;
   bottom: 0;
   left: 50vw;
@@ -124,6 +129,7 @@ export default {
   // height: calc(100vh - #{$bar-height * 2});
   width: 100vw;
   margin: auto;
+  background-image: url(/static/grid-bw.png);
 }
 
 .material-icons--off {

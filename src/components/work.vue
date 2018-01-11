@@ -7,21 +7,16 @@
          @click='goToWork({name: "singleWork", params: {hash: hash}})'
          class='work__timer'>
       <section>
-        <div v-html='payload.title' />
+        <div v-html='"«" + payload.title + "»"' />
         <div v-html='artistList' />
       </section>
-      <!-- <i class="material-icons material-icons--large">done</i> -->
-      <i class="material-icons material-icons--large">arrow_forward</i>
-      <!-- <i class="material-icons material-icons--large">open_with</i> -->
-      <!-- <i class="material-icons material-icons--large">launch</i> -->
-      <!-- <i class="material-icons material-icons--large">lock_open</i> -->
     </div>
 
     <!--CLOSED -->
     <div v-if='!open'
          class='work__timer'>
       <section>
-        <div v-html='payload.title' />
+        <div v-html='"«" + payload.title + "»"' />
         <div v-html='artistList' />
         <div v-html='timeToPublish' />
       </section>
@@ -117,7 +112,7 @@ export default {
         ts => {
           this.timeToPublish = ts.toString()
         },
-        countdown.SECONDS
+        [countdown.HOURS, countdown.MINUTES, countdown.SECONDS]
       )
     },
     'payload.content'() {
@@ -179,15 +174,16 @@ export default {
   width: 100%;
   position: relative;
   color: white;
-  transition: background 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
 
   &--open {
     cursor: pointer;
     i {
       color: $green;
     }
-    &:hover {
-      transition: background 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: $black;
+    transition: background 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    &:active {
+      transition: background 0s linear;
       background: $green;
       i {
         color: $black;
@@ -198,10 +194,13 @@ export default {
   &--closed {
     i {
       color: $red;
+      mix-blend-mode: lighten;
     }
-    &:hover {
-      transition: background 0.2s cubic-bezier(0.165, 0.84, 0.44, 1);
+    background: $black;
+    transition: background 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 
+    &:active {
+      transition: background 0s linear;
       background: $red;
       i {
         color: $black;
@@ -289,6 +288,11 @@ export default {
     section {
       @include center;
       z-index: 10;
+      width: 80vw;
+    }
+    @include screen-size('small') {
+      font-size: 32px !important;
+      line-height: 32px !important;
     }
   }
 
@@ -369,6 +373,12 @@ export default {
 .material-icons--large {
   font-size: 100vh;
   @include center;
-  z-index: 5;
+  z-index: 5000;
+}
+
+.material-icons--medium {
+  font-size: 70vh;
+  @include center;
+  z-index: 5000;
 }
 </style>
