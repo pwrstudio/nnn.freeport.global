@@ -20,7 +20,8 @@ const webpackConfig = merge(baseWebpackConfig, {
       sourceMap: config.build.productionSourceMap,
       extract: true,
       usePostCSS: true
-    })
+    }),
+    noParse: /(mapbox-gl)\.js$/
   },
   devtool: config.build.productionSourceMap ? config.build.devtool : false,
   output: {
@@ -114,10 +115,10 @@ const webpackConfig = merge(baseWebpackConfig, {
         ignore: ['.*']
       },
       {from: 'src/config/_redirects', to: './'}
-    ]),
-    new webpack.ProvidePlugin({
-      mapboxgl: 'mapbox-gl'
-    })
+    ])
+    // new webpack.ProvidePlugin({
+    //   mapboxgl: 'mapbox-gl'
+    // })
   ]
 })
 
