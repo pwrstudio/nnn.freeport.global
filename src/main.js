@@ -6,9 +6,6 @@ import store from './store'
 import VueHead from 'vue-head'
 import Notifications from 'vue-notification'
 import VueSocketio from 'vue-socket.io'
-import VueQrcode from '@xkeshi/vue-qrcode'
-
-Vue.component('qrcode', VueQrcode)
 
 // --- GOOGLE ANALYTICS
 // import ga from 'vue-ga'

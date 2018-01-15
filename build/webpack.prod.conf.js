@@ -116,9 +116,6 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       {from: 'src/config/_redirects', to: './'}
     ])
-    // new webpack.ProvidePlugin({
-    //   mapboxgl: 'mapbox-gl'
-    // })
   ]
 })
 

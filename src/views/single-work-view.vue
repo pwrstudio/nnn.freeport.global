@@ -23,9 +23,11 @@ export default {
   data() {
     return {
       payload: {
+        artists: [],
         content: [],
-        title: '',
-        artists: []
+        data: '',
+        id: '',
+        title: ''
       }
     }
   },

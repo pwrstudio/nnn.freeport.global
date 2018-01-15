@@ -11,6 +11,7 @@
         <i class="material-icons">arrow_forward</i>
       </router-link>
     </div>
+    <!-- END: TEXT -->
 
     <!-- IMAGE -->
     <router-link v-else-if='payload.media === "Image"'
@@ -19,33 +20,75 @@
                  :id='hash'>
       <img :src='"https://ipfs.io/ipfs/" + payload.hash'>
     </router-link>
+    <!-- END: IMAGE -->
 
     <!-- AUDIO -->
-    <router-link v-else-if='payload.media === "Audio"'
-                 class='atom__audio'
-                 :to='{name: "singleContent", params: {hash: hash}}'
-                 :id='hash'>
-      <audio :src='"https://ipfs.io/ipfs/" + payload.hash'
-             controls/>
-    </router-link>
+    <div v-else-if='payload.media === "Audio"'
+         class='atom__audio'
+         :to='{name: "singleContent", params: {hash: hash}}'
+         :id='hash'>
+      <span v-html='payload.title' />
+      <audio-player :sources='["https://ipfs.io/ipfs/" + payload.hash]'
+                    :loop='true'
+                    :formats='["mp3"]' />
+    </div>
+    <!-- END: AUDIO -->
 
     <!-- VIDEO -->
-    <router-link v-else-if='payload.media === "Video"'
-                 class='atom__audio'
-                 :to='{name: "singleContent", params: {hash: hash}}'
-                 :id='hash'>
-      <video :src='"https://ipfs.io/ipfs/" + payload.hash'
-             controls/>
-    </router-link>
+    <div v-else-if='payload.media === "Video"'
+         class='atom__video'
+         :id='hash'>
+      <video id='video-player'
+             class="video-js"
+             controls
+             preload="auto"
+             data-setup="{}">
+        <source :src='"https://ipfs.io/ipfs/" + payload.hash'
+                type='video/mp4'>
+        <p class="vjs-no-js">
+          To view this video please enable JavaScript, and consider upgrading to a web browser that
+          <a href="http://videojs.com/html5-video-support/"
+             target="_blank">supports HTML5 video</a>
+        </p>
+      </video>
+    </div>
+    <!-- END: VIDEO -->
 
-    <!-- TODO: FILE -->
-    <!-- TODO: LINK -->
+    <!-- FILE -->
+    <div v-if='payload.media === "File"'
+         class='atom__file'
+         :id='hash'>
+      <span v-html='payload.title' />
+      <a :href='"https://ipfs.io/ipfs/" + payload.hash'
+         class='atom__file__link'
+         target=_blank>
+        <i class="material-icons">get_app</i>
+      </a>
+    </div>
+    <!-- END: FILE -->
+
+    <!-- LINK -->
+    <div v-if='payload.media === "External link"'
+         class='atom__external'
+         :id='hash'>
+      <span v-html='text' />
+      <span v-html='payload.title' />
+      <a :href='externalLink'
+         class='atom__external__link'
+         target=_blank>
+        <i class="material-icons">open_in_new</i>
+      </a>
+    </div>
+    <!-- END: LINK -->
+
   </div>
 </template>
 
 <script>
 import request from 'browser-request'
 import ellipsize from 'ellipsize'
+import videojs from 'video.js'
+import AudioPlayer from './audio-player.vue'
 
 export default {
   name: 'contentAtom',
@@ -56,7 +99,11 @@ export default {
         hash: '',
         title: ''
       },
-      text: ''
+      text: '',
+      externalLink: '',
+      video: {
+        player: {}
+      }
     }
   },
   props: {
@@ -78,28 +125,25 @@ export default {
           throw error
         }
         this.payload = body
+        // TEXT
         if (this.payload.media === 'Text') {
           this.setIPFSText()
+          // EXTERNAL LINK
+        } else if (this.payload.media === 'External link') {
+          this.getLink()
+          // VIDEO
+        } else if (this.payload.media === 'Video') {
+          this.$nextTick(() => {
+            const options = {}
+            this.video.player = videojs('video-player', options, function onPlayerReady() {
+              // this.on('ended', function() {
+              //   videojs.log('Awww...over so soon?!')
+              // })
+            })
+          })
         }
-        this.$notify({
-          group: 'global',
-          type: 'content',
-          title: this.payload.title + ' – ' + this.payload.artists[0]
-        })
       }
     )
-  },
-  computed: {
-    sizeClass() {
-      switch (this.size) {
-        case 'large':
-          return 'atom--large'
-        case 'medium':
-          return 'atom--medium'
-        default:
-          return 'atom--small'
-      }
-    }
   },
   methods: {
     setIPFSText() {
@@ -109,7 +153,19 @@ export default {
         }
         this.text = ellipsize(body, 480)
       })
+    },
+    getLink() {
+      request('https://ipfs.io/ipfs/' + this.payload.hash, (error, response, body) => {
+        if (error) {
+          throw error
+        }
+        console.log(body)
+        this.externalLink = body
+      })
     }
+  },
+  components: {
+    AudioPlayer
   }
 }
 </script>
@@ -120,14 +176,14 @@ export default {
 @import '../style/_variables.scss';
 
 .atom {
-  cursor: pointer;
   display: block;
-  flex: 2 2 800px;
+  flex: 2 2 400px;
   margin: 20px;
   position: relative;
   text-decoration: none !important;
 
   &__image {
+    cursor: pointer;
     max-width: 100%;
     display: flex;
     align-items: center;
@@ -157,5 +213,49 @@ export default {
       }
     }
   }
+
+  &__file {
+    padding: 20px;
+    color: white !important;
+    text-decoration: none !important;
+    &__link {
+      border: 1px solid $white;
+      color: $white;
+      display: block;
+      padding: 20px;
+      margin: 20px;
+      text-align: center;
+      max-width: 200px;
+      float: right;
+      &:hover {
+        background: $green;
+        color: $white;
+      }
+    }
+  }
+
+  &__external {
+    padding: 20px;
+    color: white !important;
+    text-decoration: none !important;
+    &__link {
+      border: 1px solid $white;
+      color: $white;
+      display: block;
+      padding: 20px;
+      margin: 20px;
+      text-align: center;
+      max-width: 200px;
+      float: right;
+      &:hover {
+        background: $green;
+        color: $white;
+      }
+    }
+  }
+}
+
+.video-js {
+  max-width: 100vw;
 }
 </style>
