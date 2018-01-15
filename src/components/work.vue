@@ -30,7 +30,7 @@
 import countdown from 'countdown'
 import {isPast, parse} from 'date-fns'
 import request from 'browser-request'
-import {VueTyper} from 'vue-typer'
+// import {VueTyper} from 'vue-typer'
 
 export default {
   name: 'work',
@@ -102,7 +102,7 @@ export default {
     }
   },
   components: {
-    VueTyper
+    // VueTyper
   },
   watch: {
     'payload.date'() {
