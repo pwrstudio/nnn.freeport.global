@@ -80,6 +80,7 @@ export default {
       })
     },
     leave(data) {
+      console.log(data)
       this.UPDATE_USERLIST(data.list)
       this.$notify({
         group: 'global',

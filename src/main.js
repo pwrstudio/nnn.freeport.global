@@ -24,8 +24,9 @@ Vue.config.productionTip = false
 
 Vue.use(VueHead)
 Vue.use(Notifications)
-Vue.use(VueSocketio, 'https://nnnfreeportrelay-amoyxuyyis.now.sh')
+Vue.use(VueSocketio, 'https://nnnfreeportrelay.now.sh')
 // Vue.use(VueSocketio, 'localhost:9090')
+// Vue.use(VueSocketio, '192.168.178.25:9090')
 
 /* eslint-disable no-new */
 new Vue({
