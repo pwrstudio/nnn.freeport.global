@@ -258,39 +258,40 @@ body {
 }
 
 .global-notifications {
+  positio: fixed;
+  left: 0;
+  right: auto;
   background: $black;
-  border: 2px solid $white;
+  border: 1px solid $white;
   color: $white;
   margin: 10px;
   padding: 20px;
   width: auto;
-  font-size: 18px;
-  font-weight: normal;
-  line-height: 18px;
+  font-weight: normal !important;
 
   .notification-title {
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 14px;
   }
 
   .notification-content {
-    font-size: 16px;
-    line-height: 16px;
+    font-size: 14px;
+    line-height: 14px;
   }
 
   &.network {
     background: $black;
-    border: 2px solid $white;
+    border: 1px solid $white;
     color: $white;
   }
   &.positive {
     background: $green;
-    border: 2px solid $white;
+    border: 1px solid $white;
     color: $white;
   }
   &.negative {
     background: $red;
-    border: 2px solid $white;
+    border: 1px solid $white;
     color: $black;
   }
 }

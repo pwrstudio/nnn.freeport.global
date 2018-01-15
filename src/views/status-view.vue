@@ -30,23 +30,9 @@
             </th>
           </thead>
           <tbody class='status__users__table__body'>
-            <tr v-for='user in main.userList'
-                :key='user.id'
-                class='status__users__table__body__row'>
-              <td class='status__users__table__body__row__cell'>
-                {{user.id}}
-              </td>
-              <td class='status__users__table__body__row__cell'>
-                {{user.ip}}
-              </td>
-              <td class='status__users__table__body__row__cell'>
-                <span v-if='user.geo.city'>{{user.geo.city}}, </span>
-                <span v-if='user.geo.country'>{{user.geo.country}}</span>
-              </td>
-              <td class='status__users__table__body__row__cell'>
-                132s
-              </td>
-            </tr>
+            <statusUserRow v-for='user in main.userList'
+                :key='user.id' 
+                :user='user'/>
           </tbody>
         </table>
       </div>
@@ -117,10 +103,13 @@
 <script>
 import {mapState} from 'vuex'
 import mapboxgl from 'mapbox-gl'
+import statusUserRow from '@/components/status-user-row'
 
 export default {
   name: 'statusView',
-  components: {},
+  components: {
+    statusUserRow
+  },
   data() {
     return {
       map: {},
@@ -237,15 +226,6 @@ export default {
     &__cell {
       border-bottom: 1px solid $white;
       padding: 10px;
-    }
-  }
-
-  &__body {
-    &__row {
-      &__cell {
-        border-bottom: 1px solid $white;
-        padding: 10px;
-      }
     }
   }
 }
