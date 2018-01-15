@@ -234,6 +234,26 @@ export default {
     }
   }
 
+  &__audio {
+    padding: 20px;
+    color: white !important;
+    text-decoration: none !important;
+    &__link {
+      border: 1px solid $white;
+      color: $white;
+      display: block;
+      padding: 20px;
+      margin: 20px;
+      text-align: center;
+      max-width: 200px;
+      float: right;
+      &:hover {
+        background: $green;
+        color: $white;
+      }
+    }
+  }
+
   &__external {
     padding: 20px;
     color: white !important;
