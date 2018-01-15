@@ -28,7 +28,7 @@ export default new Router({
       component: infoView
     },
     {
-      path: '/w/:hash',
+      path: '/w/:hash/:info?',
       name: 'singleWork',
       component: singleWorkView
     },

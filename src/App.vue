@@ -13,10 +13,20 @@
                  to='/info'>
       nnn.freeport.global
     </router-link>
-    <router-link v-if='$route.name === "status" || $route.name === "singleWork"'
+    <router-link v-if='$route.name === "status"'
                  class='nav-button nav-button__right'
                  to='/stack'>
       <i class="material-icons">menu</i>
+    </router-link>
+            <router-link v-else-if='$route.name === "singleWork" && $route.params.info'
+                 class='nav-button nav-button__right'
+                 :to='{name: "singleWork", params: {hash: $route.params.hash}}' >
+      <i class="material-icons">close</i>
+    </router-link>
+        <router-link v-else-if='$route.name === "singleWork" && !$route.params.info'
+                 class='nav-button nav-button__right'
+                 to='/stack'>
+      <i class="material-icons">arrow_back</i>
     </router-link>
     <router-link v-else
                  class='nav-button nav-button__right'
