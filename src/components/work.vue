@@ -107,6 +107,7 @@ export default {
   watch: {
     'payload.date'() {
       this.open = isPast(parse(this.payload.date))
+      countdown.setLabels('ms|s|m|h|d|w|m|y|d|s|m', 'ms|s|m|h|d|w|m|y|d|s|m', ':', ':', 'now')
       this.timerId = countdown(
         new Date(this.payload.date),
         ts => {
