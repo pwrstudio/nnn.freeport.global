@@ -36,8 +36,8 @@
           </tbody>
         </table>
       </div>
-      <div id='map'
-           class='status__users__map' />
+      <!-- <div id='map'
+           class='status__users__map' /> -->
     </div>
     <!-- Content -->
     <div class='status__content'>
@@ -102,7 +102,7 @@
 
 <script>
 import {mapState} from 'vuex'
-import mapboxgl from 'mapbox-gl'
+// import mapboxgl from 'mapbox-gl'
 import statusUserRow from '@/components/status-user-row'
 
 export default {
@@ -120,48 +120,43 @@ export default {
     ...mapState(['main'])
   },
   methods: {
-    clearMarkers() {
-      // TODO
-      this.markers.map(marker => {
-        console.log('marker', marker)
-        marker.remove()
-      })
-      this.markers = []
-    }
+    // clearMarkers() {
+    //   // TODO
+    //   this.markers.map(marker => {
+    //     console.log('marker', marker)
+    //     marker.remove()
+    //   })
+    //   this.markers = []
+    // }
   },
   mounted() {
-    this.$nextTick(() => {
-      mapboxgl.accessToken =
-        'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNqYnpodnNrcjBmeTYyd3FwbGF5YzBrZmoifQ.ToAF7-pnMxqPA0ZH8ItEjQ'
-      this.map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/mapbox/dark-v9',
-        center: [13.404954, 52.520008],
-        zoom: 0
-      })
-      this.main.userList.map(user => {
-        new mapboxgl.Marker().setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
-        // if (this.markers.length > 0) {
-        //   this.markers[this.markers.length - 1].user = user.id
-        // } else {
-        //   this.markers[0].user = user.id
-        // }
-      })
-    })
+    // this.$nextTick(() => {
+    //   mapboxgl.accessToken =
+    //     'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNqYnpodnNrcjBmeTYyd3FwbGF5YzBrZmoifQ.ToAF7-pnMxqPA0ZH8ItEjQ'
+    //   this.map = new mapboxgl.Map({
+    //     container: 'map',
+    //     style: 'mapbox://styles/mapbox/dark-v9',
+    //     center: [13.404954, 52.520008],
+    //     zoom: 0
+    //   })
+    //   this.main.userList.map(user => {
+    //     new mapboxgl.Marker().setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
+    //   })
+    // })
   },
   watch: {
-    'main.userList'() {
-      // TODO
-      this.clearMarkers()
-      // TODO
-      if (this.main.userList.length > this.markers.length) {
-        this.main.userList.map(user => {
-          this.markers.push(
-            new mapboxgl.Marker().setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
-          )
-        })
-      }
-    }
+    // 'main.userList'() {
+    //   // TODO
+    //   this.clearMarkers()
+    //   // TODO
+    //   if (this.main.userList.length > this.markers.length) {
+    //     this.main.userList.map(user => {
+    //       this.markers.push(
+    //         new mapboxgl.Marker().setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
+    //       )
+    //     })
+    //   }
+    // }
   }
 }
 </script>
