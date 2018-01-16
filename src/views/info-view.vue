@@ -34,7 +34,13 @@ export default {
 @import '../style/_variables.scss';
 
 .info {
-  padding-top: 80px;
+  position: fixed;
+  top: 80px;
+  left: 0;
+  width: 100vw;
+  height: calc(100vh - 160px);
+  overflow: auto;
+  @include hide-scroll;
 
   &__main {
     float: left;
@@ -60,6 +66,7 @@ export default {
     max-width: 70;
     width: 30vw;
     max-width: 90%;
+    padding-bottom: 80px;
     @include screen-size('small') {
       width: 90vw;
       font-size: 18px;
@@ -75,6 +82,7 @@ export default {
     max-width: 70;
     width: 30vw;
     max-width: 90%;
+    padding-bottom: 160px;
     @include screen-size('small') {
       width: 90vw;
       font-size: 18px;

@@ -201,7 +201,7 @@ export default {
 html,
 body {
   margin: 0;
-  overflow-x: hidden;
+  overflow: hidden;
   background-color: $black;
 
   @include hide-scroll;

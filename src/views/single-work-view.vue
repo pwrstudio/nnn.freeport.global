@@ -122,6 +122,13 @@ export default {
   align-items: center;
   justify-content: space-around;
   padding-top: 60px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: auto;
+  @include hide-scroll;
 }
 
 .info-overlay {
