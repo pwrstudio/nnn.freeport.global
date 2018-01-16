@@ -1,38 +1,9 @@
 <template>
   <div class='app'>
+    <navbar/>
     <notifications group="global"
                    classes="global-notifications"
-                   width="500px" />
-    <router-link v-if='$route.name === "info"'
-                 class='nav-button nav-button__left'
-                 to='/'>
-      nnn.freeport.global
-    </router-link>
-    <router-link v-else-if='$route.name !== "singleWork"'
-                 class='nav-button nav-button__left'
-                 to='/info'>
-      nnn.freeport.global
-    </router-link>
-    <router-link v-if='$route.name === "status"'
-                 class='nav-button nav-button__right'
-                 to='/stack'>
-      <i class="material-icons">menu</i>
-    </router-link>
-            <router-link v-else-if='$route.name === "singleWork" && $route.params.info'
-                 class='nav-button nav-button__right'
-                 :to='{name: "singleWork", params: {hash: $route.params.hash}}' >
-      <i class="material-icons">close</i>
-    </router-link>
-        <router-link v-else-if='$route.name === "singleWork" && !$route.params.info'
-                 class='nav-button nav-button__right'
-                 to='/stack'>
-      <i class="material-icons">arrow_back</i>
-    </router-link>
-    <router-link v-else
-                 class='nav-button nav-button__right'
-                 to='/'>
-      <i class="material-icons">trending_up</i>
-    </router-link>
+                   width="400px" />
     <transition name="fade">
       <router-view id='main-view' />
     </transition>
@@ -41,7 +12,7 @@
 
 <script>
 import {mapState, mapActions} from 'vuex'
-// import logo from '@/components/logo'
+import navbar from '@/components/navbar'
 
 export default {
   name: 'app',
@@ -67,6 +38,9 @@ export default {
   },
   computed: {
     ...mapState(['main'])
+  },
+  components: {
+    navbar
   },
   watch: {
     $route(to, from) {},
@@ -203,7 +177,6 @@ body {
   margin: 0;
   overflow: hidden;
   background-color: $black;
-
   @include hide-scroll;
 }
 
@@ -240,10 +213,7 @@ body {
   @include nav;
   background: transparent;
   top: 0;
-  z-index: 100;
-  &:hover {
-    // background: rgba(30, 30, 30, 1);
-  }
+  z-index: 1000;
   &__left {
     left: 0;
   }

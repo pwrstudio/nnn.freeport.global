@@ -10,11 +10,11 @@
         </div>
       </div>
     </div>
-    <div class="swiper-button-prev">
+    <div class="swiper-button-prev slideshow-button-prev">
       <i class="material-icons material-icons--on">keyboard_arrow_up</i>
       <i class="material-icons material-icons--off">close</i>
     </div>
-    <div class="swiper-button-next">
+    <div class="swiper-button-next slideshow-button-next">
       <i class="material-icons material-icons--on">keyboard_arrow_down</i>
       <i class="material-icons material-icons--off">close</i>
     </div>
@@ -23,7 +23,7 @@
 
 <script>
 // import Vue from 'vue'
-import {mapState} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import work from '@/components/work'
 import Swiper from 'swiper'
 
@@ -46,8 +46,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['SET_CURRENT_SLIDE']),
     initSwiper() {
-      console.log('init swiper')
       this.stackSwiper = new Swiper('.swiper-container', {
         slidesPerView: 1,
         loop: false,
@@ -60,29 +60,36 @@ export default {
           prevEl: '.swiper-button-prev'
         },
         on: {
-          slideChangeTransitionEnd: this.test,
+          slideChangeTransitionEnd: this.changeSlide,
           init: this.setSlide
         }
       })
     },
-    test() {
+    changeSlide() {
       let id = document.getElementsByClassName('swiper-slide-active')[0].id
       this.$router.push({name: 'stack', params: {unit: id}})
+      this.SET_CURRENT_SLIDE(this.$route.params.unit)
     },
     setSlide() {
-      if (this.$route.params.unit) {
-        // TODO
-        // this.stackSwiper.slideTo(
-        //   console.log(this.main.container.works.map(e => e.hash).indexOf(this.$route.params.unit))
-        // )
-      } else {
-        // this.$router.push({name: 'stack', params: {unit: this.main.container.works[0].hash}})
-      }
+      this.$nextTick(() => {
+        if (this.$route.params.unit) {
+          const index = this.main.container.works.map(e => e.hash).indexOf(this.$route.params.unit)
+          this.stackSwiper.slideTo(index)
+          this.SET_CURRENT_SLIDE(this.$route.params.unit)
+        } else {
+          this.$router.push({name: 'stack', params: {unit: this.main.container.works[0].hash}})
+        }
+      })
     }
   },
   watch: {
     'main.container.works'() {
       this.$nextTick(this.initSwiper)
+    },
+    watch: {
+      $route(to, from) {
+        this.setSlide()
+      }
     }
   }
 }
@@ -105,22 +112,24 @@ export default {
   @include hide-scroll;
 }
 
-.swiper-button-prev {
+.slideshow-button-prev {
   @include nav;
   // height: 100px;
   // line-height: 100px;
   top: auto;
   bottom: 0;
   left: 0;
+  z-index: 1000;
 }
 
-.swiper-button-next {
+.slideshow-button-next {
   @include nav;
   // height: 100px;
   // line-height: 100px;
   top: auto;
   bottom: 0;
   left: 50vw;
+  z-index: 1000;
 }
 
 .swiper-container {

@@ -1,11 +1,5 @@
 <template>
   <div>
-    <router-link v-if='$route.params.info' :to='{name: "singleWork", params: {hash: $route.params.hash}}' class='nav-button nav-button__left'>
-      {{payload.title}}
-    </router-link>
-    <router-link v-else :to='{name: "singleWork", params: {hash: $route.params.hash, info: "info"}}' class='nav-button nav-button__left'>
-      {{payload.title}}
-    </router-link>
     <div class='work'>
       <contentAtom v-for='item in payload.content'
                    :key='item.hash'

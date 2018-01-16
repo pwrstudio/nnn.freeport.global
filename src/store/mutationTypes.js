@@ -1,2 +1,3 @@
 export const SET_CONTAINER = 'SET_CONTAINER'
 export const SET_USERLIST = 'SET_USERLIST'
+export const SET_CURRENT_SLIDE = 'SET_CURRENT_SLIDE'

@@ -24,6 +24,9 @@ const actions = {
   },
   [actionTypes.UPDATE_USERLIST]({commit, state}, data) {
     commit(mutationTypes.SET_USERLIST, data)
+  },
+  [actionTypes.SET_CURRENT_SLIDE]({commit, state}, data) {
+    commit(mutationTypes.SET_CURRENT_SLIDE, data)
   }
 }
 
@@ -34,6 +37,9 @@ const mutations = {
   },
   [mutationTypes.SET_USERLIST](state, data) {
     state.userList = data
+  },
+  [mutationTypes.SET_CURRENT_SLIDE](state, data) {
+    state.currentSlide = data
   }
 }
 
