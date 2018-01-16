@@ -74,7 +74,7 @@ export default {
       this.$nextTick(() => {
         if (this.$route.params.unit) {
           const index = this.main.container.works.map(e => e.hash).indexOf(this.$route.params.unit)
-          this.stackSwiper.slideTo(index)
+          this.stackSwiper.slideTo(index, 1)
           this.SET_CURRENT_SLIDE(this.$route.params.unit)
         } else {
           this.$router.push({name: 'stack', params: {unit: this.main.container.works[0].hash}})

@@ -60,7 +60,7 @@
       <router-link 
           :to='{name: "singleWork", params: {hash: $route.params.hash, info: "info"}}' 
           class='nav-button nav-button__left'>
-          xxxx
+          {{main.currentSingle}}
       </router-link>
       <router-link v-if='main.currentSlide' class='nav-button nav-button__right' :to='{name: "stack", params: {unit: main.currentSlide}}'>
         <i class="material-icons">menu</i>
@@ -77,7 +77,7 @@
     <template v-if='$route.name === "singleWork" && $route.params.info'>
       
       <router-link :to='{name: "singleWork", params: {hash: $route.params.hash}}' class='nav-button nav-button__left'>
-      xxxx
+        {{main.currentSingle}}
       </router-link>
 
       <router-link

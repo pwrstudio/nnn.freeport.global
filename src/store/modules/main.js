@@ -15,7 +15,9 @@ const state = {
       }
     ]
   },
-  userList: []
+  userList: [],
+  currentSlide: '',
+  currentSingle: 'kkkkk'
 }
 
 const actions = {
