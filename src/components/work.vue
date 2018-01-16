@@ -2,6 +2,7 @@
   <div class='work'
        :class='{"work--open": open, "work--closed": !open}'>
 
+    <div class='work__image' :style='"background-image: url(http://ipfs.io/ipfs/" + firstImage + ")"'/>
     <!-- OPEN-->
     <div v-if='open'
          @click='goToWork({name: "singleWork", params: {hash: hash}})'
@@ -30,7 +31,6 @@
 import countdown from 'countdown'
 import {isPast, parse} from 'date-fns'
 import request from 'browser-request'
-// import {VueTyper} from 'vue-typer'
 
 export default {
   name: 'work',
@@ -49,6 +49,7 @@ export default {
         title: '',
         id: ''
       },
+      firstImage: '',
       content: [],
       active: true,
       timeToPublish: '',
@@ -73,14 +74,6 @@ export default {
     )
   },
   computed: {
-    firstImage() {
-      const img = this.content.find(c => c.media === 'Image')
-      if (img) {
-        return 'https://ipfs.io/ipfs/' + img.hash
-      } else {
-        return false
-      }
-    },
     artistList() {
       return this.payload.artists.reduce(
         (accumulator, currentValue) => accumulator + ', ' + currentValue
@@ -98,6 +91,12 @@ export default {
           title: 'Access denied',
           text: 'Unlocked on ' + this.date
         })
+      }
+    },
+    setFirstImage() {
+      const img = this.content.find(c => c.media === 'Image')
+      if (img) {
+        this.firstImage = img.hash
       }
     }
   },
@@ -129,7 +128,9 @@ export default {
             if (error) {
               throw error
             }
+            console.log(body)
             this.content.push(body)
+            this.setFirstImage()
           }
         )
       })
@@ -175,6 +176,14 @@ export default {
   width: 100%;
   position: relative;
   color: white;
+  mix-blend-mode: multiply;
+
+  &__image {
+    height: 100%;
+    width: 100%;
+    will-change: opacity;
+    transition: opacity 0.4s ease-out;
+  }
 
   &--open {
     cursor: pointer;
@@ -207,6 +216,11 @@ export default {
         color: $black;
       }
     }
+  }
+
+  &--closed &__image {
+    filter: grayscale(1);
+    opacity: 0.4;
   }
 
   &__sidebar {
@@ -268,32 +282,33 @@ export default {
     }
   }
 
-  &__image {
-    height: 100%;
-    width: 100%;
-    object-fit: cover;
-    will-change: opacity;
-    transition: opacity 0.4s ease-out;
-    @include center;
-  }
-
   &__timer {
-    height: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
     font-size: 64px !important;
     line-height: 64px !important;
     text-align: center;
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
     z-index: 1000;
+    // text-shadow: -10px 10px 100px $black, 10px -10px 100px $white;
     section {
       @include center;
       z-index: 10;
       width: 80vw;
+      z-index: 100;
     }
     @include screen-size('small') {
       font-size: 32px !important;
       line-height: 32px !important;
+    }
+    @include screen-size('large') {
+      font-size: 92px !important;
+      line-height: 90px !important;
     }
   }
 
@@ -382,4 +397,21 @@ export default {
   @include center;
   z-index: 5000;
 }
+
+// .swiper-slide {
+//   .work {
+//     .work__image {
+//       opacity: 0;
+//       transition: opacity 20s ease-out;
+//     }
+//   }
+// }
+
+// .swiper-slide-active {
+//   .work {
+//     .work__image {
+//       opacity: 1;
+//     }
+//   }
+// }
 </style>

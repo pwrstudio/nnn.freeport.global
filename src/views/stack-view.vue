@@ -160,6 +160,9 @@ export default {
 
 .swiper-slide {
   overflow: hidden;
-  transition-timing-function: cubic-bezier(0.165, 0.84, 0.44, 1);
+  transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+.swiper-slide-active {
+  transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
 </style>

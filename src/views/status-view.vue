@@ -1,5 +1,65 @@
 <template>
   <div class='status'>
+    <!-- Content -->
+    <div class='status__content'>
+      <!-- Exhibitions -->
+      <div class='status__content__counter'>
+        <div class='status__content__counter__header'>
+          Exhibitions
+        </div>
+        <div v-if='main.container.exhibitions'
+             class='status__content__counter__number'>
+          {{main.container.exhibitions.length}}
+        </div>
+      </div>
+      <!-- Works -->
+      <div class='status__content__counter'>
+        <div class='status__content__counter__header'>
+          Works
+        </div>
+        <div v-if='main.container.works'
+             class='status__content__counter__number'>
+          {{main.container.works.length}}
+        </div>
+      </div>
+      <!-- Content units -->
+      <div class='status__content__counter'>
+        <div class='status__content__counter__header'>
+          Content
+        </div>
+        <div v-if='main.container.content'
+             class='status__content__counter__number'>
+          {{main.container.content.length}}
+        </div>
+      </div>
+      <!-- xxx -->
+      <div class='status__content__counter'>
+        <div class='status__content__counter__header'>
+          xxx
+        </div>
+        <div v-if='main.container.content'
+             class='status__content__counter__number'>
+        </div>
+      </div>
+      <!-- xxx -->
+      <div class='status__content__counter'>
+        <div class='status__content__counter__header'>
+          xxx
+        </div>
+        <div v-if='main.container.content'
+             class='status__content__counter__number'>
+        </div>
+      </div>
+      <!-- xxx -->
+      <div class='status__content__counter'>
+        <div class='status__content__counter__header'>
+          xxx
+        </div>
+        <div v-if='main.container.content'
+             class='status__content__counter__number'>
+        </div>
+      </div>
+    </div>
     <!-- Users -->
     <div class='status__users'>
       <!-- User count -->
@@ -38,64 +98,6 @@
       </div>
       <!-- <div id='map'
            class='status__users__map' /> -->
-    </div>
-    <!-- Content -->
-    <div class='status__content'>
-      <!-- Exhibitions -->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-          Exhibitions
-        </div>
-        <div v-if='main.container.exhibitions'
-             class='status__content__counter__number'>
-          {{main.container.exhibitions.length}}
-        </div>
-      </div>
-      <!-- Works -->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-          Works
-        </div>
-        <div v-if='main.container.works'
-             class='status__content__counter__number'>
-          {{main.container.works.length}}
-        </div>
-      </div>
-      <!-- Content units -->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-          Content
-        </div>
-        <div v-if='main.container.content'
-             class='status__content__counter__number'>
-          {{main.container.content.length}}
-        </div>
-      </div>
-      <!-- Activity -->
-      <div class='status__content__table'>
-        <table>
-          <thead class='status__content__table__header'>
-            <th class='status__content__table__header__cell'>
-              Time
-            </th>
-            <th class='status__content__table__header__cell'>
-              Activity
-            </th>
-          </thead>
-          <tbody class='status__content__table__body'>
-            <tr v-for='user in main.userList'
-                :key='user.id'
-                class='status__content__table__body__row'>
-              <td class='status__content__table__body__row__cell'>
-                {{user.id}}
-              </td>
-              <td class='status__content__table__body__row__cell'>
-                {{user.ip}}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
     </div>
   </div>
 </template>
@@ -169,9 +171,9 @@ export default {
 @mixin quad {
   align-content: stretch;
   display: flex;
-  // flex-wrap: wrap;
   height: 50%;
   width: 50%;
+  overflow: hidden;
 }
 
 @mixin small-type {
@@ -198,6 +200,25 @@ export default {
     text-align: center;
     @include large-type;
     @include center;
+  }
+}
+
+@mixin small-counter {
+  flex: 1 1 100px;
+  background: $black;
+  border: 1px solid $white;
+  padding: 20px;
+  margin: 10px;
+  position: relative;
+
+  &__header {
+    @include small-type;
+    text-align: center;
+    text-decoration: underline;
+  }
+  &__number {
+    text-align: center;
+    @include small-type;
   }
 }
 
@@ -237,22 +258,22 @@ export default {
 
 .status {
   color: $white;
-  display: flex;
-  flex-wrap: wrap;
   height: calc(100vh - 80px) !important;
   overflow: hidden;
-  padding-top: 70px;
+  padding-top: 50px;
   padding-bottom: 20px;
 
   &__content {
     @include quad;
     width: 100%;
+    height: 20%;
+    max-height: 160px;
     &__table {
       @include table;
     }
 
     &__counter {
-      @include counter;
+      @include small-counter;
     }
   }
 
