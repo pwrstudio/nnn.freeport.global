@@ -183,6 +183,7 @@ export default {
     width: 100%;
     will-change: opacity;
     transition: opacity 0.4s ease-out;
+    opacity: 0.4;
   }
 
   &--open {
