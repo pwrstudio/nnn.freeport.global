@@ -42,6 +42,7 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
 import request from 'browser-request'
 import contentAtom from '@/components/content-atom'
 export default {
@@ -73,6 +74,7 @@ export default {
           throw error
         }
         this.payload = body
+        this.SET_CURRENT_WORK(this.payload)
       }
     )
   },
@@ -82,6 +84,9 @@ export default {
         (accumulator, currentValue) => accumulator + ', ' + currentValue
       )
     }
+  },
+  methods: {
+    ...mapActions(['SET_CURRENT_WORK'])
   }
 }
 </script>

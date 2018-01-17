@@ -4,9 +4,7 @@
     <notifications group="global"
                    classes="global-notifications"
                    width="400px" />
-    <!-- <transition name="fade"> -->
-      <router-view id='main-view' />
-    <!-- </transition> -->
+    <router-view id='main-view' />
   </div>
 </template>
 

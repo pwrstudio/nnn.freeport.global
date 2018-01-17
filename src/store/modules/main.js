@@ -17,7 +17,7 @@ const state = {
   },
   userList: [],
   currentSlide: '',
-  currentSingle: 'kkkkk'
+  currentWork: {}
 }
 
 const actions = {
@@ -29,6 +29,9 @@ const actions = {
   },
   [actionTypes.SET_CURRENT_SLIDE]({commit, state}, data) {
     commit(mutationTypes.SET_CURRENT_SLIDE, data)
+  },
+  [actionTypes.SET_CURRENT_WORK]({commit, state}, data) {
+    commit(mutationTypes.SET_CURRENT_WORK, data)
   }
 }
 
@@ -42,6 +45,9 @@ const mutations = {
   },
   [mutationTypes.SET_CURRENT_SLIDE](state, data) {
     state.currentSlide = data
+  },
+  [mutationTypes.SET_CURRENT_WORK](state, data) {
+    state.currentWork = data
   }
 }
 
