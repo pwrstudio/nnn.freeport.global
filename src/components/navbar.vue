@@ -1,5 +1,5 @@
 <template>
-  <div class='atom'>
+  <div class='navbar'>
   
   <!-- INFO -->
   <!-- INFO -->
@@ -100,7 +100,7 @@ import videojs from 'video.js'
 import AudioPlayer from './audio-player.vue'
 
 export default {
-  name: 'contentAtom',
+  name: 'navbar',
   data() {
     return {
       payload: {

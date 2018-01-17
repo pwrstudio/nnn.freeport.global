@@ -1,5 +1,6 @@
 <template>
   <div class='stack'>
+    <sidebar/>
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide"
@@ -22,7 +23,7 @@
 </template>
 
 <script>
-// import Vue from 'vue'
+import sidebar from '@/components/sidebar'
 import {mapState, mapActions} from 'vuex'
 import work from '@/components/work'
 import Swiper from 'swiper'
@@ -30,7 +31,8 @@ import Swiper from 'swiper'
 export default {
   name: 'stackView',
   components: {
-    work
+    work,
+    sidebar
   },
   data() {
     return {
@@ -61,7 +63,7 @@ export default {
         },
         on: {
           slideChangeTransitionEnd: this.changeSlide,
-          init: this.setSlide
+          init: this.setSlide(1)
         }
       })
     },
@@ -70,11 +72,11 @@ export default {
       this.$router.push({name: 'stack', params: {unit: id}})
       this.SET_CURRENT_SLIDE(this.$route.params.unit)
     },
-    setSlide() {
+    setSlide(duration = 400) {
       this.$nextTick(() => {
         if (this.$route.params.unit) {
           const index = this.main.container.works.map(e => e.hash).indexOf(this.$route.params.unit)
-          this.stackSwiper.slideTo(index, 1)
+          this.stackSwiper.slideTo(index, duration)
           this.SET_CURRENT_SLIDE(this.$route.params.unit)
         } else {
           this.$router.push({name: 'stack', params: {unit: this.main.container.works[0].hash}})
@@ -83,13 +85,11 @@ export default {
     }
   },
   watch: {
+    $route(to, from) {
+      this.setSlide()
+    },
     'main.container.works'() {
       this.$nextTick(this.initSwiper)
-    },
-    watch: {
-      $route(to, from) {
-        this.setSlide()
-      }
     }
   }
 }

@@ -1,10 +1,10 @@
 <template>
   <div class='work'
-       :class='{"work--open": open, "work--closed": !open}'>
+       :class='{"work--open": payload.open, "work--closed": !payload.open}'>
 
     <div class='work__image' :style='"background-image: url(http://ipfs.io/ipfs/" + firstImage + ")"'/>
     <!-- OPEN-->
-    <div v-if='open'
+    <div v-if='payload.open'
          @click='goToWork({name: "singleWork", params: {hash: hash}})'
          class='work__timer'>
       <section>
@@ -14,7 +14,7 @@
     </div>
 
     <!--CLOSED -->
-    <div v-if='!open'
+    <div v-if='!payload.open'
          class='work__timer'>
       <section>
         <div v-html='"«" + payload.title + "»"' />
@@ -29,6 +29,7 @@
 
 <script>
 import countdown from 'countdown'
+import {mapActions} from 'vuex'
 import {isPast, parse} from 'date-fns'
 import request from 'browser-request'
 
@@ -47,11 +48,12 @@ export default {
         content: [],
         date: '',
         title: '',
-        id: ''
+        id: '',
+        open: false,
+        hash: ''
       },
       firstImage: '',
       content: [],
-      active: true,
       timeToPublish: '',
       timerId: {},
       open: false
@@ -70,6 +72,9 @@ export default {
           throw error
         }
         this.payload = body
+        this.payload.open = isPast(parse(this.payload.date))
+        this.payload.hash = this.hash
+        this.UPDATE_WORK(this.payload)
       }
     )
   },
@@ -81,17 +86,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['UPDATE_WORK']),
     goToWork(target) {
-      if (this.active) {
-        this.$router.push(target)
-      } else {
-        this.$notify({
-          group: 'global',
-          type: 'warning',
-          title: 'Access denied',
-          text: 'Unlocked on ' + this.date
-        })
-      }
+      this.$router.push(target)
     },
     setFirstImage() {
       const img = this.content.find(c => c.media === 'Image')
@@ -105,7 +102,6 @@ export default {
   },
   watch: {
     'payload.date'() {
-      this.open = isPast(parse(this.payload.date))
       countdown.setLabels('ms|s|m|h|d|w|m|y|d|s|m', 'ms|s|m|h|d|w|m|y|d|s|m', ':', ':', 'now')
       this.timerId = countdown(
         new Date(this.payload.date),
@@ -128,7 +124,6 @@ export default {
             if (error) {
               throw error
             }
-            console.log(body)
             this.content.push(body)
             this.setFirstImage()
           }

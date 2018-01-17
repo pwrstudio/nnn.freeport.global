@@ -5,6 +5,7 @@ import * as mutationTypes from '../mutationTypes'
 const state = {
   rootHash: 'Loading root hash...',
   container: {
+    about: {},
     exhibitions: [
       {
         works: [
@@ -13,7 +14,9 @@ const state = {
           }
         ]
       }
-    ]
+    ],
+    works: [],
+    content: []
   },
   userList: [],
   currentSlide: '',
@@ -32,6 +35,9 @@ const actions = {
   },
   [actionTypes.SET_CURRENT_WORK]({commit, state}, data) {
     commit(mutationTypes.SET_CURRENT_WORK, data)
+  },
+  [actionTypes.UPDATE_WORK]({commit, state}, data) {
+    commit(mutationTypes.UPDATE_WORK, data)
   }
 }
 
@@ -48,6 +54,14 @@ const mutations = {
   },
   [mutationTypes.SET_CURRENT_WORK](state, data) {
     state.currentWork = data
+  },
+  [mutationTypes.UPDATE_WORK](state, data) {
+    // TODO: nicer solution....
+    state.container.works.forEach((w, i) => {
+      if (w.hash === data.hash) {
+        state.container.works[i] = data
+      }
+    })
   }
 }
 
