@@ -1,12 +1,14 @@
-// import request from 'browser-request'
 import Vue from 'vue'
 import VueResource from 'vue-resource'
 
 Vue.use(VueResource)
 
-Vue.http.options.crossOrigin = true
+// Vue.http.options.crossOrigin = true
+// Vue.http.headers.common['Access-Control-Allow-Origin'] = '*'
 
 const CONTRACT_ADDRESS = '0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
+// const CONTRACT_API =
+// 'https://cors-anywhere.herokuapp.com/https%3A%2F%2Fapi.infura.io%2Fv1%2Fjsonrpc%2Frinkeby%2Feth_call%3Fparams%3D%5B%7B%0D%0A%09%09%22to%22%3A%20%220x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A%22%2C%0D%0A%09%09%22data%22%3A%20%220x6d4ce63c%22%0D%0A%09%7D%2C%0D%0A%09%22latest%22%0D%0A%5D'
 // const CONTRACT_API =
 //   'https://api.infura.io/v1/jsonrpc/rinkeby/eth_call?params=%5B%7B%0D%0A%09%09%22to%22%3A%20%220x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A%22%2C%0D%0A%09%09%22data%22%3A%20%220x6d4ce63c%22%0D%0A%09%7D%2C%0D%0A%09%22latest%22%0D%0A%5D'
 

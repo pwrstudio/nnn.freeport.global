@@ -16,7 +16,6 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
-    "browser-request": "^0.3.3",
     "countdown": "^2.6.0",
     "date-fns": "^1.29.0",
     "ellipsize": "^0.0.3",
@@ -97,9 +96,5 @@
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }

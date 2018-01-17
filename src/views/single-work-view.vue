@@ -44,7 +44,6 @@
 
 <script>
 import {mapActions} from 'vuex'
-import request from 'browser-request'
 import contentAtom from '@/components/content-atom'
 export default {
   name: 'singleWork',
@@ -63,21 +62,14 @@ export default {
     }
   },
   mounted() {
-    request(
-      {
-        method: 'GET',
-        url: 'https://ipfs.io/ipfs/' + this.$route.params.hash,
-        body: '{"relaxed":true}',
-        json: true
-      },
-      (error, response, body) => {
-        if (error) {
-          throw error
-        }
-        this.payload = body
-        this.SET_CURRENT_WORK(this.payload)
-      }
-    )
+    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.$route.params.hash)
+    httpPromise.then(response => {
+      this.payload = response.body
+      this.SET_CURRENT_WORK(this.payload)
+    })
+    httpPromise.catch(err => {
+      console.log(err)
+    })
   },
   computed: {
     artistList() {

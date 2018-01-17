@@ -6,8 +6,7 @@ import store from './store'
 import VueHead from 'vue-head'
 import Notifications from 'vue-notification'
 import VueSocketio from 'vue-socket.io'
-import ga from 'vue-ga'
-// --- ERROR TRACKING
+// import ga from 'vue-ga'
 // import Raven from 'raven-js'
 // import RavenVue from 'raven-js/plugins/vue'
 
@@ -16,7 +15,7 @@ import ga from 'vue-ga'
 //     .addPlugin(RavenVue, Vue)
 //     .install()
 
-ga(router, 'UA-112230518-2')
+// ga(router, 'UA-112230518-2')
 
 Vue.config.productionTip = false
 

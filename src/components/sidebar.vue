@@ -10,18 +10,7 @@ import {mapState} from 'vuex'
 export default {
   name: 'sidebar',
   data() {
-    return {
-      payload: {
-        media: '',
-        hash: '',
-        title: ''
-      },
-      text: '',
-      externalLink: '',
-      video: {
-        player: {}
-      }
-    }
+    return {}
   },
   props: {
     hash: {
@@ -29,8 +18,6 @@ export default {
       required: false
     }
   },
-  mounted() {},
-  methods: {},
   computed: {
     ...mapState(['main']),
     blockState(block) {

@@ -20,7 +20,6 @@
 </template>
 
 <script>
-import request from 'browser-request'
 import work from '@/components/work'
 export default {
   name: 'singleContentView',
@@ -38,31 +37,25 @@ export default {
     }
   },
   mounted() {
-    request(
-      {
-        method: 'GET',
-        url: 'https://ipfs.io/ipfs/' + this.$route.params.hash,
-        body: '{"relaxed":true}',
-        json: true
-      },
-      (error, response, body) => {
-        if (error) {
-          throw error
-        }
-        this.payload = body
-        if (this.payload.media === 'Text') {
-          this.setIPFSText()
-        }
+    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.$route.params.hash)
+    httpPromise.then(response => {
+      this.payload = response.body
+      if (this.payload.media === 'Text') {
+        this.setIPFSText()
       }
-    )
+    })
+    httpPromise.catch(err => {
+      console.log(err)
+    })
   },
   methods: {
     setIPFSText() {
-      request('https://ipfs.io/ipfs/' + this.payload.hash, (error, response, body) => {
-        if (error) {
-          throw error
-        }
-        this.text = body
+      const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
+      httpPromise.then(response => {
+        this.text = response.body
+      })
+      httpPromise.catch(err => {
+        console.log(err)
       })
     }
   }

@@ -31,7 +31,6 @@
 import countdown from 'countdown'
 import {mapActions} from 'vuex'
 import {isPast, parse} from 'date-fns'
-import request from 'browser-request'
 
 export default {
   name: 'work',
@@ -60,23 +59,16 @@ export default {
     }
   },
   mounted() {
-    request(
-      {
-        method: 'GET',
-        url: 'https://ipfs.io/ipfs/' + this.hash,
-        body: '{"relaxed":true}',
-        json: true
-      },
-      (error, response, body) => {
-        if (error) {
-          throw error
-        }
-        this.payload = body
-        this.payload.open = isPast(parse(this.payload.date))
-        this.payload.hash = this.hash
-        this.UPDATE_WORK(this.payload)
-      }
-    )
+    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.hash)
+    httpPromise.then(response => {
+      this.payload = response.body
+      this.payload.open = isPast(parse(this.payload.date))
+      this.payload.hash = this.hash
+      this.UPDATE_WORK(this.payload)
+    })
+    httpPromise.catch(err => {
+      console.log(err)
+    })
   },
   computed: {
     artistList() {
@@ -113,21 +105,14 @@ export default {
     },
     'payload.content'() {
       this.payload.content.map(c => {
-        request(
-          {
-            method: 'GET',
-            url: 'https://ipfs.io/ipfs/' + c.hash,
-            body: '{"relaxed":true}',
-            json: true
-          },
-          (error, response, body) => {
-            if (error) {
-              throw error
-            }
-            this.content.push(body)
-            this.setFirstImage()
-          }
-        )
+        const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + c.hash)
+        httpPromise.then(response => {
+          this.content.push(response.body)
+          this.setFirstImage()
+        })
+        httpPromise.catch(err => {
+          console.log(err)
+        })
       })
     }
   }

@@ -85,7 +85,6 @@
 </template>
 
 <script>
-import request from 'browser-request'
 import ellipsize from 'ellipsize'
 import videojs from 'video.js'
 import AudioPlayer from './audio-player.vue'
@@ -113,54 +112,48 @@ export default {
     }
   },
   mounted() {
-    request(
-      {
-        method: 'GET',
-        url: 'https://ipfs.io/ipfs/' + this.hash,
-        body: '{"relaxed":true}',
-        json: true
-      },
-      (error, response, body) => {
-        if (error) {
-          throw error
-        }
-        this.payload = body
-        // TEXT
-        if (this.payload.media === 'Text') {
-          this.setIPFSText()
-          // EXTERNAL LINK
-        } else if (this.payload.media === 'External link') {
-          this.getLink()
-          // VIDEO
-        } else if (this.payload.media === 'Video') {
-          this.$nextTick(() => {
-            const options = {}
-            this.video.player = videojs('video-player', options, function onPlayerReady() {
-              // this.on('ended', function() {
-              //   videojs.log('Awww...over so soon?!')
-              // })
-            })
+    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.hash)
+    httpPromise.then(response => {
+      this.payload = response.body
+      // TEXT
+      if (this.payload.media === 'Text') {
+        this.setIPFSText()
+        // EXTERNAL LINK
+      } else if (this.payload.media === 'External link') {
+        this.getLink()
+        // VIDEO
+      } else if (this.payload.media === 'Video') {
+        this.$nextTick(() => {
+          const options = {}
+          this.video.player = videojs('video-player', options, function onPlayerReady() {
+            // this.on('ended', function() {
+            //   videojs.log('Awww...over so soon?!')
+            // })
           })
-        }
+        })
       }
-    )
+    })
+    httpPromise.catch(err => {
+      console.log(err)
+    })
   },
   methods: {
     setIPFSText() {
-      request('https://ipfs.io/ipfs/' + this.payload.hash, (error, response, body) => {
-        if (error) {
-          throw error
-        }
-        this.text = ellipsize(body, 480)
+      const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
+      httpPromise.then(response => {
+        this.text = ellipsize(response.body, 480)
+      })
+      httpPromise.catch(err => {
+        console.log(err)
       })
     },
     getLink() {
-      request('https://ipfs.io/ipfs/' + this.payload.hash, (error, response, body) => {
-        if (error) {
-          throw error
-        }
-        console.log(body)
-        this.externalLink = body
+      const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
+      httpPromise.then(response => {
+        this.externalLink = response.body
+      })
+      httpPromise.catch(err => {
+        console.log(err)
       })
     }
   },
