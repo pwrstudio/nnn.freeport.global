@@ -179,6 +179,7 @@ export default {
     will-change: opacity;
     transition: opacity 0.4s ease-out;
     opacity: 0.4;
+    background-position: center center;
   }
 
   &--open {

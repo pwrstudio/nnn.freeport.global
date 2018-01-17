@@ -84,5 +84,9 @@ export default {
     width: 70ch;
     max-width: 90%;
   }
+  &__image {
+    max-width: 80vw;
+    max-height: 90vh;
+  }
 }
 </style>

@@ -30,12 +30,13 @@
         <span v-html='"Territories of Complicity"' />
       </div>
 
-      <div class='info-overlay__location'
-           v-text=''>
+      <div class='info-overlay__location'>
         <span class='info-overlay__title__label'
               v-html='"location"' />
         <span v-html='"Berlin, Germany"' />
       </div>
+
+      <div v-if='payload.description' class='info-overlay__description' v-html='payload.description'/>
 
     </div>
   </div>
@@ -164,6 +165,12 @@ export default {
     }
   }
   &__location {
+    @include box;
+    &__label {
+      @include label;
+    }
+  }
+  &__description {
     @include box;
     &__label {
       @include label;
