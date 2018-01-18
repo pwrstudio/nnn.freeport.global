@@ -162,6 +162,7 @@ export default {
 .swiper-slide {
   overflow: hidden;
   transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0px 0px 100px $black;
 }
 .swiper-slide-active {
   transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);

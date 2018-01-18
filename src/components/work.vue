@@ -64,7 +64,7 @@ export default {
       this.payload = response.body
       this.payload.open = isPast(parse(this.payload.date))
       this.payload.hash = this.hash
-      this.UPDATE_WORK(this.payload)
+      // this.UPDATE_WORK(this.payload)
     })
     httpPromise.catch(err => {
       console.log(err)
@@ -277,7 +277,6 @@ export default {
     height: 100%;
     width: 100%;
     z-index: 1000;
-    // text-shadow: -10px 10px 100px $black, 10px -10px 100px $white;
     section {
       @include center;
       z-index: 10;
