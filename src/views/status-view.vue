@@ -2,6 +2,15 @@
   <div class='status'>
     <!-- Content -->
     <div class='status__content'>
+           <!-- User count -->
+      <div class='status__users__counter'>
+        <div class='status__users__counter__header'>
+        </div>
+        <div v-if='main.userList'
+             class='status__users__counter__number'>
+          {{main.userList.length}}
+        </div>
+      </div>
       <!-- Exhibitions -->
       <div class='status__content__counter'>
         <div class='status__content__counter__header'>
@@ -32,46 +41,9 @@
           {{main.container.content.length}}
         </div>
       </div>
-      <!-- xxx -->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-          xxx
-        </div>
-        <div v-if='main.container.content'
-             class='status__content__counter__number'>
-        </div>
-      </div>
-      <!-- xxx -->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-          xxx
-        </div>
-        <div v-if='main.container.content'
-             class='status__content__counter__number'>
-        </div>
-      </div>
-      <!-- xxx -->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-          xxx
-        </div>
-        <div v-if='main.container.content'
-             class='status__content__counter__number'>
-        </div>
-      </div>
     </div>
     <!-- Users -->
     <div class='status__users'>
-      <!-- User count -->
-      <div class='status__users__counter'>
-        <div class='status__users__counter__header'>
-          Active users
-        </div>
-        <div v-if='main.userList'
-             class='status__users__counter__number'>
-          {{main.userList.length}}
-        </div>
-      </div>
       <!-- User list -->
       <div class='status__users__table'>
         <table>
@@ -96,15 +68,15 @@
           </tbody>
         </table>
       </div>
-      <!-- <div id='map'
-           class='status__users__map' /> -->
+      <div id='map'
+           class='status__users__map' />
     </div>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
-// import mapboxgl from 'mapbox-gl'
+import mapboxgl from 'mapbox-gl'
 import statusUserRow from '@/components/status-user-row'
 
 export default {
@@ -122,43 +94,46 @@ export default {
     ...mapState(['main'])
   },
   methods: {
-    // clearMarkers() {
-    //   // TODO
-    //   this.markers.map(marker => {
-    //     console.log('marker', marker)
-    //     marker.remove()
-    //   })
-    //   this.markers = []
-    // }
+    clearMarkers() {
+      // TODO
+      this.markers.map(marker => {
+        marker.remove()
+      })
+      this.markers = []
+    }
   },
   mounted() {
-    // this.$nextTick(() => {
-    //   mapboxgl.accessToken =
-    //     'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNqYnpodnNrcjBmeTYyd3FwbGF5YzBrZmoifQ.ToAF7-pnMxqPA0ZH8ItEjQ'
-    //   this.map = new mapboxgl.Map({
-    //     container: 'map',
-    //     style: 'mapbox://styles/mapbox/dark-v9',
-    //     center: [13.404954, 52.520008],
-    //     zoom: 0
-    //   })
-    //   this.main.userList.map(user => {
-    //     new mapboxgl.Marker().setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
-    //   })
-    // })
+    this.$nextTick(() => {
+      mapboxgl.accessToken =
+        'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg'
+      this.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o',
+        center: [13.404954, 52.520008],
+        zoom: 0
+      })
+      this.main.userList.map(user => {
+        var el = document.createElement('div')
+        el.className = 'marker'
+        new mapboxgl.Marker(el).setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
+      })
+    })
   },
   watch: {
-    // 'main.userList'() {
-    //   // TODO
-    //   this.clearMarkers()
-    //   // TODO
-    //   if (this.main.userList.length > this.markers.length) {
-    //     this.main.userList.map(user => {
-    //       this.markers.push(
-    //         new mapboxgl.Marker().setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
-    //       )
-    //     })
-    //   }
-    // }
+    'main.userList'() {
+      // TODO
+      this.clearMarkers()
+      // TODO
+      if (this.main.userList.length > this.markers.length) {
+        this.main.userList.map(user => {
+          var el = document.createElement('div')
+          el.className = 'marker'
+          this.markers.push(
+            new mapboxgl.Marker(el).setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
+          )
+        })
+      }
+    }
   }
 }
 </script>
@@ -224,7 +199,7 @@ export default {
 
 @mixin table {
   border: 1px solid $white;
-  flex: 1 2 800px;
+  flex: 1 1 500px;
   margin: 10px;
   max-height: 100%;
   overflow-x: hidden;
@@ -246,28 +221,19 @@ export default {
   }
 }
 
-.list-enter-active,
-.list-leave-active {
-  transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.list-enter,
-.list-leave-to {
-  transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  opacity: 0;
-}
-
 .status {
   color: $white;
   height: calc(100vh - 80px) !important;
   overflow: hidden;
-  padding-top: 50px;
+  padding-top: 80px;
   padding-bottom: 20px;
 
   &__content {
     @include quad;
     width: 100%;
-    height: 20%;
+    height: 10%;
     max-height: 160px;
+    min-height: 10px;
     &__table {
       @include table;
     }
@@ -290,16 +256,13 @@ export default {
     }
 
     &__map {
-      flex: 2 2 400px;
-      padding: 10px;
-      margin-right: 10px;
+      flex: 1 2 500px;
+      padding: 0px;
+      margin: 10px;
       overflow: hidden;
+      border: 1px solid $white;
     }
   }
-}
-
-.mapboxgl-control-container {
-  display: none !important;
 }
 
 .mapboxgl-marker {
@@ -308,5 +271,10 @@ export default {
       fill: $red !important;
     }
   }
+}
+
+.mapboxgl-control-container {
+  display: none !important;
+  opacity: 0;
 }
 </style>

@@ -263,4 +263,21 @@ body {
     color: $black;
   }
 }
+
+.mapboxgl-control-container {
+  display: none !important;
+  opacity: 0;
+}
+
+.marker {
+  background-image: url('assets/img/ic_place_black_24px.svg');
+  // background-image: url('assets/img/ic_clear_black_24px.svg');
+  background-size: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  // background: $green;
+  // opacity: 0.7;
+  cursor: pointer;
+}
 </style>
