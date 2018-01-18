@@ -157,6 +157,7 @@ export default {
   position: relative;
   color: white;
   mix-blend-mode: multiply;
+  user-select: none;
 
   &__image {
     height: 100%;

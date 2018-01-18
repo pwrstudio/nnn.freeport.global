@@ -5,6 +5,7 @@
                    :key='item.hash'
                    :hash='item.hash' />
     </div>
+
     <div v-if='$route.params.info' class='info-overlay'>
        <div class='info-overlay__hash'>
         <span class='info-overlay__hash__label'
@@ -119,7 +120,8 @@ export default {
   left: 0;
   width: 100vw;
   height: 100vh;
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   @include hide-scroll;
 }
 

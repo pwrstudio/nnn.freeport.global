@@ -39,19 +39,11 @@
     <div v-else-if='payload.media === "Video"'
          class='atom__video'
          :id='hash'>
-      <video id='video-player'
-             class="video-js"
-             controls
-             preload="auto"
-             data-setup="{}">
-        <source :src='"https://ipfs.io/ipfs/" + payload.hash'
-                type='video/mp4'>
-        <p class="vjs-no-js">
-          To view this video please enable JavaScript, and consider upgrading to a web browser that
-          <a href="http://videojs.com/html5-video-support/"
-             target="_blank">supports HTML5 video</a>
-        </p>
-      </video>
+               <video-player :sources='["https://ipfs.io/ipfs/" + payload.hash]'
+                    image='/static/test.jpg'
+                    :title='payload.title'
+                    :hash='payload.hash'
+                    type='video/mp4' />
     </div>
     <!-- END: VIDEO -->
 
@@ -87,8 +79,8 @@
 
 <script>
 import ellipsize from 'ellipsize'
-import videojs from 'video.js'
-import AudioPlayer from './audio-player.vue'
+import AudioPlayer from '@/components/audio-player.vue'
+import VideoPlayer from '@/components/video-player.vue'
 
 export default {
   name: 'contentAtom',
@@ -102,7 +94,7 @@ export default {
       text: '',
       externalLink: '',
       video: {
-        player: {}
+        options: {}
       }
     }
   },
@@ -121,18 +113,17 @@ export default {
         this.setIPFSText()
         // EXTERNAL LINK
       } else if (this.payload.media === 'External link') {
+        console.log('link')
         this.getLink()
         // VIDEO
-      } else if (this.payload.media === 'Video') {
-        this.$nextTick(() => {
-          const options = {}
-          this.video.player = videojs('video-player', options, function onPlayerReady() {
-            // this.on('ended', function() {
-            //   videojs.log('Awww...over so soon?!')
-            // })
-          })
-        })
       }
+      // else if (this.payload.media === 'Video') {
+      //   this.$nextTick(() => {
+      //     this.video.options = {
+      //       sources: [{}]
+      //     }
+      //   })
+      // }
     })
     httpPromise.catch(err => {
       console.log(err)
@@ -149,8 +140,13 @@ export default {
       })
     },
     getLink() {
+      console.log('getlink')
+      console.log(this.payload.hash)
+
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
+        console.log(response.body)
+
         this.externalLink = response.body
       })
       httpPromise.catch(err => {
@@ -159,7 +155,8 @@ export default {
     }
   },
   components: {
-    AudioPlayer
+    AudioPlayer,
+    VideoPlayer
   }
 }
 </script>
@@ -168,6 +165,7 @@ export default {
 @import '../style/helpers/_mixins.scss';
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
+// @import '../style/vendor/videojs.css';
 
 .atom {
   display: block;
@@ -269,7 +267,7 @@ export default {
   }
 }
 
-.video-js {
-  max-width: 100vw;
+video {
+  max-width: 100%;
 }
 </style>
