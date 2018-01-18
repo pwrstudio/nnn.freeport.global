@@ -2,43 +2,40 @@
   <div class='status'>
     <!-- Content -->
     <div class='status__content'>
-           <!-- User count -->
+      <!-- User count -->
       <div class='status__users__counter'>
         <div class='status__users__counter__header'>
         </div>
         <div v-if='main.userList'
              class='status__users__counter__number'>
-          {{main.userList.length}}
+          <!-- {{main.userList.length}} -->
         </div>
       </div>
       <!-- Exhibitions -->
       <div class='status__content__counter'>
         <div class='status__content__counter__header'>
-          Exhibitions
         </div>
         <div v-if='main.container.exhibitions'
              class='status__content__counter__number'>
-          {{main.container.exhibitions.length}}
+          <!-- {{main.container.exhibitions.length}} -->
         </div>
       </div>
       <!-- Works -->
       <div class='status__content__counter'>
         <div class='status__content__counter__header'>
-          Works
         </div>
         <div v-if='main.container.works'
              class='status__content__counter__number'>
-          {{main.container.works.length}}
+          <!-- {{main.container.works.length}} -->
         </div>
       </div>
       <!-- Content units -->
       <div class='status__content__counter'>
         <div class='status__content__counter__header'>
-          Content
         </div>
         <div v-if='main.container.content'
              class='status__content__counter__number'>
-          {{main.container.content.length}}
+          <!-- {{main.container.content.length}} -->
         </div>
       </div>
     </div>
@@ -70,6 +67,35 @@
       </div>
       <div id='map'
            class='status__users__map' />
+    </div>
+    <div class='status__third'>
+      <!-- User count -->
+      <div class='status__users__counter'>
+        <div class='status__users__counter__header'>
+        </div>
+        <div v-if='main.userList'
+             class='status__users__counter__number'>
+          <!-- {{main.userList.length}} -->
+        </div>
+      </div>
+      <!-- Exhibitions -->
+      <div class='status__content__counter'>
+        <div class='status__content__counter__header'>
+        </div>
+        <div v-if='main.container.exhibitions'
+             class='status__content__counter__number'>
+          <!-- {{main.container.exhibitions.length}} -->
+        </div>
+      </div>
+      <!-- Works -->
+      <div class='status__content__counter'>
+        <div class='status__content__counter__header'>
+        </div>
+        <div v-if='main.container.works'
+             class='status__content__counter__number'>
+          <!-- {{main.container.works.length}} -->
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -156,7 +182,7 @@ export default {
 }
 
 @mixin large-type {
-  font-size: 48px;
+  font-size: 14px;
 }
 
 @mixin counter {
@@ -223,17 +249,15 @@ export default {
 
 .status {
   color: $white;
-  height: calc(100vh - 80px) !important;
+  height: calc(100vh - 60px) !important;
   overflow: hidden;
-  padding-top: 80px;
+  padding-top: 60px;
   padding-bottom: 20px;
 
   &__content {
     @include quad;
     width: 100%;
     height: 10%;
-    max-height: 160px;
-    min-height: 10px;
     &__table {
       @include table;
     }
@@ -246,6 +270,7 @@ export default {
   &__users {
     @include quad;
     width: 100%;
+    height: 60%;
 
     &__table {
       @include table;
@@ -263,18 +288,27 @@ export default {
       border: 1px solid $white;
     }
   }
-}
 
-.mapboxgl-marker {
-  svg {
-    g {
-      fill: $red !important;
+  &__third {
+    @include quad;
+    width: 100%;
+    height: 30%;
+
+    &__table {
+      @include table;
+    }
+
+    &__counter {
+      @include counter;
+    }
+
+    &__map {
+      flex: 1 2 500px;
+      padding: 0px;
+      margin: 10px;
+      overflow: hidden;
+      border: 1px solid $white;
     }
   }
-}
-
-.mapboxgl-control-container {
-  display: none !important;
-  opacity: 0;
 }
 </style>
