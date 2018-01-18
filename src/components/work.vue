@@ -2,7 +2,7 @@
   <div class='work'
        :class='{"work--open": payload.open, "work--closed": !payload.open}'>
 
-    <div class='work__image' :style='"background-image: url(http://ipfs.io/ipfs/" + firstImage + ")"'/>
+    <div class='work__image' :style='"background-image: url(" + firstImage + ")"'/>
     <!-- OPEN-->
     <div v-if='payload.open'
          @click='goToWork({name: "singleWork", params: {hash: hash}})'
@@ -31,6 +31,7 @@
 import countdown from 'countdown'
 import {mapActions} from 'vuex'
 import {isPast, parse} from 'date-fns'
+import ImgixClient from 'imgix-core-js'
 
 export default {
   name: 'work',
@@ -59,6 +60,16 @@ export default {
     }
   },
   mounted() {
+    var client = new ImgixClient({
+      host: 'nnnfreeport.imgix.net',
+      secureURLToken: 'A8qQj2zw8eqcXqEW'
+    })
+    var url = client.buildURL(
+      'https://ipfs.io/ipfs/QmNsgAUTpiFhqpvebe6Sd2j3A6k6hU4b88V3wVswcYsafz',
+      {w: 400, h: 300}
+    )
+    console.log(url)
+
     const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.hash)
     httpPromise.then(response => {
       this.payload = response.body
@@ -85,7 +96,18 @@ export default {
     setFirstImage() {
       const img = this.content.find(c => c.media === 'Image')
       if (img) {
-        this.firstImage = img.hash
+        let options = {}
+        if (this.payload.open) {
+          options = {w: 800, q: 10}
+        } else {
+          options = {w: 800, q: 40, blur: 100, mono: 808080}
+        }
+        const client = new ImgixClient({
+          host: 'nnnfreeport.imgix.net',
+          secureURLToken: 'A8qQj2zw8eqcXqEW'
+        })
+        let url = client.buildURL('https://ipfs.io/ipfs/' + img.hash, options)
+        this.firstImage = url
       }
     }
   },
@@ -202,7 +224,6 @@ export default {
   }
 
   &--closed &__image {
-    filter: grayscale(1);
     opacity: 0.4;
   }
 

@@ -165,7 +165,6 @@ export default {
 @import '../style/helpers/_mixins.scss';
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
-// @import '../style/vendor/videojs.css';
 
 .atom {
   display: block;
@@ -268,6 +267,6 @@ export default {
 }
 
 video {
-  max-width: 100%;
+  max-width: 400px;
 }
 </style>

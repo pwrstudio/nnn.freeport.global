@@ -60,6 +60,7 @@ export default {
 
 .audio-player {
   height: 400px;
+  width: 400px;
   overflow: hidden;
 
   &__progress {

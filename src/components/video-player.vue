@@ -80,6 +80,8 @@ export default {
 
 .video-player {
   color: $white;
+  // width: 400px;
+
   &__progress {
     appearance: none;
     border: none;
@@ -132,6 +134,9 @@ export default {
     &__title {
       float: left;
     }
+  }
+  &__video {
+    width: 100%;
   }
 }
 
