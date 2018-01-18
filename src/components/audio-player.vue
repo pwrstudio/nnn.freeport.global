@@ -1,25 +1,49 @@
+<template>
+  <div class='audio-player'>
+    <img class='audio-player__image' :src='image'/>
+    <progress class='audio-player__progress'
+              :class='{"audio-player__progress--playing": playing}'
+              max="1"
+              :value="progress" />
+    <div class='audio-player__toggle'
+          @click="togglePlayback">
+      <i v-if='playing'
+          class="material-icons audio-player__toggle__icon">pause</i>
+      <i v-else
+          class="material-icons audio-player__toggle__icon">play_arrow</i>
+    </div>
+    <div class='audio-player__controls'>
+
+      <div class='audio-player__controls__title' v-html='title'/>
+      <div class='audio-player__controls__timecode'><span v-html='formatTime(seek)'></span> / <span v-html='formatTime(duration)'></span></div>
+    </div>
+  </div>
+</template>
+
 <script>
 import VueHowler from 'vue-howler'
 
 export default {
-  mixins: [VueHowler]
+  mixins: [VueHowler],
+  methods: {
+    formatTime(time) {
+      const minutes = Math.floor(time / 60)
+      const seconds = Math.floor(time - minutes * 60)
+      return (
+        (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds)
+      )
+    }
+  },
+  props: {
+    title: {
+      type: String
+    },
+    image: {
+      type: String
+    }
+  }
 }
 </script>
- 
-<template>
-  <div class='audio-player'>
-    <progress class='audio-player__progress'
-              max="1"
-              :value="progress" />
-    <div class='audio-player__toggle'
-         @click="togglePlayback">
-      <i v-if='playing'
-         class="material-icons audio-player__toggle__icon">pause</i>
-      <i v-else
-         class="material-icons audio-player__toggle__icon">play_arrow</i>
-    </div>
-  </div>
-</template>
 
 <style scoped lang='scss'>
 @import '../style/helpers/_mixins.scss';
@@ -27,33 +51,72 @@ export default {
 @import '../style/_variables.scss';
 
 @mixin progress-bar {
-  background-color: blue;
+  background-color: transparent;
 }
+
 @mixin progress-value {
-  background-color: yellow;
+  background-color: $red;
 }
 
 .audio-player {
-  &__progress[value] {
-    border: none;
+  height: 400px;
+  overflow: hidden;
 
+  &__progress {
+    appearance: none;
+    border: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
     width: 100%;
-    height: 60px;
+    height: 100px;
+    z-index: 100;
     @include progress-bar;
+    &--playing {
+      &::-webkit-progress-value {
+        background-color: $green;
+      }
+    }
   }
+
+  &__image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
   &__toggle {
     cursor: pointer;
+    @include center;
 
     &__icon {
+      font-size: 96px;
       user-select: none;
       color: $white;
     }
   }
+
+  &__controls {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    width: calc(100% - 20px);
+    z-index: 100;
+
+    &__timecode {
+      float: right;
+      font-size: 14px;
+    }
+
+    &__title {
+      float: left;
+    }
+  }
 }
 
-progress {
-  @include progress-value;
-}
 progress::-webkit-progress-bar {
   @include progress-bar;
 }

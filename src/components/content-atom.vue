@@ -27,9 +27,10 @@
          class='atom__audio'
          :to='{name: "singleContent", params: {hash: hash}}'
          :id='hash'>
-      <span v-html='payload.title' />
       <audio-player :sources='["https://ipfs.io/ipfs/" + payload.hash]'
-                    :loop='true'
+                    :loop='false'
+                    image='/static/test.jpg'
+                    :title='payload.title'
                     :formats='["mp3"]' />
     </div>
     <!-- END: AUDIO -->
