@@ -56,7 +56,8 @@ export default {
         speed: 400,
         direction: 'vertical',
         keyboard: true,
-        spaceBetween: 200,
+        simulateTouch: false,
+        spaceBetween: 300,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
