@@ -98,9 +98,9 @@ export default {
       if (img) {
         let options = {}
         if (this.payload.open) {
-          options = {w: 800, q: 10}
+          options = {w: 800, auto: 'compress,enhance,format'}
         } else {
-          options = {w: 800, q: 40, blur: 100, mono: 808080}
+          options = {w: 800, auto: 'compress,enhance,format', blur: 100, mono: 808080}
         }
         const client = new ImgixClient({
           host: 'nnnfreeport.imgix.net',
