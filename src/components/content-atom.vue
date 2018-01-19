@@ -18,7 +18,7 @@
                  class='atom__image'
                  :to='{name: "singleContent", params: {hash: hash}}'
                  :id='hash'>
-      <img :src='"https://ipfs.io/ipfs/" + payload.hash'>
+      <img :src='getImageLink(payload.hash)'>
     </router-link>
     <!-- END: IMAGE -->
 
@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
 import AudioPlayer from '@/components/audio-player.vue'
 import VideoPlayer from '@/components/video-player.vue'
@@ -108,22 +109,12 @@ export default {
     const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.hash)
     httpPromise.then(response => {
       this.payload = response.body
-      // TEXT
       if (this.payload.media === 'Text') {
         this.setIPFSText()
-        // EXTERNAL LINK
       } else if (this.payload.media === 'External link') {
         console.log('link')
         this.getLink()
-        // VIDEO
       }
-      // else if (this.payload.media === 'Video') {
-      //   this.$nextTick(() => {
-      //     this.video.options = {
-      //       sources: [{}]
-      //     }
-      //   })
-      // }
     })
     httpPromise.catch(err => {
       console.log(err)
@@ -152,6 +143,15 @@ export default {
       httpPromise.catch(err => {
         console.log(err)
       })
+    },
+    getImageLink(imageHash) {
+      const options = {w: 800, auto: 'compress,format'}
+      const client = new ImgixClient({
+        host: 'nnnfreeport.imgix.net',
+        secureURLToken: 'A8qQj2zw8eqcXqEW'
+      })
+      let url = client.buildURL('https://ipfs.io/ipfs/' + imageHash, options)
+      return url
     }
   },
   components: {
