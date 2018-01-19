@@ -80,6 +80,7 @@
 <script>
 import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
+import marked from 'marked'
 import AudioPlayer from '@/components/audio-player.vue'
 import VideoPlayer from '@/components/video-player.vue'
 
@@ -124,7 +125,7 @@ export default {
     setIPFSText() {
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
-        this.text = ellipsize(response.body, 480)
+        this.text = marked(ellipsize(response.body, 480))
       })
       httpPromise.catch(err => {
         console.log(err)

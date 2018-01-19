@@ -20,12 +20,10 @@
 </template>
 
 <script>
-import work from '@/components/work'
+import marked from 'marked'
+
 export default {
   name: 'singleContentView',
-  components: {
-    work
-  },
   data() {
     return {
       payload: {
@@ -52,7 +50,7 @@ export default {
     setIPFSText() {
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
-        this.text = response.body
+        this.text = marked(response.body)
       })
       httpPromise.catch(err => {
         console.log(err)

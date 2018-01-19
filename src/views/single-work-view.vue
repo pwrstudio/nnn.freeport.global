@@ -46,6 +46,7 @@
 <script>
 import {mapActions} from 'vuex'
 import contentAtom from '@/components/content-atom'
+
 export default {
   name: 'singleWork',
   components: {
