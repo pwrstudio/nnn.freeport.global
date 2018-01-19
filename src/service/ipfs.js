@@ -8,11 +8,11 @@ Vue.use(VueResource)
 
 const CONTRACT_ADDRESS = '0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
 // const CONTRACT_API =
-// 'https://cors-anywhere.herokuapp.com/https%3A%2F%2Fapi.infura.io%2Fv1%2Fjsonrpc%2Frinkeby%2Feth_call%3Fparams%3D%5B%7B%0D%0A%09%09%22to%22%3A%20%220x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A%22%2C%0D%0A%09%09%22data%22%3A%20%220x6d4ce63c%22%0D%0A%09%7D%2C%0D%0A%09%22latest%22%0D%0A%5D'
-// const CONTRACT_API =
 //   'https://api.infura.io/v1/jsonrpc/rinkeby/eth_call?params=%5B%7B%0D%0A%09%09%22to%22%3A%20%220x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A%22%2C%0D%0A%09%09%22data%22%3A%20%220x6d4ce63c%22%0D%0A%09%7D%2C%0D%0A%09%22latest%22%0D%0A%5D'
 
-const FALLBACK_ROOTHASH = 'QmdAfAKQpNK6cGiPT7r6zkx9NYN33mWn3WF8y3Gj4ae6CQ'
+// const FALLBACK_ROOTHASH = 'QmdAfAKQpNK6cGiPT7r6zkx9NYN33mWn3WF8y3Gj4ae6CQ'
+// const FALLBACK_ROOTHASH = 'QmNexXTxspjxf7Fx3cXZcVgqwwCde5vhNbnCxwPZ6WUee3'
+const FALLBACK_ROOTHASH = 'QmckeTeJNyYidZB3fXCx2ChxLbXAQdmFZi9mojcSjGL6rb'
 
 // const hexToString = hex => {
 //   let string = ''
@@ -25,9 +25,12 @@ const FALLBACK_ROOTHASH = 'QmdAfAKQpNK6cGiPT7r6zkx9NYN33mWn3WF8y3Gj4ae6CQ'
 const getRootHash = contractAddress => {
   return new Promise((resolve, reject) => {
     resolve(FALLBACK_ROOTHASH)
+
     // Vue.http.get(CONTRACT_API).then(
     //   response => {
     //     let convertedHash = hexToString(response.body.result).slice(-64)
+    //     console.log(convertedHash)
+
     //     resolve(convertedHash)
     //   },
     //   response => {
@@ -39,7 +42,9 @@ const getRootHash = contractAddress => {
 
 const callIPFS = rootHash => {
   return new Promise((resolve, reject) => {
-    Vue.http.get('https://ipfs.io/ipfs/' + rootHash).then(
+    console.log(rootHash)
+    console.log('https://ipfs.io/ipfs/' + rootHash)
+    Vue.http.get('https://ipfs.io/ipfs/' + String(rootHash)).then(
       response => {
         resolve({
           rootHash: rootHash,
