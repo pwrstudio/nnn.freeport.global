@@ -1,16 +1,16 @@
 <template>
   <div class='info'>
     <div class='info__main'>
-      <div class='info__main__overlay'/>
-      <span v-html='main.container.about.info'/>
+      <div class='info__main__overlay' />
+      <span v-html='main.container.about.info' />
     </div>
     <div class='info__credits'>
-      <div class='info__credits__overlay'/>
-      <span v-html='main.container.about.credits'/>
+      <div class='info__credits__overlay' />
+      <span v-html='main.container.about.credits' />
     </div>
     <div class='info__tech'>
-      <div class='info__tech__overlay'/>
-      <span v-html='main.container.about.tech'/>
+      <div class='info__tech__overlay' />
+      <span v-html='main.container.about.tech' />
     </div>
   </div>
 </template>
@@ -77,6 +77,8 @@ export default {
   width: calc(100vw - 60px);
   font-size: 20px;
   line-height: 24px;
+  // font-family: 'PanamaDemo-Monospace', $serif-stack;
+
   @include screen-size('small') {
     margin-top: 50px;
     height: auto;

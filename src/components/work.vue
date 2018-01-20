@@ -2,7 +2,8 @@
   <div class='work'
        :class='{"work--open": payload.open, "work--closed": !payload.open}'>
 
-    <div class='work__image' :style='"background-image: url(" + firstImage + ")"'/>
+    <div class='work__image'
+         :style='"background-image: url(" + firstImage + ")"' />
     <!-- OPEN-->
     <div v-if='payload.open'
          @click='goToWork({name: "singleWork", params: {hash: hash}})'
@@ -299,8 +300,8 @@ export default {
       z-index: 100;
     }
     @include screen-size('small') {
-      font-size: 32px !important;
-      line-height: 32px !important;
+      font-size: 46px !important;
+      line-height: 46px !important;
     }
     @include screen-size('large') {
       font-size: 92px !important;

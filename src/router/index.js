@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // Views
 import stackView from '@/views/stack-view'
+import scanView from '@/views/scan-view'
 import singleWorkView from '@/views/single-work-view'
 import singleContentView from '@/views/single-content-view'
 import statusView from '@/views/status-view'
@@ -21,6 +22,11 @@ export default new Router({
       path: '/stack/:unit?',
       name: 'stack',
       component: stackView
+    },
+    {
+      path: '/scan',
+      name: 'scan',
+      component: scanView
     },
     {
       path: '/info',

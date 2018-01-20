@@ -172,6 +172,8 @@ export default {
 @import './style/helpers/_mixins.scss';
 @import './style/helpers/_responsive.scss';
 @import './style/_variables.scss';
+@import './style/fonts/PanamaDemo-Monospace/styles.css';
+@import './style/fonts/FiveYearsLaterDemo/styles.css';
 @import url('https://fonts.googleapis.com/css?family=Space+Mono');
 
 html,
@@ -183,6 +185,7 @@ body {
 }
 
 .app {
+  // font-family: 'FiveYearsLaterDemo', 'space mono', $sans-serif-stack;
   font-family: 'space mono', $sans-serif-stack;
   font-size: $font-size;
   @include screen-size('small') {

@@ -1,0 +1,11 @@
+@font-face {
+  font-family: 'FiveYearsLaterDemo';
+  src: url('./style/fonts/FiveYearsLaterDemo/FiveYearsLaterDemo.eot?#iefix')
+      format('embedded-opentype'),
+    url('./style/fonts/FiveYearsLaterDemo/FiveYearsLaterDemo.otf') format('opentype'),
+    url('./style/fonts/FiveYearsLaterDemo/FiveYearsLaterDemo.woff') format('woff'),
+    url('./style/fonts/FiveYearsLaterDemo/FiveYearsLaterDemo.ttf') format('truetype'),
+    url('./style/fonts/FiveYearsLaterDemo/FiveYearsLaterDemo.svg#FiveYearsLaterDemo') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}

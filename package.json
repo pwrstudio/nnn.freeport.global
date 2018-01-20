@@ -20,6 +20,7 @@
     "date-fns": "^1.29.0",
     "ellipsize": "^0.0.3",
     "imgix-core-js": "^1.1.1",
+    "instascan": "^1.0.0",
     "mapbox-gl": "^0.43.0",
     "marked": "^0.3.12",
     "raven-js": "^3.21.0",
