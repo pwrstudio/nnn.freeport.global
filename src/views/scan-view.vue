@@ -27,15 +27,15 @@ export default {
     })
     console.dir(this.scanner)
     this.scanner.addListener('scan', content => {
-      console.log(content)
+      window.alert(content)
     })
     Instascan.Camera.getCameras()
       .then(cameras => {
         console.log(cameras[0])
-        if (cameras.length > 0) {
-          this.scanner.start(cameras[0])
+        if (cameras[1]) {
+          this.scanner.start(cameras[1])
         } else {
-          console.error('No cameras found.')
+          this.scanner.start(cameras[0])
         }
       })
       .catch(e => {
@@ -69,6 +69,7 @@ export default {
     width: 100vw;
     height: 100vh;
     background: blue;
+    object-fit: cover;
   }
 }
 </style>
