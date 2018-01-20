@@ -60,16 +60,6 @@ export default {
     }
   },
   mounted() {
-    var client = new ImgixClient({
-      host: 'nnnfreeport.imgix.net',
-      secureURLToken: 'A8qQj2zw8eqcXqEW'
-    })
-    var url = client.buildURL(
-      'https://ipfs.io/ipfs/QmNsgAUTpiFhqpvebe6Sd2j3A6k6hU4b88V3wVswcYsafz',
-      {w: 400, h: 300}
-    )
-    console.log(url)
-
     const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.hash)
     httpPromise.then(response => {
       this.payload = response.body
@@ -186,8 +176,11 @@ export default {
     width: 100%;
     will-change: opacity;
     transition: opacity 0.4s ease-out;
-    opacity: 0.4;
+    opacity: 0.5;
     background-position: center center;
+    @include screen-size('small') {
+      // background-size: cover;
+    }
   }
 
   &--open {
@@ -393,12 +386,18 @@ export default {
   font-size: 100vh;
   @include center;
   z-index: 5000;
+  @include screen-size('small') {
+    font-size: 90vw;
+  }
 }
 
 .material-icons--medium {
   font-size: 70vh;
   @include center;
   z-index: 5000;
+  @include screen-size('small') {
+    font-size: 50vh;
+  }
 }
 
 // .swiper-slide {

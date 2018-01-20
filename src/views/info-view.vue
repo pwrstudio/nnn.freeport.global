@@ -1,6 +1,5 @@
 <template>
   <div class='info'>
-
     <div class='info__main'>
       <div class='info__main__overlay'/>
       <span v-html='main.container.about.info'/>
@@ -50,6 +49,9 @@ export default {
   overflow-x: hidden;
   @include hide-scroll;
   @include bluroverlay;
+  @include screen-size('small') {
+    position: static;
+  }
 }
 
 @mixin secondary {
@@ -59,16 +61,28 @@ export default {
   line-height: 20px;
   top: calc(50vh + 80px);
   height: calc(50vh - 200px);
+  @include screen-size('small') {
+    height: auto;
+    width: calc(100vw - 120px);
+    font-size: 13px;
+    line-height: 16px;
+  }
 }
 
 @mixin primary {
   @include infobox;
   top: 80px;
-  left: 30px;
+  left: 0px;
   height: calc(50vh - 80px);
-  width: calc(100vw - 120px);
+  width: calc(100vw - 60px);
   font-size: 20px;
   line-height: 24px;
+  @include screen-size('small') {
+    margin-top: 50px;
+    height: auto;
+    font-size: 15px;
+    line-height: 18px;
+  }
 }
 
 .info {

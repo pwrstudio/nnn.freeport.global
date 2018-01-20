@@ -57,7 +57,7 @@ export default {
         direction: 'vertical',
         keyboard: true,
         simulateTouch: false,
-        spaceBetween: 300,
+        spaceBetween: 100,
         navigation: {
           nextEl: '.swiper-button-next',
           prevEl: '.swiper-button-prev'
@@ -121,6 +121,9 @@ export default {
   bottom: 0;
   left: 0;
   z-index: 1000;
+  @include screen-size('small') {
+    display: none;
+  }
 }
 
 .slideshow-button-next {
@@ -131,15 +134,22 @@ export default {
   bottom: 0;
   left: 50vw;
   z-index: 1000;
+  @include screen-size('small') {
+    display: none;
+  }
 }
 
 .swiper-container {
   top: 0;
+  // right: 0;
   height: 100vh;
   // height: calc(100vh - #{$bar-height * 2});
-  width: 100vw;
-  margin: auto;
+  width: calc(100vw - 30px);
+  margin-right: 0;
   background-image: url(/static/grid-bw.png);
+  @include screen-size('small') {
+    background-size: 300px;
+  }
 }
 
 .material-icons--off {
@@ -162,7 +172,6 @@ export default {
 .swiper-slide {
   overflow: hidden;
   transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0px 0px 100px $black;
 }
 .swiper-slide-active {
   transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);

@@ -36,5 +36,13 @@ export default {
   z-index: 10000;
   display: flex;
   flex-direction: column;
+
+  @include screen-size('small') {
+    right: auto;
+    left: 0;
+    top: 60px;
+    height: calc(100vh - 60px);
+    width: 30px;
+  }
 }
 </style>

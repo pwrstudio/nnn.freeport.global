@@ -46,6 +46,8 @@ export default {
       this.$notify({
         group: 'global',
         type: 'network',
+        duration: 1000,
+        position: 'bottom right',
         title: 'Connected to IPFS',
         text: 'IPFS root hash: ' + this.main.rootHash
       })
@@ -84,6 +86,8 @@ export default {
     this.$notify({
       group: 'global',
       type: 'network',
+      duration: 1000,
+      position: 'bottom right',
       title: 'Connecting to Ethereum: Rinkeby',
       text: 'Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
     })
@@ -223,6 +227,10 @@ body {
 .material-icons {
   font-size: 48px;
   line-height: 60px;
+  @include screen-size('small') {
+    font-size: 38px;
+    line-height: 65px;
+  }
 }
 
 .global-notifications {

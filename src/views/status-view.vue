@@ -274,6 +274,9 @@ export default {
 
     &__table {
       @include table;
+      @include screen-size('small') {
+        display: none;
+      }
     }
 
     &__counter {

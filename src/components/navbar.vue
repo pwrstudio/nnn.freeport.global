@@ -121,4 +121,18 @@ export default {
 @import '../style/helpers/_mixins.scss';
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
+
+.nav-button__left {
+  @include screen-size('small') {
+    width: 70vw;
+    background: $black;
+  }
+}
+
+.nav-button__right {
+  @include screen-size('small') {
+    width: 30vw;
+    background: $black;
+  }
+}
 </style>
