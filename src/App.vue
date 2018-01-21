@@ -1,9 +1,6 @@
 <template>
   <div class='app'>
     <navbar/>
-    <notifications group="global"
-                   classes="global-notifications"
-                   width="400px" />
     <router-view id='main-view' />
   </div>
 </template>
