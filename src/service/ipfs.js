@@ -10,8 +10,6 @@ const CONTRACT_ADDRESS = '0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
 // const CONTRACT_API =
 //   'https://api.infura.io/v1/jsonrpc/rinkeby/eth_call?params=%5B%7B%0D%0A%09%09%22to%22%3A%20%220x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A%22%2C%0D%0A%09%09%22data%22%3A%20%220x6d4ce63c%22%0D%0A%09%7D%2C%0D%0A%09%22latest%22%0D%0A%5D'
 
-// const FALLBACK_ROOTHASH = 'QmdAfAKQpNK6cGiPT7r6zkx9NYN33mWn3WF8y3Gj4ae6CQ'
-// const FALLBACK_ROOTHASH = 'QmNexXTxspjxf7Fx3cXZcVgqwwCde5vhNbnCxwPZ6WUee3'
 const FALLBACK_ROOTHASH = 'QmckeTeJNyYidZB3fXCx2ChxLbXAQdmFZi9mojcSjGL6rb'
 
 // const hexToString = hex => {

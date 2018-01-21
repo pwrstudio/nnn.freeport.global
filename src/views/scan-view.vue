@@ -12,7 +12,6 @@
 <script>
 import {mapState} from 'vuex'
 import Instascan from 'instascan'
-import {setTimeout} from 'timers'
 
 export default {
   name: 'scanView',
@@ -54,9 +53,11 @@ export default {
       if (matchingWork) {
         console.log('matching', matchingWork.hash)
         this.resultHash = matchingWork.hash
-        setTimeout(() => {
-          this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
-        }, 3000)
+        this.scanner.stop().then(() => {
+          window.setTimeout(() => {
+            this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
+          }, 2000)
+        })
       }
     })
   },
