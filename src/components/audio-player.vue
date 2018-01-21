@@ -63,6 +63,11 @@ export default {
   width: 400px;
   overflow: hidden;
 
+  @include screen-size('small') {
+    width: 80vw;
+    height: 300px;
+  }
+
   &__progress {
     appearance: none;
     border: none;

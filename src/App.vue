@@ -94,6 +94,13 @@ export default {
     //   title: 'Connecting to Ethereum: Rinkeby',
     //   text: 'Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
     // })
+    // Check for mobile here. To be improved!
+    if (
+      typeof window.orientation !== 'undefined' ||
+      navigator.userAgent.indexOf('IEMobile') !== -1
+    ) {
+      this.$router.push({name: 'scan'})
+    }
     this.$_setMetaTags()
     this.$_fetchData()
   },

@@ -24,8 +24,8 @@
         <div v-html='payload.title' />
         <div v-html='artistList' />
         <div v-html='timeToPublish' />
+        <i class="material-icons material-icons--large">close</i>
       </section>
-      <i class="material-icons material-icons--large">close</i>
     </div>
     <!-- END: CLOSED -->
 
@@ -169,7 +169,7 @@ export default {
   &__image {
     background-position: center center;
     height: 100%;
-    opacity: 0.6;
+    opacity: 0.5;
     width: 100%;
   }
 
@@ -194,11 +194,12 @@ export default {
     z-index: 1000;
 
     section {
+      position: relative;
       width: 80vw;
       z-index: 100;
 
       @include screen-size('small') {
-        top: 45%;
+        margin-bottom: 15%;
       }
     }
 
@@ -216,9 +217,9 @@ export default {
 
 .material-icons--large {
   @include center;
-
   font-size: 100vh;
-  z-index: 50;
+  z-index: -50;
+  top: 48%;
 
   @include screen-size('small') {
     font-size: 90vw;

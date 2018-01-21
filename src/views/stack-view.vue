@@ -19,6 +19,11 @@
       <i class="material-icons material-icons--on">keyboard_arrow_down</i>
       <i class="material-icons material-icons--off">close</i>
     </div>
+
+    <!-- Scanner nav button on mobile -->
+    <router-link :to='{name: "scan"}' class="scanner-nav">
+      <i class="material-icons material-icons--on">center_focus_weak</i>
+    </router-link>
   </div>
 </template>
 
@@ -169,6 +174,38 @@ export default {
 
   .material-icons--on {
     display: none;
+  }
+}
+
+.scanner-nav {
+  display: none;
+
+  @include screen-size('small') {
+    align-items: center;
+    background: $black;
+    border-radius: 80px;
+    bottom: 20px;
+    display: flex;
+    height: 80px;
+    justify-content: center;
+    position: fixed;
+    right: 20px;
+    text-decoration: none;
+    width: 80px;
+    z-index: 1000;
+
+    i {
+      color: $white;
+      font-size: 50px;
+    }
+
+    &:active {
+      background: $white;
+
+      i {
+        color: $black;
+      }
+    }
   }
 }
 </style>
