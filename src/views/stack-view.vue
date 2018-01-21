@@ -144,7 +144,7 @@ export default {
   // right: 0;
   height: 100vh;
   // height: calc(100vh - #{$bar-height * 2});
-  width: calc(100vw - 30px);
+  width: 100vw;
   margin-right: 0;
   background-image: url(/static/grid-bw.png);
   @include screen-size('small') {

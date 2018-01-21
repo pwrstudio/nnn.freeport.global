@@ -2,11 +2,12 @@
   <div class='scanner'>
     <video id='preview'
            class='scanner__preview' />
+           <i class="material-icons scanner__crosshair">crop_free</i>
   </div>
 </template>
 
 <script>
-import {mapState, mapActions} from 'vuex'
+import {mapState} from 'vuex'
 import Instascan from 'instascan'
 
 export default {
@@ -23,11 +24,8 @@ export default {
   mounted() {
     this.scanner = new Instascan.Scanner({
       video: document.getElementById('preview'),
-      continuous: true
-    })
-    console.dir(this.scanner)
-    this.scanner.addListener('scan', content => {
-      window.alert(content)
+      continuous: true,
+      mirror: false
     })
     Instascan.Camera.getCameras()
       .then(cameras => {
@@ -41,6 +39,18 @@ export default {
       .catch(e => {
         console.log(e)
       })
+    // Listen for scan events
+    this.scanner.addListener('scan', content => {
+      console.log('scanned content', content, typeof content)
+      const matchingWork = this.main.container.works.find(w => {
+        console.log(w.id)
+        return w.id === content
+      })
+      if (matchingWork) {
+        console.log('matching', matchingWork.hash)
+        this.$router.push({name: 'singleWork', params: {hash: matchingWork.hash}})
+      }
+    })
   },
   methods: {},
   watch: {
@@ -70,6 +80,13 @@ export default {
     height: 100vh;
     background: blue;
     object-fit: cover;
+  }
+
+  &__crosshair {
+    @include center;
+    font-size: 70vw;
+    opacity: 0.7;
+    color: $white;
   }
 }
 </style>
