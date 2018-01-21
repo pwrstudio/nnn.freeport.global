@@ -110,15 +110,18 @@ export default {
   height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
+
   @include hide-scroll;
 }
 
 .slideshow-button-prev {
   @include nav;
+
   top: auto;
   bottom: 0;
   left: 0;
   z-index: 1000;
+
   @include screen-size('small') {
     display: none;
   }
@@ -126,10 +129,12 @@ export default {
 
 .slideshow-button-next {
   @include nav;
+
   top: auto;
   bottom: 0;
   left: 50vw;
   z-index: 1000;
+
   @include screen-size('small') {
     display: none;
   }
@@ -138,9 +143,10 @@ export default {
 .swiper-container {
   top: 0;
   height: 100vh;
-  width: 100vw;
+  width: calc(100vw - 30px);
   margin-right: 0;
   background-image: url(/static/grid-bw.png);
+
   @include screen-size('small') {
     background-size: 300px;
   }
@@ -152,22 +158,17 @@ export default {
 
 .swiper-button-disabled {
   pointer-events: all !important;
+
   &:hover {
     color: darkgrey;
   }
+
   .material-icons--off {
     display: block;
   }
+
   .material-icons--on {
     display: none;
   }
 }
-
-// .swiper-slide {
-//   overflow: hidden;
-//   transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-// }
-// .swiper-slide-active {
-//   transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-// }
 </style>

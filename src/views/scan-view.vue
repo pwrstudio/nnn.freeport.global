@@ -3,9 +3,7 @@
     <video id='preview'
            class='scanner__preview' />
     <i class="material-icons scanner__crosshair">crop_free</i>
-    <transition name="fade">
-      <div v-if='resultHash.length > 0' class='scanner__success' v-html='resultHash'/>
-    </transition>
+    <div v-if='resultHash.length > 0' class='scanner__success' v-html='resultHash'/>
   </div>
 </template>
 
@@ -89,6 +87,7 @@ export default {
 
   &__crosshair {
     @include center;
+    top: 45%;
     font-size: 70vw;
     opacity: 0.7;
     color: $white;

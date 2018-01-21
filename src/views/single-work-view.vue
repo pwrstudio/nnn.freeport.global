@@ -1,13 +1,13 @@
 <template>
   <div>
-    
+
     <div class='work'>
       <contentAtom v-for='item in payload.content'
                    :key='item.hash'
                    :hash='item.hash' />
     </div>
 
-    <!-- Roll down info overlay -->
+    <!-- Roll-down info overlay -->
     <div v-if='$route.params.info' class='info-overlay'>
        <div class='info-overlay__hash'>
         <span class='info-overlay__hash__label'
@@ -71,9 +71,7 @@ export default {
       this.payload = response.body
       this.SET_CURRENT_WORK(this.payload)
     })
-    httpPromise.catch(err => {
-      console.log(err)
-    })
+    httpPromise.catch(console.log)
   },
   computed: {
     artistList() {
@@ -94,38 +92,42 @@ export default {
 @import '../style/_variables.scss';
 
 @mixin box {
-  padding: 20px;
   border: 1px solid $white;
+  color: $white;
+  overflow: hidden;
+  padding: 20px;
   margin-bottom: 20px;
   width: calc(100% - 100px);
-  color: $white;
 }
 
 @mixin label {
+  display: inline-block;
   font-size: 14px;
+  letter-spacing: 1px;
   text-transform: uppercase;
   width: 12ch;
-  display: inline-block;
-  letter-spacing: 1px;
+
   @include screen-size('medium') {
     font-size: 12px;
+    width: auto;
   }
 }
 
 .work {
+  @include hide-scroll;
+
+  align-items: center;
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
+  height: 100vh;
   justify-content: space-around;
+  left: 0;
+  overflow-y: auto;
+  overflow-x: hidden;
   padding-top: 60px;
   position: fixed;
   top: 0;
-  left: 0;
   width: 100vw;
-  height: 100vh;
-  overflow-y: auto;
-  overflow-x: hidden;
-  @include hide-scroll;
 }
 
 .info-overlay {
@@ -137,38 +139,53 @@ export default {
   background: $black;
   padding: 30px;
   padding-top: 80px;
+
   &__hash {
     @include box;
+
+    white-space: nowrap;
+    text-overflow: ellipsis;
+
     &__label {
       @include label;
     }
   }
+
   &__title {
     @include box;
+
     &__label {
       @include label;
     }
   }
+
   &__artist {
     @include box;
+
     &__label {
       @include label;
     }
   }
+
   &__exhibition {
     @include box;
+
     &__label {
       @include label;
     }
   }
+
   &__location {
     @include box;
+
     &__label {
       @include label;
     }
   }
+
   &__description {
     @include box;
+
     &__label {
       @include label;
     }

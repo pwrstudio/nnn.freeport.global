@@ -188,15 +188,18 @@ export default {
     line-height: 64px !important;
     position: absolute;
     text-align: center;
+    text-decoration: none;
     top: 0;
     width: 100%;
     z-index: 1000;
 
     section {
-      @include center;
-
       width: 80vw;
       z-index: 100;
+
+      @include screen-size('small') {
+        top: 45%;
+      }
     }
 
     @include screen-size('small') {

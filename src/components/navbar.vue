@@ -150,6 +150,10 @@ export default {
   @include screen-size('small') {
     width: 70vw;
     background: $black;
+    &:active {
+      background: $white;
+      color: $black;
+    }
   }
 }
 
@@ -157,6 +161,10 @@ export default {
   @include screen-size('small') {
     width: 30vw;
     background: $black;
+    &:active {
+      background: $white;
+      color: $black;
+    }
   }
 }
 </style>
