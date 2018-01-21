@@ -32,11 +32,12 @@ export default {
 
 @mixin infobox {
   @include hide-scroll;
-  position: absolute;
-  padding: 30px;
-  color: white;
+
+  color: $white;
   overflow-y: auto;
   overflow-x: hidden;
+  padding: 30px;
+  position: absolute;
 
   &__overlay {
     position: absolute;

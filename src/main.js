@@ -4,7 +4,7 @@ import App from './App'
 import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
-import Notifications from 'vue-notification'
+// import Notifications from 'vue-notification'
 import VueSocketio from 'vue-socket.io'
 // import ga from 'vue-ga'
 // import Raven from 'raven-js'
@@ -20,7 +20,7 @@ import VueSocketio from 'vue-socket.io'
 Vue.config.productionTip = false
 
 Vue.use(VueHead)
-Vue.use(Notifications)
+// Vue.use(Notifications)
 Vue.use(VueSocketio, 'https://nnnfreeportrelay.now.sh')
 // Vue.use(VueSocketio, 'localhost:9090')
 // Vue.use(VueSocketio, '192.168.178.25:9090')

@@ -87,6 +87,7 @@ export default {
 
   &__crosshair {
     @include center;
+
     top: 45%;
     font-size: 70vw;
     opacity: 0.7;

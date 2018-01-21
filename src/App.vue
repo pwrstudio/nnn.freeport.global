@@ -43,57 +43,57 @@ export default {
   watch: {
     $route(to, from) {},
     'main.rootHash'() {
-      this.$notify({
-        group: 'global',
-        type: 'network',
-        duration: 1000,
-        position: 'bottom right',
-        title: 'Connected to IPFS',
-        text: 'IPFS root hash: ' + this.main.rootHash
-      })
+      // this.$notify({
+      //   group: 'global',
+      //   type: 'network',
+      //   duration: 1000,
+      //   position: 'bottom right',
+      //   title: 'Connected to IPFS',
+      //   text: 'IPFS root hash: ' + this.main.rootHash
+      // })
     }
   },
   sockets: {
     enter(data) {
       this.UPDATE_USERLIST(data.list)
-      this.$notify({
-        group: 'global',
-        type: 'positive',
-        position: 'bottom right',
-        title: data.user.id + ' (' + data.user.geo.city + ', ' + data.user.geo.country + ') joined',
-        text: ''
-      })
+      // this.$notify({
+      //   group: 'global',
+      //   type: 'positive',
+      //   position: 'bottom right',
+      //   title: data.user.id + ' (' + data.user.geo.city + ', ' + data.user.geo.country + ') joined',
+      //   text: ''
+      // })
     },
     leave(data) {
       console.log(data)
       this.UPDATE_USERLIST(data.list)
-      this.$notify({
-        group: 'global',
-        type: 'negative',
-        position: 'bottom right',
-        title: data.user.id + ' left',
-        text: ''
-      })
+      // this.$notify({
+      //   group: 'global',
+      //   type: 'negative',
+      //   position: 'bottom right',
+      //   title: data.user.id + ' left',
+      //   text: ''
+      // })
     },
     view(data) {
-      this.$notify({
-        group: 'global',
-        position: 'bottom right',
-        type: 'user',
-        title: 'view',
-        text: 'xxx'
-      })
+      // this.$notify({
+      //   group: 'global',
+      //   position: 'bottom right',
+      //   type: 'user',
+      //   title: 'view',
+      //   text: 'xxx'
+      // })
     }
   },
   mounted() {
-    this.$notify({
-      group: 'global',
-      type: 'network',
-      duration: 1000,
-      position: 'bottom right',
-      title: 'Connecting to Ethereum: Rinkeby',
-      text: 'Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
-    })
+    // this.$notify({
+    //   group: 'global',
+    //   type: 'network',
+    //   duration: 1000,
+    //   position: 'bottom right',
+    //   title: 'Connecting to Ethereum: Rinkeby',
+    //   text: 'Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
+    // })
     this.$_setMetaTags()
     this.$_fetchData()
   },
@@ -175,8 +175,8 @@ export default {
 @import './style/helpers/_mixins.scss';
 @import './style/helpers/_responsive.scss';
 @import './style/_variables.scss';
-@import './style/fonts/PanamaDemo-Monospace/styles.css';
-@import './style/fonts/FiveYearsLaterDemo/styles.css';
+// @import './style/fonts/PanamaDemo-Monospace/styles.css';
+// @import './style/fonts/FiveYearsLaterDemo/styles.css';
 @import url('https://fonts.googleapis.com/css?family=Space+Mono');
 
 html,
@@ -209,6 +209,7 @@ body {
 
 .nav-button {
   @include nav;
+
   background: transparent;
   top: 0;
   z-index: 1000;
@@ -223,48 +224,10 @@ body {
 .material-icons {
   font-size: 48px;
   line-height: 60px;
+
   @include screen-size('small') {
     font-size: 38px;
     line-height: 65px;
-  }
-}
-
-.global-notifications {
-  positio: fixed;
-  left: 0;
-  right: auto;
-  background: $black;
-  border: 1px solid $white;
-  color: $white;
-  margin: 10px;
-  padding: 20px;
-  width: auto;
-  font-weight: normal !important;
-
-  .notification-title {
-    font-size: 14px;
-    line-height: 14px;
-  }
-
-  .notification-content {
-    font-size: 14px;
-    line-height: 14px;
-  }
-
-  &.network {
-    background: $black;
-    border: 1px solid $white;
-    color: $white;
-  }
-  &.positive {
-    background: $green;
-    border: 1px solid $white;
-    color: $white;
-  }
-  &.negative {
-    background: $red;
-    border: 1px solid $white;
-    color: $black;
   }
 }
 
