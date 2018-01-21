@@ -1,11 +1,13 @@
 <template>
   <div>
+    
     <div class='work'>
       <contentAtom v-for='item in payload.content'
                    :key='item.hash'
                    :hash='item.hash' />
     </div>
 
+    <!-- Roll down info overlay -->
     <div v-if='$route.params.info' class='info-overlay'>
        <div class='info-overlay__hash'>
         <span class='info-overlay__hash__label'

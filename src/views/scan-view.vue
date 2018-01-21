@@ -15,7 +15,6 @@ import Instascan from 'instascan'
 
 export default {
   name: 'scanView',
-  components: {},
   data() {
     return {
       scanner: {},
@@ -33,7 +32,6 @@ export default {
     })
     Instascan.Camera.getCameras()
       .then(cameras => {
-        console.log(cameras[0])
         if (cameras[1]) {
           this.scanner.start(cameras[1])
         } else {
@@ -45,13 +43,13 @@ export default {
       })
     // Listen for scan events
     this.scanner.addListener('scan', content => {
-      console.log('scanned content', content, typeof content)
+      // console.log('scanned content', content, typeof content)
       const matchingWork = this.main.container.works.find(w => {
-        console.log(w.id)
+        // console.log(w.id)
         return w.id === content
       })
       if (matchingWork) {
-        console.log('matching', matchingWork.hash)
+        // console.log('matching', matchingWork.hash)
         this.resultHash = matchingWork.hash
         this.scanner.stop().then(() => {
           window.setTimeout(() => {
@@ -61,9 +59,8 @@ export default {
       }
     })
   },
-  methods: {},
-  watch: {
-    $route(to, from) {}
+  beforeDestroy() {
+    this.scanner.stop()
   }
 }
 </script>
@@ -75,7 +72,6 @@ export default {
 @import '../style/vendor/swiper.css';
 
 .scanner {
-  background: $red;
   position: fixed;
   top: 0px;
   left: 0;

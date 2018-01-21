@@ -300,8 +300,8 @@ export default {
       z-index: 100;
     }
     @include screen-size('small') {
-      font-size: 46px !important;
-      line-height: 46px !important;
+      font-size: 36px !important;
+      line-height: 36px !important;
     }
     @include screen-size('large') {
       font-size: 92px !important;

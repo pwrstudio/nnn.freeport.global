@@ -59,6 +59,7 @@ export default {
       this.$notify({
         group: 'global',
         type: 'positive',
+        position: 'bottom right',
         title: data.user.id + ' (' + data.user.geo.city + ', ' + data.user.geo.country + ') joined',
         text: ''
       })
@@ -69,6 +70,7 @@ export default {
       this.$notify({
         group: 'global',
         type: 'negative',
+        position: 'bottom right',
         title: data.user.id + ' left',
         text: ''
       })
@@ -76,6 +78,7 @@ export default {
     view(data) {
       this.$notify({
         group: 'global',
+        position: 'bottom right',
         type: 'user',
         title: 'view',
         text: 'xxx'
@@ -204,16 +207,6 @@ body {
   height: 100vh;
 }
 
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.fade-enter,
-.fade-leave-to {
-  transition: opacity 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  opacity: 0;
-}
-
 .nav-button {
   @include nav;
   background: transparent;
@@ -281,14 +274,11 @@ body {
 }
 
 .marker {
-  background-image: url('assets/img/ic_place_black_24px.svg');
-  // background-image: url('assets/img/ic_clear_black_24px.svg');
+  // background-image: url('assets/img/ic_place_black_24px.svg');
+  background-image: url('assets/img/ic_clear_black_24px.svg');
   background-size: cover;
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  // background: $green;
-  // opacity: 0.7;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
 }
 </style>

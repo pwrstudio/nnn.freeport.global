@@ -70,11 +70,13 @@ export default {
   flex-wrap: wrap;
   align-items: center;
   justify-content: center;
+
   &__text {
     color: $white;
     width: 70ch;
     max-width: 90%;
   }
+
   &__image {
     max-width: 80vw;
     max-height: 90vh;

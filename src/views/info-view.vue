@@ -30,7 +30,14 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
-@mixin bluroverlay {
+@mixin infobox {
+  @include hide-scroll;
+  position: absolute;
+  padding: 30px;
+  color: white;
+  overflow-y: auto;
+  overflow-x: hidden;
+
   &__overlay {
     position: absolute;
     top: 0;
@@ -39,16 +46,7 @@ export default {
     height: 100%;
     box-shadow: inset -20px -30px 30px $black;
   }
-}
 
-@mixin infobox {
-  position: absolute;
-  padding: 30px;
-  color: white;
-  overflow-y: auto;
-  overflow-x: hidden;
-  @include hide-scroll;
-  @include bluroverlay;
   @include screen-size('small') {
     position: static;
   }
@@ -61,6 +59,7 @@ export default {
   line-height: 20px;
   top: calc(50vh + 80px);
   height: calc(50vh - 200px);
+
   @include screen-size('small') {
     height: auto;
     width: calc(100vw - 120px);
@@ -77,7 +76,6 @@ export default {
   width: calc(100vw - 60px);
   font-size: 20px;
   line-height: 24px;
-  // font-family: 'PanamaDemo-Monospace', $serif-stack;
 
   @include screen-size('small') {
     margin-top: 50px;
@@ -101,12 +99,5 @@ export default {
     @include secondary;
     left: calc(50vw + 10px);
   }
-}
-
-svg {
-  width: 300px;
-}
-.cls-1 {
-  fill: $green;
 }
 </style>

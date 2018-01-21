@@ -115,8 +115,6 @@ export default {
 
 .slideshow-button-prev {
   @include nav;
-  // height: 100px;
-  // line-height: 100px;
   top: auto;
   bottom: 0;
   left: 0;
@@ -128,8 +126,6 @@ export default {
 
 .slideshow-button-next {
   @include nav;
-  // height: 100px;
-  // line-height: 100px;
   top: auto;
   bottom: 0;
   left: 50vw;
@@ -141,9 +137,7 @@ export default {
 
 .swiper-container {
   top: 0;
-  // right: 0;
   height: 100vh;
-  // height: calc(100vh - #{$bar-height * 2});
   width: 100vw;
   margin-right: 0;
   background-image: url(/static/grid-bw.png);
@@ -169,11 +163,11 @@ export default {
   }
 }
 
-.swiper-slide {
-  overflow: hidden;
-  transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
-.swiper-slide-active {
-  transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
-}
+// .swiper-slide {
+//   overflow: hidden;
+//   transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+// }
+// .swiper-slide-active {
+//   transition: transition 1s cubic-bezier(0.165, 0.84, 0.44, 1);
+// }
 </style>
