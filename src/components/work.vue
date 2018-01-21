@@ -4,33 +4,36 @@
 
     <div class='work__image'
          :style='"background-image: url(" + firstImage + ")"' />
+
     <!-- OPEN-->
-    <div v-if='payload.open'
-         @click='goToWork({name: "singleWork", params: {hash: hash}})'
-         class='work__timer'>
+    <router-link v-if='payload.open'
+         :to='{name: "singleWork", params: {hash: hash}}'
+         class='work__text'>
       <section>
-        <div v-html='"«" + payload.title + "»"' />
+        <div v-html='payload.title' />
         <div v-html='artistList' />
       </section>
-    </div>
+    </router-link>
+    <!-- END: OPEN-->
+
 
     <!--CLOSED -->
     <div v-if='!payload.open'
-         class='work__timer'>
+         class='work__text'>
       <section>
-        <div v-html='"«" + payload.title + "»"' />
+        <div v-html='payload.title' />
         <div v-html='artistList' />
         <div v-html='timeToPublish' />
       </section>
       <i class="material-icons material-icons--large">close</i>
     </div>
+    <!-- END: CLOSED -->
 
   </div>
 </template>
 
 <script>
 import countdown from 'countdown'
-import {mapActions} from 'vuex'
 import {isPast, parse} from 'date-fns'
 import ImgixClient from 'imgix-core-js'
 
@@ -66,11 +69,8 @@ export default {
       this.payload = response.body
       this.payload.open = isPast(parse(this.payload.date))
       this.payload.hash = this.hash
-      // this.UPDATE_WORK(this.payload)
     })
-    httpPromise.catch(err => {
-      console.log(err)
-    })
+    httpPromise.catch(console.log)
   },
   computed: {
     artistList() {
@@ -80,10 +80,6 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['UPDATE_WORK']),
-    goToWork(target) {
-      this.$router.push(target)
-    },
     setFirstImage() {
       const img = this.content.find(c => c.media === 'Image')
       if (img) {
@@ -101,9 +97,6 @@ export default {
         this.firstImage = url
       }
     }
-  },
-  components: {
-    // VueTyper
   },
   watch: {
     'payload.date'() {
@@ -123,9 +116,7 @@ export default {
           this.content.push(response.body)
           this.setFirstImage()
         })
-        httpPromise.catch(err => {
-          console.log(err)
-        })
+        httpPromise.catch(console.log)
       })
     }
   }
@@ -137,63 +128,24 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
-@mixin box {
-  padding: 15px;
-  border: 1px solid white;
-  margin-bottom: 20px;
-  @include screen-size('medium') {
-    font-size: 18px;
-    line-height: 18px;
-    padding: 10px;
-  }
-  @include screen-size('short') {
-    font-size: 18px;
-    line-height: 18px;
-    padding: 10px;
-  }
-}
-
-@mixin label {
-  font-size: 14px;
-  text-transform: uppercase;
-  width: 12ch;
-  display: inline-block;
-  letter-spacing: 1px;
-  @include screen-size('medium') {
-    font-size: 12px;
-  }
-}
-
 .work {
-  height: 100%;
-  width: 100%;
-  position: relative;
+  background: $black;
   color: white;
-  mix-blend-mode: multiply;
+  height: 100%;
+  position: relative;
   user-select: none;
-
-  &__image {
-    height: 100%;
-    width: 100%;
-    will-change: opacity;
-    transition: opacity 0.4s ease-out;
-    opacity: 0.5;
-    background-position: center center;
-    @include screen-size('small') {
-      // background-size: cover;
-    }
-  }
+  width: 100%;
 
   &--open {
     cursor: pointer;
+
     i {
       color: $green;
     }
-    background: $black;
-    transition: background 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+
     &:active {
-      transition: background 0s linear;
       background: $green;
+
       i {
         color: $black;
       }
@@ -203,218 +155,70 @@ export default {
   &--closed {
     i {
       color: $red;
-      mix-blend-mode: lighten;
     }
-    background: $black;
-    transition: background 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
 
     &:active {
-      transition: background 0s linear;
       background: $red;
+
       i {
         color: $black;
       }
     }
   }
 
-  &--closed &__image {
-    opacity: 0.4;
-  }
-
-  &__sidebar {
-    float: right;
-    @include screen-size('small') {
-      float: left;
-      width: 100%;
-    }
-  }
-
-  &__qr {
-    width: 200px;
-    margin-bottom: 20px;
-    canvas {
-      max-width: 100%;
-    }
-    @include screen-size('medium') {
-      top: 160px;
-      width: 100px;
-      height: 100px;
-    }
-    @include screen-size('small') {
-      display: none;
-    }
-  }
-
-  &__counter {
-    width: 200px;
-    height: 200px;
-    word-break: break-all;
-    line-height: 200px;
-    text-align: center;
-    white-space: nowrap;
-    overflow: hidden;
-    color: white;
-    font-size: 48px;
-    border: 1px solid $white;
-    margin-bottom: 20px;
-    @include screen-size('medium') {
-      font-size: 38px;
-      width: 100px;
-      height: 100px;
-      line-height: 100px;
-    }
-    @include screen-size('small') {
-      float: left;
-      width: calc(100% - 4px);
-    }
-  }
-
-  &__info {
-    width: calc(100% - 220px);
-    float: left;
-    @include screen-size('medium') {
-      width: calc(100% - 120px);
-    }
-    @include screen-size('small') {
-      width: 100%;
-    }
-  }
-
-  &__timer {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 64px !important;
-    line-height: 64px !important;
-    text-align: center;
-    position: absolute;
-    top: 0;
-    left: 0;
+  &__image {
+    background-position: center center;
     height: 100%;
+    opacity: 0.6;
+    width: 100%;
+  }
+
+  &:active &__image {
+    opacity: 0;
+  }
+
+  &__text {
+    align-items: center;
+    color: $white;
+    display: flex;
+    font-size: 64px !important;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    line-height: 64px !important;
+    position: absolute;
+    text-align: center;
+    top: 0;
     width: 100%;
     z-index: 1000;
+
     section {
       @include center;
-      z-index: 10;
+
       width: 80vw;
       z-index: 100;
     }
+
     @include screen-size('small') {
-      font-size: 36px !important;
-      line-height: 36px !important;
+      font-size: 30px !important;
+      line-height: 30px !important;
     }
+
     @include screen-size('large') {
       font-size: 92px !important;
       line-height: 90px !important;
     }
   }
-
-  &__hash {
-    padding: 20px;
-    word-break: break-all;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    @include box;
-    &__label {
-      @include label;
-    }
-  }
-
-  &__exhibition {
-    @include box;
-    &__label {
-      @include label;
-    }
-  }
-
-  &__location {
-    @include box;
-    &__label {
-      @include label;
-    }
-  }
-
-  &__artist {
-    @include box;
-    &__label {
-      @include label;
-    }
-  }
-
-  &__title {
-    @include box;
-    &__label {
-      @include label;
-    }
-  }
-
-  &__link {
-    @include box;
-    width: 50%;
-    float: right;
-    height: 100px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 68px;
-    // &--open {
-    //   &:hover {
-    //     background: $green;
-    //     border: 1px solid $green;
-    //     cursor: pointer;
-    //   }
-    // }
-    // &--closed {
-    //   &:hover {
-    //     background: $red;
-    //     border: 1px solid $red;
-    //   }
-    // }
-    @include screen-size('medium') {
-      height: 60px;
-    }
-    @include screen-size('short') {
-      height: 60px;
-    }
-    @include screen-size('small') {
-      width: 100%;
-    }
-  }
 }
 
 .material-icons--large {
-  font-size: 100vh;
   @include center;
-  z-index: 5000;
+
+  font-size: 100vh;
+  z-index: 50;
+
   @include screen-size('small') {
     font-size: 90vw;
   }
 }
-
-.material-icons--medium {
-  font-size: 70vh;
-  @include center;
-  z-index: 5000;
-  @include screen-size('small') {
-    font-size: 50vh;
-  }
-}
-
-// .swiper-slide {
-//   .work {
-//     .work__image {
-//       opacity: 0;
-//       transition: opacity 20s ease-out;
-//     }
-//   }
-// }
-
-// .swiper-slide-active {
-//   .work {
-//     .work__image {
-//       opacity: 1;
-//     }
-//   }
-// }
 </style>
