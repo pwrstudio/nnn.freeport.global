@@ -2,20 +2,25 @@
   <div class='scanner'>
     <video id='preview'
            class='scanner__preview' />
-           <i class="material-icons scanner__crosshair">crop_free</i>
+    <i class="material-icons scanner__crosshair">crop_free</i>
+    <transition name="fade">
+      <div v-if='resultHash.length > 0' class='scanner__success' v-html='resultHash'/>
+    </transition>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
 import Instascan from 'instascan'
+import {setTimeout} from 'timers'
 
 export default {
   name: 'scanView',
   components: {},
   data() {
     return {
-      scanner: {}
+      scanner: {},
+      resultHash: ''
     }
   },
   computed: {
@@ -48,7 +53,10 @@ export default {
       })
       if (matchingWork) {
         console.log('matching', matchingWork.hash)
-        this.$router.push({name: 'singleWork', params: {hash: matchingWork.hash}})
+        this.resultHash = matchingWork.hash
+        setTimeout(() => {
+          this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
+        }, 3000)
       }
     })
   },
@@ -86,6 +94,19 @@ export default {
     @include center;
     font-size: 70vw;
     opacity: 0.7;
+    color: $white;
+  }
+
+  &__success {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: $green;
+    z-index: 100000;
+    text-align: center;
+    line-height: 100vh;
     color: $white;
   }
 }
