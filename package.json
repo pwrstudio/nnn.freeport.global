@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "babel-polyfill": "^6.26.0",
+    "bytes": "^3.0.0",
     "countdown": "^2.6.0",
     "date-fns": "^1.29.0",
     "ellipsize": "^0.0.3",

@@ -51,7 +51,7 @@
     <div v-if='payload.media === "File"'
          class='atom__file'
          :id='hash'>
-      <span v-html='payload.title' />
+      <span v-html='payload.title + " (" + formattedSize + ")"' />
       <a :href='"https://ipfs.io/ipfs/" + payload.hash'
          class='atom__file__link'
          target=_blank>
@@ -80,6 +80,7 @@
 <script>
 import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
+import bytes from 'bytes'
 import marked from 'marked'
 import AudioPlayer from '@/components/audio-player.vue'
 import VideoPlayer from '@/components/video-player.vue'
@@ -91,7 +92,8 @@ export default {
       payload: {
         media: '',
         hash: '',
-        title: ''
+        title: '',
+        size: 0
       },
       text: '',
       externalLink: '',
@@ -127,18 +129,11 @@ export default {
       httpPromise.catch(console.log)
     },
     getLink() {
-      console.log('getlink')
-      console.log(this.payload.hash)
-
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
-        console.log(response.body)
-
         this.externalLink = response.body
       })
-      httpPromise.catch(err => {
-        console.log(err)
-      })
+      httpPromise.catch(console.log)
     },
     getImageLink(imageHash) {
       const options = {w: 800, auto: 'compress,format'}
@@ -148,6 +143,11 @@ export default {
       })
       let url = client.buildURL('https://ipfs.io/ipfs/' + imageHash, options)
       return url
+    }
+  },
+  computed: {
+    formattedSize() {
+      return bytes(this.payload.size)
     }
   },
   components: {
