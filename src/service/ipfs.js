@@ -24,8 +24,6 @@ const getRootHash = contractAddress => {
     Vue.http.get(CONTRACT_API).then(
       response => {
         let convertedHash = hexToString(response.body.result).slice(-64)
-        console.log(convertedHash)
-
         resolve(convertedHash)
       },
       response => {
@@ -37,8 +35,6 @@ const getRootHash = contractAddress => {
 
 const callIPFS = rootHash => {
   return new Promise((resolve, reject) => {
-    console.log(rootHash)
-    console.log('https://ipfs.io/ipfs/' + rootHash)
     const URL = 'https://ipfs.io/ipfs/' + String(rootHash)
 
     fetch(URL)

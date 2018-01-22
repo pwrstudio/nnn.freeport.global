@@ -1,45 +1,28 @@
 <template>
   <div class='status'>
-    <!-- Content -->
+    <!-- 1 ROW -->
+    <!-- 1 ROW -->
+    <!-- 1 ROW -->
     <div class='status__content'>
-      <!-- User count -->
+      <!-- IPFS -->
       <div class='status__users__counter'>
-        <div class='status__users__counter__header'>
-        </div>
-        <div v-if='main.userList'
-             class='status__users__counter__number'>
-          {{main.rootHash}}
-        </div>
+        <div class='status__users__counter__header'/>
+        <div class='status__users__counter__number' v-html='main.rootHash'/>
       </div>
-      <!-- Exhibitions -->
+      <!-- Ethereum-->
       <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-        </div>
-        <div v-if='main.container.exhibitions'
-             class='status__content__counter__number'>
-          <!-- {{main.container.exhibitions.length}} -->
-        </div>
+        <div class='status__content__counter__header'/>
+        <div class='status__content__counter__number' v-html='"0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A"' />
       </div>
-      <!-- Works -->
+      <!-- Last update -->
       <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-        </div>
-        <div v-if='main.container.works'
-             class='status__content__counter__number'>
-          <!-- {{main.container.works.length}} -->
-        </div>
-      </div>
-      <!-- Content units -->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-        </div>
-        <div v-if='main.container.content'
-             class='status__content__counter__number'>
-          <!-- {{main.container.content.length}} -->
-        </div>
+        <div class='status__content__counter__header'/>
+        <div class='status__content__counter__number' v-html='"12:34 2018-01-21"' />
       </div>
     </div>
-    <!-- Users -->
+    <!-- 2 ROW -->
+    <!-- 2 ROW -->
+    <!-- 2 ROW -->
     <div class='status__users'>
       <!-- User list -->
       <div class='status__users__table'>
@@ -69,33 +52,24 @@
       <div id='map'
            class='status__users__map' />
     </div>
+    <!-- 3 ROW -->
+    <!-- 3 ROW -->
+    <!-- 3 ROW -->
     <div class='status__third'>
-      <!-- User count -->
-      <div class='status__users__table'>
+      <div class='status__third__table'>
         <table>
-          <tbody class='status__users__table__body'>
+          <tbody class='status__third__table__body'>
             <statusLogRow v-for='msg in main.log'
                 :key='msg.time'
                 :msg='msg'/>
           </tbody>
         </table>
       </div>
-      <!-- Exhibitions -->
-      <div class='status__content__counter'>
+      <div class='status__third__counter'>
         <div class='status__content__counter__header'>
         </div>
         <div v-if='main.container.exhibitions'
              class='status__content__counter__number'>
-          <!-- {{main.container.exhibitions.length}} -->
-        </div>
-      </div>
-      <!-- Works -->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'>
-        </div>
-        <div v-if='main.container.works'
-             class='status__content__counter__number'>
-          <!-- {{main.container.works.length}} -->
         </div>
       </div>
     </div>
@@ -315,14 +289,10 @@ export default {
 
     &__counter {
       @include counter;
-    }
 
-    &__map {
-      flex: 1 2 500px;
-      padding: 0px;
-      margin: 10px;
-      overflow: hidden;
-      border: 1px solid $white;
+      @include screen-size('small') {
+        display: none !important;
+      }
     }
   }
 }

@@ -41,5 +41,14 @@ $breakpoints: (
   text-decoration: none;
   &:active {
     background: $white;
+    color: $black;
+  }
+
+  @include screen-size('small') {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }

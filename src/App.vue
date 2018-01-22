@@ -39,10 +39,6 @@ export default {
     navbar
   },
   watch: {
-    $route(to, from) {
-      // if (to.name === 'singleWork' && !to.params.info) {
-      // }
-    },
     'main.rootHash'() {
       this.WRITE_LOG({
         time: format(new Date(), 'HH:mm:ss'),
@@ -78,7 +74,8 @@ export default {
       console.log(data)
       this.WRITE_LOG({
         time: format(new Date(), 'HH:mm:ss'),
-        text: data.id + ' opened ' + data.data,
+        text: data.id + ' opened <strong>' + data.title + '</strong>',
+        hash: data.hash,
         type: 'activity'
       })
     }
@@ -106,7 +103,7 @@ export default {
       this.meta.description = meta.description || this.meta.defaults.description
       this.meta.image = meta.image || this.meta.defaults.image
       this.meta.type = meta.type || this.meta.defaults.type
-      this.meta.url = 'http://xxx.com' + this.$route.fullPath
+      this.meta.url = 'https://nnn.freeport.global' + this.$route.fullPath
       this.$emit('updateHead')
     },
     $_fetchData(routeName) {
@@ -130,7 +127,7 @@ export default {
       return [
         {
           name: 'application-name',
-          content: 'Beirut Art Center'
+          content: 'NNN.FREEPORT.GLOBAL'
         },
         {
           name: 'description',

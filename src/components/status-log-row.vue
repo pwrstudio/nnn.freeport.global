@@ -1,16 +1,9 @@
 <template>
-  <tr class='status__user__stable__body__row' :class='"status__users__table__body__row--" + msg.type'>
-    <!-- <td class='status__users__table__body__row__cell'>
-      <i v-if='msg.type === "positive"' class="material-icons">add_circle_outline</i>
-      <i v-if='msg.type === "negative"' class="material-icons">remove_circle_outline</i>
-      <i v-if='msg.type === "network"' class="material-icons">import_export</i>
-    </td> -->
-    <td class='status__users__table__body__row__cell'>
-      {{msg.time}}
-    </td>
-    <td class='status__users__table__body__row__cell'>
-      {{msg.text}}
-    </td>
+  <tr class='status__user__stable__body__row' 
+      :class='"status__users__table__body__row--" + msg.type'
+      @click='goToWork'>
+    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html='msg.time'/>
+    <td class='status__users__table__body__row__cell' v-html='msg.text'/>
   </tr>
 </template>
 
@@ -21,6 +14,13 @@ export default {
     msg: {
       type: Object,
       required: true
+    }
+  },
+  methods: {
+    goToWork() {
+      if (this.msg.type === 'activity') {
+        this.$router.push({name: 'singleWork', params: {hash: this.msg.hash}})
+      }
     }
   }
 }
@@ -45,16 +45,38 @@ export default {
       &--network {
         background: #bababa;
         color: $black;
+
+        @include screen-size('small') {
+          word-break: break-all;
+        }
       }
 
       &--activity {
         background: $yellow;
-        color: $black;
+        color: $black !important;
+        cursor: pointer;
+        text-decoration: none;
+
+        a {
+          color: $black !important;
+          text-decoration: none;
+        }
+
+        &:active {
+          background: $white;
+        }
       }
       &__cell {
         margin: 0;
         border-bottom: 2px solid $black;
         padding: 10px;
+        user-select: none;
+
+        &--mobile-hide {
+          @include screen-size('small') {
+            display: none;
+          }
+        }
       }
     }
   }
