@@ -7,6 +7,7 @@
 
 <script>
 import {mapState, mapActions} from 'vuex'
+import {format} from 'date-fns'
 import navbar from '@/components/navbar'
 
 export default {
@@ -40,57 +41,49 @@ export default {
   watch: {
     $route(to, from) {},
     'main.rootHash'() {
-      // this.$notify({
-      //   group: 'global',
-      //   type: 'network',
-      //   duration: 1000,
-      //   position: 'bottom right',
-      //   title: 'Connected to IPFS',
-      //   text: 'IPFS root hash: ' + this.main.rootHash
-      // })
+      this.WRITE_LOG({
+        time: format(new Date(), 'HH:mm:ss'),
+        text: 'IPFS root hash: ' + this.main.rootHash,
+        type: 'network'
+      })
     }
   },
   sockets: {
     enter(data) {
       this.UPDATE_USERLIST(data.list)
-      // this.$notify({
-      //   group: 'global',
-      //   type: 'positive',
-      //   position: 'bottom right',
-      //   title: data.user.id + ' (' + data.user.geo.city + ', ' + data.user.geo.country + ') joined',
-      //   text: ''
-      // })
+      this.WRITE_LOG({
+        time: format(new Date(), 'HH:mm:ss'),
+        text:
+          data.user.id +
+          ' (' +
+          this.formatLocation(data.user.geo.city, data.user.geo.country) +
+          ') joined',
+        type: 'positive'
+      })
     },
     leave(data) {
       console.log(data)
       this.UPDATE_USERLIST(data.list)
-      // this.$notify({
-      //   group: 'global',
-      //   type: 'negative',
-      //   position: 'bottom right',
-      //   title: data.user.id + ' left',
-      //   text: ''
-      // })
+      this.WRITE_LOG({
+        time: format(new Date(), 'HH:mm:ss'),
+        text: data.user.id + ' left',
+        type: 'negative'
+      })
     },
     view(data) {
-      // this.$notify({
-      //   group: 'global',
-      //   position: 'bottom right',
-      //   type: 'user',
-      //   title: 'view',
-      //   text: 'xxx'
-      // })
+      this.WRITE_LOG({
+        time: format(new Date(), 'HH:mm:ss'),
+        text: data + ' view',
+        type: 'activity'
+      })
     }
   },
   mounted() {
-    // this.$notify({
-    //   group: 'global',
-    //   type: 'network',
-    //   duration: 1000,
-    //   position: 'bottom right',
-    //   title: 'Connecting to Ethereum: Rinkeby',
-    //   text: 'Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
-    // })
+    this.WRITE_LOG({
+      time: format(new Date(), 'HH:mm:ss'),
+      text: 'Ethereum Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A',
+      type: 'network'
+    })
     // Check for mobile here. To be improved!
     if (
       typeof window.orientation !== 'undefined' ||
@@ -102,7 +95,7 @@ export default {
     this.$_fetchData()
   },
   methods: {
-    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST']),
+    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST', 'WRITE_LOG']),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
       this.meta.description = meta.description || this.meta.defaults.description
@@ -113,6 +106,13 @@ export default {
     },
     $_fetchData(routeName) {
       this.GET_CONTAINER()
+    },
+    formatLocation(city, country) {
+      if (city) {
+        return city + ', ' + country
+      } else {
+        return country
+      }
     }
   },
   head: {
@@ -260,4 +260,9 @@ h3 {
 //   font-weight: bold;
 //   font-style: normal;
 // }
+
+table {
+  border-collapse: collapse;
+  padding: 0;
+}
 </style>

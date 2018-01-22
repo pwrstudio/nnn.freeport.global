@@ -47,7 +47,7 @@ const callIPFS = rootHash => {
       })
       .then(json => {
         resolve({
-          rootHash: rootHash,
+          rootHash: rootHash.replace(/\u0000/g, ''),
           container: json
         })
       })

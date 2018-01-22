@@ -20,7 +20,8 @@ const state = {
   },
   userList: [],
   currentSlide: '',
-  currentWork: {}
+  currentWork: {},
+  log: []
 }
 
 const actions = {
@@ -38,6 +39,9 @@ const actions = {
   },
   [actionTypes.UPDATE_WORK]({commit, state}, data) {
     commit(mutationTypes.UPDATE_WORK, data)
+  },
+  [actionTypes.WRITE_LOG]({commit, state}, data) {
+    commit(mutationTypes.WRITE_LOG, data)
   }
 }
 
@@ -62,6 +66,9 @@ const mutations = {
         state.container.works[i] = data
       }
     })
+  },
+  [mutationTypes.WRITE_LOG](state, data) {
+    state.log.unshift(data)
   }
 }
 

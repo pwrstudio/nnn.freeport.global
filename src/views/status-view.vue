@@ -8,7 +8,7 @@
         </div>
         <div v-if='main.userList'
              class='status__users__counter__number'>
-          <!-- {{main.userList.length}} -->
+          {{main.rootHash}}
         </div>
       </div>
       <!-- Exhibitions -->
@@ -45,6 +45,7 @@
       <div class='status__users__table'>
         <table>
           <thead class='status__users__table__header'>
+            <th class='status__users__table__header__cell'></th>
             <th class='status__users__table__header__cell'>
               ID
             </th>
@@ -70,13 +71,14 @@
     </div>
     <div class='status__third'>
       <!-- User count -->
-      <div class='status__users__counter'>
-        <div class='status__users__counter__header'>
-        </div>
-        <div v-if='main.userList'
-             class='status__users__counter__number'>
-          <!-- {{main.userList.length}} -->
-        </div>
+      <div class='status__users__table'>
+        <table>
+          <tbody class='status__users__table__body'>
+            <statusLogRow v-for='msg in main.log'
+                :key='msg.time'
+                :msg='msg'/>
+          </tbody>
+        </table>
       </div>
       <!-- Exhibitions -->
       <div class='status__content__counter'>
@@ -104,11 +106,13 @@
 import {mapState} from 'vuex'
 import mapboxgl from 'mapbox-gl'
 import statusUserRow from '@/components/status-user-row'
+import statusLogRow from '@/components/status-log-row'
 
 export default {
   name: 'statusView',
   components: {
-    statusUserRow
+    statusUserRow,
+    statusLogRow
   },
   data() {
     return {
@@ -265,12 +269,20 @@ export default {
     &__counter {
       @include small-counter;
     }
+
+    @include screen-size('short') {
+      display: none;
+    }
+
+    @include screen-size('small') {
+      display: none;
+    }
   }
 
   &__users {
     @include quad;
     width: 100%;
-    height: 60%;
+    height: 50%;
 
     &__table {
       @include table;
@@ -295,7 +307,7 @@ export default {
   &__third {
     @include quad;
     width: 100%;
-    height: 30%;
+    height: 40%;
 
     &__table {
       @include table;

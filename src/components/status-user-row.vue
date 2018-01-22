@@ -1,6 +1,9 @@
 <template>
   <tr class='status__users__row'>
     <td class='status__users__table__body__row__cell'>
+      <i class="material-icons">chat_bubble_outline</i>
+    </td>
+    <td class='status__users__table__body__row__cell'>
       {{user.id}}
     </td>
     <td class='status__users__table__body__row__cell'>
@@ -64,6 +67,11 @@ export default {
       &__cell {
         border-bottom: 1px solid $white;
         padding: 10px;
+        .material-icons {
+          font-size: 20px;
+          line-height: 20px;
+          text-align: center;
+        }
       }
     }
   }
