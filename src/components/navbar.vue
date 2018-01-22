@@ -5,13 +5,23 @@
     <!-- INFO -->
     <!-- INFO -->
     <template v-if='$route.name === "info"'>
-      <router-link class='nav-button nav-button__left'
+      <router-link v-if='fromStatus' class='nav-button nav-button__left'
                    to='/'>
-        nnn.freeport.global
+                   nnn.freeport.global
       </router-link>
-      <router-link class='nav-button nav-button__right'
+      <router-link v-if='fromStack'
+                   class='nav-button nav-button__left'
+                   :to='{name: "stack", params: {unit: main.currentSlide}}'>
+                   nnn.freeport.global
+      </router-link>
+      <router-link v-if='fromStatus' class='nav-button nav-button__right'
                    to='/'>
         <i class="material-icons">trending_up</i>
+      </router-link>
+      <router-link v-if='fromStack'
+                   class='nav-button nav-button__right'
+                   :to='{name: "stack", params: {unit: main.currentSlide}}'>
+        <i class="material-icons">menu</i>
       </router-link>
     </template>
     <!-- END: INFO -->
@@ -135,8 +145,26 @@ import {mapState} from 'vuex'
 
 export default {
   name: 'navbar',
+  data() {
+    return {
+      fromStatus: false,
+      fromStack: true
+    }
+  },
   computed: {
     ...mapState(['main'])
+  },
+  watch: {
+    $route(to, from) {
+      console.log(from)
+      if (from.name === 'status') {
+        this.fromStatus = true
+        this.fromStack = false
+      } else {
+        this.fromStatus = false
+        this.fromStack = true
+      }
+    }
   }
 }
 </script>
