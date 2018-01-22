@@ -187,9 +187,10 @@ export default {
   }
 
   &__text {
-    padding: 20px;
     color: white !important;
+    padding: 20px;
     text-decoration: none !important;
+
     &__link {
       border: 1px solid $white;
       color: $white;

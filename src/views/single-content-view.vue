@@ -1,15 +1,17 @@
 <template>
   <div class='single-content'>
     <div v-if='payload.media === "Text"'
-         class='single-content__text'
-         v-html='text' />
-    <img v-else-if='payload.media === "Image"'
-         :src='"https://ipfs.io/ipfs/" + payload.hash'
-         class='single-content__image' />
+         class='single-content__text'>
+         <div class='single-content__text__inner' v-html='text'/>
+    </div>
+    <div v-else-if='payload.media === "Image"'class='single-content__image'>
+      <img :src='"https://ipfs.io/ipfs/" + payload.hash'
+            class='single-content__image__inner' />
+      </div>
     <div v-else-if='payload.media === "Audio"'
-         class='single-content__audio'>
+        class='single-content__audio'>
       <audio :src='"https://ipfs.io/ipfs/" + payload.hash'
-             controls/>
+            controls/>
     </div>
     <div v-else-if='payload.media === "Video"'
          class='single-content__audio'>
@@ -66,20 +68,40 @@ export default {
 @import '../style/_variables.scss';
 
 .single-content {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: center;
-
   &__text {
-    color: $white;
-    width: 70ch;
-    max-width: 90%;
+    position: fixed;
+    top: 80px;
+    left: 0;
+    width: 100vw;
+    height: calc(100vh - 80px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    @include hide-scroll;
+
+    &__inner {
+      margin: auto;
+      color: $white;
+      width: 70ch;
+      max-width: 90%;
+      padding-bottom: 200px;
+    }
   }
 
   &__image {
-    max-width: 80vw;
-    max-height: 90vh;
+    position: fixed;
+    top: 0px;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+
+    &__inner {
+      max-width: 95vw;
+      max-height: 85vh;
+    }
   }
 }
 </style>

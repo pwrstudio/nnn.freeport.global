@@ -181,7 +181,7 @@ export default {
 @import './style/_variables.scss';
 // @import './style/fonts/PanamaDemo-Monospace/styles.css';
 // @import './style/fonts/FiveYearsLaterDemo/styles.css';
-@import url('https://fonts.googleapis.com/css?family=Space+Mono');
+@import url('https://fonts.googleapis.com/css?family=Space+Mono:400,400i,700,700i');
 
 html,
 body {
@@ -248,4 +248,16 @@ body {
   height: 30px;
   cursor: pointer;
 }
+
+h1,
+h2,
+h3 {
+  font-size: 22px;
+}
+
+// i,
+// em {
+//   font-weight: bold;
+//   font-style: normal;
+// }
 </style>
