@@ -2,25 +2,36 @@
   <div class='info'>
     <div class='info__main'>
       <div class='info__main__overlay' />
-      <span v-html='main.container.about.info' />
+      <span v-html='formattedInfo' />
     </div>
     <div class='info__credits'>
       <div class='info__credits__overlay' />
-      <span v-html='main.container.about.credits' />
+      <span v-html='formattedCredits' />
     </div>
     <div class='info__tech'>
       <div class='info__tech__overlay' />
-      <span v-html='main.container.about.tech' />
+      <span v-html='formattedTech' />
     </div>
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
+import marked from 'marked'
+
 export default {
   name: 'infoView',
   computed: {
-    ...mapState(['main'])
+    ...mapState(['main']),
+    formattedInfo() {
+      return marked(this.main.container.about.info)
+    },
+    formattedCredits() {
+      return marked(this.main.container.about.credits)
+    },
+    formattedTech() {
+      return marked(this.main.container.about.tech)
+    }
   }
 }
 </script>

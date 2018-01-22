@@ -113,13 +113,10 @@ export default {
       if (this.payload.media === 'Text') {
         this.setIPFSText()
       } else if (this.payload.media === 'External link') {
-        console.log('link')
         this.getLink()
       }
     })
-    httpPromise.catch(err => {
-      console.log(err)
-    })
+    httpPromise.catch(console.log)
   },
   methods: {
     setIPFSText() {
@@ -127,9 +124,7 @@ export default {
       httpPromise.then(response => {
         this.text = marked(ellipsize(response.body, 480))
       })
-      httpPromise.catch(err => {
-        console.log(err)
-      })
+      httpPromise.catch(console.log)
     },
     getLink() {
       console.log('getlink')

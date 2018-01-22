@@ -17,7 +17,7 @@
       <!-- Last update -->
       <div class='status__content__counter'>
         <div class='status__content__counter__header'/>
-        <div class='status__content__counter__number' v-html='"12:34 2018-01-21"' />
+        <div class='status__content__counter__number' v-html='main.container.updated' />
       </div>
     </div>
     <!-- 2 ROW -->
