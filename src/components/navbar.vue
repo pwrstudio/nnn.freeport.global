@@ -156,7 +156,6 @@ export default {
   },
   watch: {
     $route(to, from) {
-      console.log(from)
       if (from.name === 'status') {
         this.fromStatus = true
         this.fromStack = false

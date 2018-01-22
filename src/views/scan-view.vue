@@ -3,7 +3,11 @@
     <video id='preview'
            class='scanner__preview' />
     <i class="material-icons scanner__crosshair">crop_free</i>
-    <div v-if='resultHash.length > 0' class='scanner__success' v-html='resultHash'/>
+    <div v-if='resultHash.length > 0' class='scanner__success'>
+      <div class='scanner__success__inner'>
+        <div v-html='resultHash'/>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -16,7 +20,7 @@ export default {
   data() {
     return {
       scanner: {},
-      resultHash: ''
+      resultHash: 'lslslsl'
     }
   },
   computed: {
@@ -41,13 +45,10 @@ export default {
       })
     // Listen for scan events
     this.scanner.addListener('scan', content => {
-      // console.log('scanned content', content, typeof content)
       const matchingWork = this.main.container.works.find(w => {
-        // console.log(w.id)
         return w.id === content
       })
       if (matchingWork) {
-        // console.log('matching', matchingWork.hash)
         this.resultHash = matchingWork.hash
         this.scanner.stop().then(() => {
           window.setTimeout(() => {
@@ -81,7 +82,6 @@ export default {
   &__preview {
     width: 100vw;
     height: 100vh;
-    background: blue;
     object-fit: cover;
   }
 
@@ -95,16 +95,26 @@ export default {
   }
 
   &__success {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background: $green;
-    z-index: 100000;
-    text-align: center;
-    line-height: 100vh;
     color: $white;
+    height: 100vh;
+    left: 0;
+    line-height: 100vh;
+    position: fixed;
+    text-align: center;
+    top: 0;
+    width: 100vw;
+    z-index: 100000;
+
+    &__inner {
+      word-wrap: break-word;
+      font-size: 32px;
+      line-height: 32px;
+      max-width: 95vw;
+    }
   }
 }
 </style>
