@@ -5,7 +5,7 @@
          <div class='single-content__text__inner' v-html='text'/>
     </div>
     <div v-else-if='payload.media === "Image"'class='single-content__image'>
-      <img :src='"https://ipfs.io/ipfs/" + payload.hash'
+      <img :src='getImageLink(payload.hash)'
             class='single-content__image__inner' />
       </div>
     <div v-else-if='payload.media === "Audio"'
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import ImgixClient from 'imgix-core-js'
 import marked from 'marked'
 
 export default {
@@ -57,6 +58,15 @@ export default {
       httpPromise.catch(err => {
         console.log(err)
       })
+    },
+    getImageLink(imageHash) {
+      const options = {w: 1600, auto: 'compress,format'}
+      const client = new ImgixClient({
+        host: 'nnnfreeport.imgix.net',
+        secureURLToken: 'A8qQj2zw8eqcXqEW'
+      })
+      let url = client.buildURL('https://ipfs.io/ipfs/' + imageHash, options)
+      return url
     }
   }
 }
