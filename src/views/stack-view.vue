@@ -148,12 +148,13 @@ export default {
 .swiper-container {
   top: 0;
   height: 100vh;
-  width: calc(100vw - 30px);
+  width: 100vw;
   margin-right: 0;
   background-image: url(/static/grid-bw.png);
 
   @include screen-size('small') {
     background-size: 300px;
+    width: calc(100vw - 30px);
   }
 }
 

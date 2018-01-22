@@ -2,9 +2,11 @@
   <div>
 
     <div class='work'>
-      <contentAtom v-for='item in payload.content'
-                   :key='item.hash'
-                   :hash='item.hash' />
+      <div class='work__inner'>
+        <contentAtom v-for='item in payload.content'
+                    :key='item.hash'
+                    :hash='item.hash' />
+     </div>
     </div>
 
     <!-- Roll-down info overlay -->
@@ -116,9 +118,6 @@ export default {
 .work {
   @include hide-scroll;
 
-  align-items: center;
-  display: flex;
-  flex-wrap: wrap;
   height: 100vh;
   justify-content: space-around;
   left: 0;
@@ -128,6 +127,13 @@ export default {
   position: fixed;
   top: 0;
   width: 100vw;
+
+  &__inner {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    padding-bottom: 200px;
+  }
 }
 
 .info-overlay {
