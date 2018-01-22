@@ -39,7 +39,10 @@ export default {
     navbar
   },
   watch: {
-    $route(to, from) {},
+    $route(to, from) {
+      // if (to.name === 'singleWork' && !to.params.info) {
+      // }
+    },
     'main.rootHash'() {
       this.WRITE_LOG({
         time: format(new Date(), 'HH:mm:ss'),
@@ -71,9 +74,11 @@ export default {
       })
     },
     view(data) {
+      console.log('view received')
+      console.log(data)
       this.WRITE_LOG({
         time: format(new Date(), 'HH:mm:ss'),
-        text: data + ' view',
+        text: data.id + ' opened ' + data.data,
         type: 'activity'
       })
     }

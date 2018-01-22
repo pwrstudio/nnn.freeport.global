@@ -46,6 +46,11 @@ export default {
         background: #bababa;
         color: $black;
       }
+
+      &--activity {
+        background: $yellow;
+        color: $black;
+      }
       &__cell {
         margin: 0;
         border-bottom: 2px solid $black;

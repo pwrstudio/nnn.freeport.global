@@ -72,6 +72,7 @@ export default {
     httpPromise.then(response => {
       this.payload = response.body
       this.SET_CURRENT_WORK(this.payload)
+      this.$socket.emit('view', this.payload.title)
     })
     httpPromise.catch(console.log)
   },
