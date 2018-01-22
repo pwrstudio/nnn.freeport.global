@@ -20,7 +20,7 @@ export default {
   data() {
     return {
       scanner: {},
-      resultHash: 'lslslsl'
+      resultHash: ''
     }
   },
   computed: {
