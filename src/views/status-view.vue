@@ -6,18 +6,15 @@
     <div class='status__content'>
       <!-- IPFS -->
       <div class='status__users__counter'>
-        <div class='status__users__counter__header'/>
         <div class='status__users__counter__number' v-html='main.rootHash'/>
       </div>
       <!-- Ethereum-->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'/>
-        <div class='status__content__counter__number' v-html='"0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A"' />
+      <div class='status__users__counter'>
+        <div class='status__users__counter__number' v-html='"0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A"' />
       </div>
       <!-- Last update -->
-      <div class='status__content__counter'>
-        <div class='status__content__counter__header'/>
-        <div class='status__content__counter__number' v-html='main.container.updated' />
+      <div class='status__users__counter'>
+        <div class='status__users__counter__number' v-html='main.container.updated' />
       </div>
     </div>
     <!-- 2 ROW -->
@@ -60,16 +57,31 @@
         <table>
           <tbody class='status__third__table__body'>
             <statusLogRow v-for='msg in main.log'
-                :key='msg.time'
+                :key='makeId()'
                 :msg='msg'/>
           </tbody>
         </table>
       </div>
-      <div class='status__third__counter'>
-        <div class='status__content__counter__header'>
+      <div class='status__third__inventory'>
+        <div class='status__third__inventory__tabs'>
+          <div @click='activeTab = "works"' 
+               class='status__third__inventory__tabs__tab'
+               :class='{"status__third__inventory__tabs__tab--active": activeTab === "works"}'
+               v-html='"Works (" + main.container.works.length  + ")"'/>
+          <div @click='activeTab = "exhibitions"' 
+               class='status__third__inventory__tabs__tab'
+               :class='{"status__third__inventory__tabs__tab--active": activeTab === "exhibitions"}'
+               v-html='"Exhibitions (" + main.container.exhibitions.length  + ")"'/>
         </div>
-        <div v-if='main.container.exhibitions'
-             class='status__content__counter__number'>
+        <div v-if='activeTab === "works"' class='status__third__inventory__container'>
+          <statusWorksRow v-for='work in main.container.works'
+                          :key='work.id'
+                          :work='work'/>
+        </div>
+        <div v-if='activeTab === "exhibitions"' class='status__third__inventory__container'>
+          <statusExhibitionsRow v-for='exhibition in main.container.exhibitions'
+                                :key='exhibition.id'
+                                :exhibition='exhibition'/>
         </div>
       </div>
     </div>
@@ -81,17 +93,22 @@ import {mapState} from 'vuex'
 import mapboxgl from 'mapbox-gl'
 import statusUserRow from '@/components/status-user-row'
 import statusLogRow from '@/components/status-log-row'
+import statusWorksRow from '@/components/status-works-row'
+import statusExhibitionsRow from '@/components/status-exhibitions-row'
 
 export default {
   name: 'statusView',
   components: {
     statusUserRow,
-    statusLogRow
+    statusLogRow,
+    statusWorksRow,
+    statusExhibitionsRow
   },
   data() {
     return {
       map: {},
-      markers: []
+      markers: [],
+      activeTab: 'works'
     }
   },
   computed: {
@@ -104,6 +121,16 @@ export default {
         marker.remove()
       })
       this.markers = []
+    },
+    makeId() {
+      let text = ''
+      const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+
+      for (var i = 0; i < 5; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length))
+      }
+
+      return text
     }
   },
   mounted() {
@@ -167,7 +194,7 @@ export default {
   flex: 1 2 200px;
   background: $black;
   border: 1px solid $white;
-  padding: 20px;
+  padding: 10px;
   margin: 10px;
   position: relative;
 
@@ -287,7 +314,26 @@ export default {
       @include table;
     }
 
-    &__counter {
+    &__inventory {
+      font-size: 16px;
+      &__tabs {
+        display: flex;
+        height: 40px;
+        width: 100%;
+        cursor: pointer;
+
+        &__tab {
+          background: transparent;
+          width: 50%;
+          line-height: 40px;
+          text-align: center;
+          &--active {
+            background: $white;
+            color: $black;
+          }
+        }
+      }
+
       @include counter;
 
       @include screen-size('small') {
