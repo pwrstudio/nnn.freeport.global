@@ -166,6 +166,25 @@ export default {
           )
         })
       }
+    },
+    'main.exhibitionLocations'() {
+      // TODO
+      this.exhibitionMarkers.map(marker => {
+        marker.remove()
+      })
+      this.exhibitionMarkers = []
+      // TODO
+      if (this.main.exhibitionLocations.length > this.markers.length) {
+        this.main.userList.map(exhibition => {
+          var el = document.createElement('div')
+          el.className = 'exhibition-marker'
+          this.exhibitionMarkers.push(
+            new mapboxgl.Marker(el)
+              .setLngLat([exhibition.geo.ll[1], exhibition.geo.ll[0]])
+              .addTo(this.map)
+          )
+        })
+      }
     }
   }
 }

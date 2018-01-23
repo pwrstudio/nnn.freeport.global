@@ -78,6 +78,10 @@ export default {
         hash: data.hash,
         type: 'activity'
       })
+    },
+    chat(data) {
+      console.log('chat received')
+      console.log(data)
     }
   },
   mounted() {

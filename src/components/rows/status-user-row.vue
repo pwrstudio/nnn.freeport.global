@@ -1,6 +1,6 @@
 <template>
   <tr class='status__users__row'>
-    <td class='status__users__table__body__row__cell'>
+    <td class='status__users__table__body__row__cell' @click='openChat(user.id)'>
       <i class="material-icons">chat_bubble_outline</i>
     </td>
     <td class='status__users__table__body__row__cell'>
@@ -52,7 +52,11 @@ export default {
       [countdown.HOURS, countdown.MINUTES, countdown.SECONDS]
     )
   },
-  methods: {}
+  methods: {
+    openChat(id) {
+      this.$socket.emit('chat', {id: id, msg: 'kxkxkxkxk'})
+    }
+  }
 }
 </script>
 
@@ -62,6 +66,8 @@ export default {
 @import '../../style/_variables.scss';
 
 .status__users__table {
+  user-select: none;
+
   &__body {
     &__row {
       &__cell {
@@ -71,6 +77,9 @@ export default {
           font-size: 20px;
           line-height: 20px;
           text-align: center;
+          position: relative;
+          top: 5px;
+          cursor: pointer;
         }
       }
     }

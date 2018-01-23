@@ -5,9 +5,11 @@
          <div class='single-content__text__inner' v-html='text'/>
     </div>
     <div v-else-if='payload.media === "Image"'class='single-content__image'>
-      <img :src='getImageLink(payload.hash)'
-            class='single-content__image__inner' />
+      <div class='single-content__image__inner'>
+        <img :src='getImageLink(payload.hash)'/>
+        <div v-if='payload.caption' v-html='payload.caption'/>
       </div>
+    </div>
     <div v-else-if='payload.media === "Audio"'
         class='single-content__audio'>
       <audio :src='"https://ipfs.io/ipfs/" + payload.hash'
@@ -55,9 +57,7 @@ export default {
       httpPromise.then(response => {
         this.text = marked(response.body)
       })
-      httpPromise.catch(err => {
-        console.log(err)
-      })
+      httpPromise.catch(console.log)
     },
     getImageLink(imageHash) {
       const options = {w: 1600, auto: 'compress,format'}
@@ -93,6 +93,7 @@ export default {
       color: $white;
       width: 70ch;
       max-width: 90%;
+      max-height: 80vh;
       padding-bottom: 200px;
     }
   }
@@ -103,15 +104,22 @@ export default {
     left: 0;
     width: 100vw;
     height: 100vh;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+    // display: flex;
+    // flex-wrap: wrap;
+    // align-items: center;
+    // justify-content: center;
 
     &__inner {
       max-width: 95vw;
       max-height: 85vh;
+      @include center;
+      color: $white;
     }
   }
+}
+
+img {
+  max-width: 100%;
+  max-height: 100%;
 }
 </style>
