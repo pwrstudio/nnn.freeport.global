@@ -1,5 +1,6 @@
 <template>
-  <div class='atom'>
+  <div class='atom'
+       :class='[getSizeClass(), getImageClass()]'>
 
     <!-- TEXT -->
     <div v-if='payload.media === "Text"'
@@ -143,6 +144,24 @@ export default {
       })
       let url = client.buildURL('https://ipfs.io/ipfs/' + imageHash, options)
       return url
+    },
+    getSizeClass() {
+      let r = Math.random()
+      if (r < 0.33) {
+        return 'atom--small'
+      }
+      if (r > 0.66) {
+        return 'atom--large'
+      } else {
+        return 'atom--medium'
+      }
+    },
+    getImageClass() {
+      if (this.payload.media === 'Image') {
+        return 'atom--image'
+      } else {
+        return ''
+      }
     }
   },
   computed: {
@@ -164,10 +183,25 @@ export default {
 
 .atom {
   display: block;
-  flex: 2 2 400px;
   margin: 20px;
   position: relative;
   text-decoration: none !important;
+  height: auto;
+  border: 1px solid $white;
+
+  &--small {
+    flex: 2 1 300px;
+  }
+  &--medium {
+    flex: 2 2 400px;
+  }
+  &--large {
+    flex: 1 2 600px;
+  }
+
+  &--image {
+    border: none;
+  }
 
   &__image {
     cursor: pointer;

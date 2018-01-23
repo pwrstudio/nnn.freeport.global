@@ -117,7 +117,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       {from: 'src/config/_redirects', to: './'}
     ])
-    // new FaviconsWebpackPlugin('src/assets/img/favicon.png')
+    new FaviconsWebpackPlugin('src/assets/img/favicon.png')
   ]
 })
 

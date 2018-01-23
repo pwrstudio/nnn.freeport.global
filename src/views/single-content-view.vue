@@ -110,16 +110,16 @@ export default {
     // justify-content: center;
 
     &__inner {
-      max-width: 95vw;
-      max-height: 85vh;
       @include center;
+      max-width: 95vw;
+      max-height: 80vh;
       color: $white;
     }
   }
 }
 
 img {
-  max-width: 100%;
-  max-height: 100%;
+  max-width: 95vw;
+  max-height: 80vh;
 }
 </style>

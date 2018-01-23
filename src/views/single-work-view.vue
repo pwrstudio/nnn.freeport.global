@@ -2,7 +2,7 @@
   <div>
 
     <div class='work'>
-      <div class='work__inner'>
+      <div class='work__inner masonry'>
         <contentAtom v-for='item in payload.content'
                     :key='item.hash'
                     :hash='item.hash' />
@@ -64,7 +64,8 @@ export default {
         data: '',
         id: '',
         title: ''
-      }
+      },
+      masonry: {}
     }
   },
   mounted() {
@@ -74,6 +75,11 @@ export default {
       this.SET_CURRENT_WORK(this.payload)
       console.log(this.$router)
       this.$socket.emit('view', {title: this.payload.title, hash: this.$route.params.hash})
+      // this.masonry = Macy({
+      //   container: '.masonry',
+      //   margin: 24,
+      //   columns: 2
+      // })
     })
     httpPromise.catch(console.log)
   },
@@ -86,6 +92,12 @@ export default {
   },
   methods: {
     ...mapActions(['SET_CURRENT_WORK'])
+  },
+  watch: {
+    // payload() {
+    //   console.log('casdcs')
+    //   this.masonry.recalculate()
+    // }
   }
 }
 </script>
@@ -121,7 +133,7 @@ export default {
   @include hide-scroll;
 
   height: 100vh;
-  justify-content: space-around;
+  // justify-content: space-around;
   left: 0;
   overflow-y: auto;
   overflow-x: hidden;
@@ -135,6 +147,11 @@ export default {
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 200px;
+
+    // display: grid;
+    // grid-gap: 10px;
+    // grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
+    // grid-auto-rows: 20px;
   }
 }
 
