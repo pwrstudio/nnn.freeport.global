@@ -93,10 +93,14 @@
 <script>
 import {mapState} from 'vuex'
 import mapboxgl from 'mapbox-gl'
-import statusUserRow from '@/components/rows/status-user-row'
-import statusLogRow from '@/components/rows/status-log-row'
-import statusWorksRow from '@/components/rows/status-works-row'
-import statusExhibitionsRow from '@/components/rows/status-exhibitions-row'
+// import statusLogRow from '@/components/rows/status-log-row'
+// import statusWorksRow from '@/components/rows/status-works-row'
+// import statusExhibitionsRow from '@/components/rows/status-exhibitions-row'
+
+const statusUserRow = () => import('@/components/rows/status-user-row')
+const statusLogRow = () => import('@/components/rows/status-log-row')
+const statusWorksRow = () => import('@/components/rows/status-works-row')
+const statusExhibitionsRow = () => import('@/components/rows/status-exhibitions-row')
 
 export default {
   name: 'statusView',
@@ -337,6 +341,8 @@ export default {
 
     &__inventory {
       font-size: 16px;
+      overflow: hidden;
+
       &__tabs {
         display: flex;
         height: 40px;

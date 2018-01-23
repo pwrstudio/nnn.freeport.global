@@ -175,7 +175,7 @@ export default {
 
 .nav-button__left {
   @include screen-size('small') {
-    width: 70vw;
+    width: calc(70vw - 20px);
     background: $black;
     &:active {
       background: $white;
@@ -186,7 +186,7 @@ export default {
 
 .nav-button__right {
   @include screen-size('small') {
-    width: 30vw;
+    width: calc(30vw - 20px);
     background: $black;
     &:active {
       background: $white;

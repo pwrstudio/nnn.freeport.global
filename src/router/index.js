@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 // Views
-import stackView from '@/views/stack-view'
-import scanView from '@/views/scan-view'
-import singleWorkView from '@/views/single-work-view'
-import singleContentView from '@/views/single-content-view'
-import statusView from '@/views/status-view'
-import infoView from '@/views/info-view'
+const stackView = () => import('@/views/stack-view')
+const scanView = () => import('@/views/scan-view')
+const singleWorkView = () => import('@/views/single-work-view')
+const singleContentView = () => import('@/views/single-content-view')
+const statusView = () => import('@/views/status-view')
+const infoView = () => import('@/views/info-view')
 
 Vue.use(Router)
 
