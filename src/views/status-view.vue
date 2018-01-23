@@ -53,6 +53,7 @@
     <!-- 3 ROW -->
     <!-- 3 ROW -->
     <div class='status__third'>
+      <!-- Log-->
       <div class='status__third__table'>
         <table>
           <tbody class='status__third__table__body'>
@@ -62,6 +63,7 @@
           </tbody>
         </table>
       </div>
+      <!-- Works/exhibitions list-->
       <div class='status__third__inventory'>
         <div class='status__third__inventory__tabs'>
           <div @click='activeTab = "works"' 
@@ -91,10 +93,10 @@
 <script>
 import {mapState} from 'vuex'
 import mapboxgl from 'mapbox-gl'
-import statusUserRow from '@/components/status-user-row'
-import statusLogRow from '@/components/status-log-row'
-import statusWorksRow from '@/components/status-works-row'
-import statusExhibitionsRow from '@/components/status-exhibitions-row'
+import statusUserRow from '@/components/rows/status-user-row'
+import statusLogRow from '@/components/rows/status-log-row'
+import statusWorksRow from '@/components/rows/status-works-row'
+import statusExhibitionsRow from '@/components/rows/status-exhibitions-row'
 
 export default {
   name: 'statusView',
@@ -332,6 +334,14 @@ export default {
             color: $black;
           }
         }
+      }
+
+      &__container {
+        height: 90%;
+        overflow-x: hidden;
+        overflow-y: auto;
+
+        @include hide-scroll;
       }
 
       @include counter;

@@ -1,5 +1,5 @@
 <template>
-  <tr class='status__user__stable__body__row' 
+  <tr class='status__users__table__body__row' 
       :class='"status__users__table__body__row--" + msg.type'
       @click='goToWork'>
     <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html='msg.time'/>
@@ -27,9 +27,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import '../style/helpers/_mixins.scss';
-@import '../style/helpers/_responsive.scss';
-@import '../style/_variables.scss';
+@import '../../style/helpers/_mixins.scss';
+@import '../../style/helpers/_responsive.scss';
+@import '../../style/_variables.scss';
 
 .status__users__table {
   &__body {
