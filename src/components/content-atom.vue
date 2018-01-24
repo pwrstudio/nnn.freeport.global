@@ -30,7 +30,7 @@
          :id='hash'>
       <audio-player :sources='["https://ipfs.io/ipfs/" + payload.hash]'
                     :loop='false'
-                    image='/static/test.jpg'
+                    :image='"https://ipfs.io/ipfs/" + payload.poster'
                     :title='payload.title'
                     :formats='["mp3"]' />
     </div>
@@ -52,7 +52,7 @@
     <div v-if='payload.media === "File"'
          class='atom__file'
          :id='hash'>
-      <span v-html='payload.title + " (" + formattedSize + ")"' />
+      <span v-html='payload.title + " (" + payload.size + ")"' />
       <a :href='"https://ipfs.io/ipfs/" + payload.hash'
          class='atom__file__link'
          target=_blank>
@@ -81,7 +81,6 @@
 <script>
 import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
-import bytes from 'bytes'
 import marked from 'marked'
 import AudioPlayer from '@/components/audio-player.vue'
 import VideoPlayer from '@/components/video-player.vue'
@@ -162,11 +161,6 @@ export default {
       } else {
         return ''
       }
-    }
-  },
-  computed: {
-    formattedSize() {
-      return bytes(this.payload.size)
     }
   },
   components: {
