@@ -24,7 +24,8 @@
         <div v-html='payload.title' />
         <div v-html='artistList' />
         <div v-html='timeToPublish' />
-        <i class="material-icons material-icons--large">close</i>
+        <i class="material-icons material-icons--large"
+           v-if='showIcons'>close</i>
       </section>
     </div>
     <!-- END: CLOSED -->
@@ -47,6 +48,7 @@ export default {
   },
   data() {
     return {
+      showIcons: false,
       payload: {
         artists: [''],
         content: [],
@@ -69,6 +71,7 @@ export default {
       this.payload = response.body
       this.payload.open = isPast(parse(this.payload.date))
       this.payload.hash = this.hash
+      this.setIcons()
     })
     httpPromise.catch(console.log)
   },
@@ -80,6 +83,12 @@ export default {
     }
   },
   methods: {
+    setIcons() {
+      if (this.payload.hash === this.$route.params.unit) {
+        if (!this.payload.open) this.showIcons = true
+        else this.showIcons = false
+      }
+    },
     setFirstImage() {
       const img = this.content.find(c => c.media === 'Image')
       if (img) {
@@ -99,6 +108,9 @@ export default {
     }
   },
   watch: {
+    $route () {
+      this.setIcons()
+    },
     'payload.date'() {
       countdown.setLabels('ms|s|m|h|d|w|m|y|d|s|m', 'ms|s|m|h|d|w|m|y|d|s|m', ':', ':', 'now')
       this.timerId = countdown(
@@ -225,4 +237,5 @@ export default {
     font-size: 90vw;
   }
 }
+
 </style>

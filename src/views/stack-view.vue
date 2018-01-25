@@ -7,7 +7,7 @@
              v-for='(work, index) in main.container.works'
              :key='work.hash'
              :id='work.hash'>
-          <work :hash='work.hash' />
+          <work :hash='work.hash'/>
         </div>
       </div>
     </div>
@@ -41,6 +41,7 @@ export default {
   },
   data() {
     return {
+      showSwiper: false,
       stackSwiper: {}
     }
   },
@@ -82,7 +83,7 @@ export default {
       this.$nextTick(() => {
         if (this.$route.params.unit) {
           const index = this.main.container.works.map(e => e.hash).indexOf(this.$route.params.unit)
-          this.stackSwiper.slideTo(index, duration)
+          this.stackSwiper.slideTo(index, duration, this.showSwiper = true)
           this.SET_CURRENT_SLIDE(this.$route.params.unit)
         } else {
           this.$router.push({name: 'stack', params: {unit: this.main.container.works[0].hash}})
@@ -155,6 +156,16 @@ export default {
   @include screen-size('small') {
     background-size: 300px;
     width: calc(100vw - 30px);
+  }
+}
+
+.swiper-slide {
+  &__work {
+    display: none;
+
+    &--active {
+      display: block;
+    }
   }
 }
 
