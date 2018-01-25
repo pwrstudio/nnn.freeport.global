@@ -1,5 +1,6 @@
 <template>
-  <div class='stack'>
+  <div class='stack'
+       :class='{"stack--show": loaded}'>
     <sidebar/>
     <div class="swiper-container">
       <div class="swiper-wrapper">
@@ -41,7 +42,7 @@ export default {
   },
   data() {
     return {
-      showSwiper: false,
+      loaded: false,
       stackSwiper: {}
     }
   },
@@ -88,6 +89,7 @@ export default {
         } else {
           this.$router.push({name: 'stack', params: {unit: this.main.container.works[0].hash}})
         }
+        this.loaded = true
       })
     }
   },
@@ -116,6 +118,11 @@ export default {
   height: 100vh;
   overflow-x: hidden;
   overflow-y: scroll;
+  opacity: 0;
+
+  &--show {
+    opacity: 1;
+  }
 
   @include hide-scroll;
 }

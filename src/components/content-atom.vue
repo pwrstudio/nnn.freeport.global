@@ -1,6 +1,6 @@
 <template>
   <div class='atom'
-       :class='[getSizeClass(), getImageClass()]'>
+       :class='[getSizeClass(), getImageClass(), {"atom--loaded": payload.loaded}]'>
 
     <!-- TEXT -->
     <div v-if='payload.media === "Text"'
@@ -93,7 +93,8 @@ export default {
         media: '',
         hash: '',
         title: '',
-        size: 0
+        size: 0,
+        loaded: false
       },
       text: '',
       externalLink: '',
@@ -117,6 +118,7 @@ export default {
       } else if (this.payload.media === 'External link') {
         this.getLink()
       }
+      this.payload.loaded = true
     })
     httpPromise.catch(console.log)
   },
@@ -176,12 +178,16 @@ export default {
 @import '../style/_variables.scss';
 
 .atom {
-  display: block;
+  display: none;
   margin: 20px;
   position: relative;
   text-decoration: none !important;
   height: auto;
   border: 1px solid $white;
+
+  &--loaded {
+    display: block;
+  }
 
   &--small {
     flex: 2 1 300px;

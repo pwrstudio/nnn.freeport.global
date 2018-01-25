@@ -1,11 +1,12 @@
 <template>
   <div>
 
-    <div class='work'>
+    <div class='work'
+         :class='{"work--show": loaded}'>
       <div class='work__inner masonry'>
         <contentAtom v-for='item in payload.content'
                     :key='item.hash'
-                    :hash='item.hash' />
+                    :hash='item.hash'/>
      </div>
     </div>
 
@@ -58,6 +59,7 @@ export default {
   },
   data() {
     return {
+      loaded: false,
       payload: {
         artists: [],
         content: [],
@@ -73,8 +75,8 @@ export default {
     httpPromise.then(response => {
       this.payload = response.body
       this.SET_CURRENT_WORK(this.payload)
-      console.log(this.$router)
       this.$socket.emit('view', {title: this.payload.title, hash: this.$route.params.hash})
+      this.loaded = true
       // this.masonry = Macy({
       //   container: '.masonry',
       //   margin: 24,
@@ -141,6 +143,11 @@ export default {
   position: fixed;
   top: 0;
   width: 100vw;
+  display: none;
+
+  &--show {
+    display: block;
+  }
 
   &__inner {
     align-items: center;

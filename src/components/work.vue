@@ -1,6 +1,6 @@
 <template>
   <div class='work'
-       :class='{"work--open": payload.open, "work--closed": !payload.open, "work--open--active": green}'>
+       :class='{"work--open": payload.open, "work--closed": !payload.open, "work--open--active": green, "work--loaded": loaded}'>
 
     <div class='work__image'
          :style='"background-image: url(" + firstImage + ")"' />
@@ -49,6 +49,7 @@ export default {
   },
   data() {
     return {
+      loaded: false,
       showIcons: false,
       green: false,
       payload: {
@@ -111,6 +112,9 @@ export default {
     }
   },
   watch: {
+    loaded () {
+      console.log('loaded work')
+    },
     $route () {
       this.setIcons()
     },
@@ -130,6 +134,7 @@ export default {
         httpPromise.then(response => {
           this.content.push(response.body)
           this.setFirstImage()
+          this.loaded = true
         })
         httpPromise.catch(console.log)
       })
@@ -150,6 +155,11 @@ export default {
   position: relative;
   user-select: none;
   width: 100%;
+  opacity: 0;
+
+  &--loaded {
+    opacity: 1;
+  }
 
   &--open {
     cursor: pointer;
