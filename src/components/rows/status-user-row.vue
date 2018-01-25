@@ -36,18 +36,32 @@ export default {
     }
   },
   mounted() {
-    countdown.setLabels('ms| |:|h|d|w|m|y|d|s|m', 'ms| |:|h|d|w|m|y|d|s|m', '', ':', '0', n => {
-      if (n < 10) {
-        return '0' + n.toString()
-      } else {
-        return n.toString()
+    countdown.setLabels(
+      'ms| |:|h|d|w|m|y|d|s|m',
+      'ms| |:|h|d|w|m|y|d|s|m',
+      '',
+      ':',
+      '0',
+      n => {
+        if (n < 10) {
+          return '0' + n.toString()
+        } else {
+          return n.toString()
+        }
       }
-    })
+    )
     countdown(
       new Date(this.user.time),
       ts => {
-        this.timeOnSite = ts.toString()
-        // this.timeOnSite = this.user.date
+        if (ts.minutes === 0) {
+          this.timeOnSite = '00:' + ts.toString()
+        } else {
+          if (ts.seconds === 0) {
+            this.timeOnSite = '' + ts.toString() + '00'
+          } else {
+            this.timeOnSite = ts.toString()
+          }
+        }
       },
       [countdown.HOURS, countdown.MINUTES, countdown.SECONDS]
     )

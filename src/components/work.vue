@@ -1,6 +1,6 @@
 <template>
   <div class='work'
-       :class='{"work--open": payload.open, "work--closed": !payload.open}'>
+       :class='{"work--open": payload.open, "work--closed": !payload.open, "work--open--active": green}'>
 
     <div class='work__image'
          :style='"background-image: url(" + firstImage + ")"' />
@@ -8,7 +8,8 @@
     <!-- OPEN-->
     <router-link v-if='payload.open'
          :to='{name: "singleWork", params: {hash: hash}}'
-         class='work__text'>
+         class='work__text'
+         @mousedown.native='handleMouse'>
       <section>
         <div v-html='payload.title' />
         <div v-html='artistList' />
@@ -49,6 +50,7 @@ export default {
   data() {
     return {
       showIcons: false,
+      green: false,
       payload: {
         artists: [''],
         content: [],
@@ -83,6 +85,7 @@ export default {
     }
   },
   methods: {
+    handleMouse() { this.green = true },
     setIcons() {
       if (this.payload.hash === this.$route.params.unit) {
         if (!this.payload.open) this.showIcons = true
@@ -155,7 +158,7 @@ export default {
       color: $green;
     }
 
-    &:active {
+    &--active {
       background: $green;
 
       i {
