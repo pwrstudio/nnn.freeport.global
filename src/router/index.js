@@ -4,7 +4,6 @@ import Router from 'vue-router'
 const stackView = () => import('@/views/stack-view')
 const scanView = () => import('@/views/scan-view')
 const singleWorkView = () => import('@/views/single-work-view')
-const singleContentView = () => import('@/views/single-content-view')
 const statusView = () => import('@/views/status-view')
 const infoView = () => import('@/views/info-view')
 

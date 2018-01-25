@@ -212,6 +212,10 @@ body {
 #main-view {
   width: 100vw;
   height: 100vh;
+
+  @include screen-size('small') {
+    overflow-y: scroll;  
+  }
 }
 
 .nav-button {
