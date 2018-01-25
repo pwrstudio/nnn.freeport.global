@@ -3,12 +3,16 @@
 
     <div class='work'
          :class='{"work--show": loaded}'>
-      <div class='work__inner masonry'>
+      <div class='work__inner masonry'
+           @scroll='updateScroll'>
         <contentAtom v-for='item in payload.content'
                     :key='item.hash'
                     :hash='item.hash'/>
      </div>
     </div>
+
+    <!-- Single content overlay -->
+    <singleContentOverlay v-if='$route.name === "singleContent"'/>
 
     <!-- Roll-down info overlay -->
     <div v-if='$route.params.info' class='info-overlay'>
@@ -51,11 +55,13 @@
 <script>
 import {mapActions} from 'vuex'
 import contentAtom from '@/components/content-atom'
+import singleContentOverlay from '@/components/single-content-overlay'
 
 export default {
   name: 'singleWork',
   components: {
-    contentAtom
+    contentAtom,
+    singleContentOverlay
   },
   data() {
     return {
@@ -93,7 +99,10 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['SET_CURRENT_WORK'])
+    ...mapActions(['SET_CURRENT_WORK']),
+    updateScroll(event) {
+      console.log(event)
+    }
   },
   watch: {
     // payload() {

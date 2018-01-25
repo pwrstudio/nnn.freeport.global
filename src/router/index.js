@@ -39,10 +39,16 @@ export default new Router({
       component: singleWorkView
     },
     {
-      path: '/c/:hash',
+      path: '/w/:hash/c/:hash',
       name: 'singleContent',
-      component: singleContentView
+      component: singleWorkView
     }
+    // Replaces:
+    // {
+    //   path: '/c/:hash',
+    //   name: 'singleContent',
+    //   component: singleContentView
+    // }
   ],
   scrollBehavior (to, from, savedPosition) {
     if (to.name === 'singleContent') {
