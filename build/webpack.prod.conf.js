@@ -11,6 +11,8 @@ const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin')
 const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
 const FaviconsWebpackPlugin = require('favicons-webpack-plugin')
+const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
+const WebpackPwaManifest = require('webpack-pwa-manifest')
 
 const env =
   process.env.NODE_ENV === 'testing' ? require('../config/test.env') : require('../config/prod.env')
@@ -107,7 +109,6 @@ const webpackConfig = merge(baseWebpackConfig, {
       children: true,
       minChunks: 3
     }),
-
     // copy custom static assets
     new CopyWebpackPlugin([
       {
@@ -117,7 +118,23 @@ const webpackConfig = merge(baseWebpackConfig, {
       },
       {from: 'src/config/_redirects', to: './'}
     ]),
-    new FaviconsWebpackPlugin('./src/assets/img/favicon.png')
+    new FaviconsWebpackPlugin('./src/assets/img/favicon.png'),
+    new SWPrecacheWebpackPlugin({
+      cacheId: 'nnn-freeport-global',
+      filename: 'service-worker.js',
+      staticFileGlobs: ['dist/**/*.{js,html,css}'],
+      minify: true,
+      stripPrefix: 'dist/'
+    }),
+    new WebpackPwaManifest({
+      name: 'NNN FREEPORT',
+      short_name: 'NNN FREEPORT',
+      description: 'Description!',
+      background_color: '#000000',
+      theme_color: '#000000',
+      'theme-color': '#000000',
+      start_url: '/'
+    })
   ]
 })
 

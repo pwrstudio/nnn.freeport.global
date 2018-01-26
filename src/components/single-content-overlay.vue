@@ -2,7 +2,10 @@
   <div class='single-content'>
     <div v-if='payload.media === "Text"'
          class='single-content__text'>
-         <div class='single-content__text__inner' v-html='text'/>
+         <div class='single-content__text__inner'>
+           <div v-html='payload.title'/>
+           <div v-html='text'/>
+         </div>
     </div>
     <div v-else-if='payload.media === "Image"'class='single-content__image'>
       <div class='single-content__image__inner'>
