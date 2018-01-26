@@ -49,6 +49,15 @@ const mutations = {
   [mutationTypes.SET_CONTAINER](state, data) {
     state.rootHash = data.rootHash
     state.container = data.container
+    state.container.works.sort((a, b) => {
+      if (a.hash < b.hash) {
+        return -1
+      }
+      if (a.hash > b.hash) {
+        return 1
+      }
+      return 0
+    })
   },
   [mutationTypes.SET_USERLIST](state, data) {
     state.userList = data
