@@ -68,6 +68,9 @@ const mutations = {
     })
   },
   [mutationTypes.WRITE_LOG](state, data) {
+    if (state.log.length > 500) {
+      state.log.splice(-1, 200)
+    }
     state.log.unshift(data)
   }
 }
