@@ -8,7 +8,7 @@
     </div>
     <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html=''/>
     <td class='status__users__table__body__row__cell' v-html='payload.title'/>
-    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html='artistList()'/>
+    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html='payload.artistList'/>
   </tr>
 </template>
 
@@ -27,6 +27,7 @@ export default {
     return {
       payload: {
         artists: [],
+        artistList: '',
         content: [],
         data: '',
         open: false,
@@ -44,7 +45,7 @@ export default {
     httpPromise.catch(console.log)
   },
   methods: {
-    artistList() {
+    getArtistList() {
       return this.payload.artists.reduce(
         (accumulator, currentValue) => accumulator + ', ' + currentValue
       )
@@ -55,7 +56,11 @@ export default {
       }
     }
   },
-  computed: {}
+  watch: {
+    payload () {
+      this.payload.artistList = this.getArtistList()
+    }
+  }
 }
 </script>
 
@@ -89,7 +94,6 @@ export default {
         border-bottom: 2px solid $black;
         padding: 10px;
         user-select: none;
-        // white-space: nowrap;
         overflow: hidden;
 
         &__icon {

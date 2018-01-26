@@ -214,7 +214,7 @@ body {
   height: 100vh;
 
   @include screen-size('small') {
-    overflow-y: scroll;  
+    overflow-y: scroll;
   }
 }
 
