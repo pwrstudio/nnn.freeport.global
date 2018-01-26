@@ -6,6 +6,7 @@
     <div v-if='payload.media === "Text"'
          class='atom__text'
          :id='hash'>
+      <div class='atom__text__title' v-html='payload.title'/>
       <span v-html='text' />
       <router-link class='atom__text__link'
                    :to='{name: "singleContent", params: {singleHash: hash}}'>
@@ -219,6 +220,10 @@ export default {
     color: white !important;
     padding: 20px;
     text-decoration: none !important;
+
+    &__title {
+      margin-bottom: $line-height;
+    }
 
     &__link {
       border: 1px solid $white;
