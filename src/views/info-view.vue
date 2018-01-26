@@ -1,16 +1,16 @@
 <template>
   <div class='info'>
     <div class='info__main'>
-      <span v-html='formattedInfo' />
-      <div class='info__main__overlay' />
+      <span class='info__main__text'
+            v-html='formattedInfo' />
     </div>
     <div class='info__credits'>
-      <span v-html='formattedCredits' />
+      <span class='info__credits__text'
+            v-html='formattedCredits' />
     </div>
     <div class='info__tech'>
       <span class="info__tech__text"
             v-html='formattedTech' />
-      <div class='info__tech__overlay' />
     </div>
   </div>
 </template>
@@ -41,132 +41,104 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
-@mixin overlay {
-  &__overlay {
+@mixin gradient-scroll {
+  &__text {
+    z-index: 1;
+    position: absolute;
+    height: 100%;
+    padding: 0 30px;
+    overflow-y: scroll;
+    @include hide-scroll;
+
+    &:after {
+      content: '';
+      display: block;
+      height: 30px;
+    }
+
+    @include screen-size('small') {
+      position: relative;
+      height: auto;
+      display: block;
+
+      &:after {
+        height: 0;
+      }
+    }
+  }
+
+  &:before {
+    content: '';
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 30px;
     left: 0;
     bottom: 0;
+    display: block;
+    z-index: 2;
+    background: linear-gradient(0deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
+    background-size: 100% 100%;
     pointer-events: none;
-    box-shadow: inset -20px -30px 30px black;
+
+    @include screen-size('small') {
+      display: none;
+    }
   }
 }
 
-// @mixin infobox {
-//   @include hide-scroll;
-//
-//   color: $white;
-//   overflow-y: auto;
-//   overflow-x: hidden;
-//   padding: 30px;
-//   position: absolute;
-//
-//   &__overlay {
-//     position: absolute;
-//     width: calc(100% + 60px);
-//     height: 100%;
-//     bottom: 0;
-//     pointer-events: none;
-//     box-shadow: inset -20px -30px 30px black;
-//   }
-//
-//   @include screen-size('small') {
-//     position: static;
-//   }
-// }
-//
-// @mixin secondary($left) {
-//   @include infobox;
-//   width: calc(50vw - 100px);
-//   font-size: 14px;
-//   line-height: 20px;
-//   top: calc(50vh + 80px);
-//   left: $left;
-//   height: calc(50vh - 200px);
-//
-//   @include screen-size('small') {
-//     height: auto;
-//     width: calc(100vw - 120px);
-//     font-size: 13px;
-//     line-height: 16px;
-//   }
-// }
-//
-// @mixin primary {
-//   @include infobox;
-//   top: 80px;
-//   left: 0px;
-//   height: calc(50vh - 80px);
-//   width: calc(100vw - 60px);
-//   font-size: 20px;
-//   line-height: 24px;
-//
-//   @include screen-size('small') {
-//     margin-top: 50px;
-//     height: auto;
-//     font-size: 15px;
-//     line-height: 18px;
-//   }
-// }
-
-.info {
-  color: $white;
-  display: grid;
-  height: calc(100vh - 80px);
-  padding-top: 80px;
-  grid-gap: 0;
-  grid-auto-rows: minmax(10vh, 40vh);
-  grid-template-rows: max-content;
-  grid-template-columns: 1fr 1fr;
-  grid-template-areas:
-  'main main'
-  'credits tech';
+@mixin primary {
+  font-size: 20px;
+  line-height: 24px;
+  position: relative;
+  overflow: hidden;
+  height: 35vh;
+  margin-bottom: 30px;
+  @include gradient-scroll;
 
   @include screen-size('small') {
     height: auto;
-    grid-auto-rows: min-content;
-    grid-template-columns: 100%;
-    grid-template-areas:
-    'main'
-    'credits'
-    'tech';
   }
+}
+
+@mixin secondary {
+  font-size: 14px;
+  line-height: 20px;
+  position: relative;
+  clear: none;
+  overflow: hidden;
+  width: 50%;
+  height: 28vh;
+  @include gradient-scroll;
+
+  @include screen-size('small') {
+    height: auto;
+    width: 100%;
+  }
+}
+
+.info {
+  color: $white;
+  padding-top: 80px;
+  height: calc(100vh - 80px);
 
   &__main {
-    grid-area: main;
-    padding: 30px;
-    font-size: 20px;
-    line-height: 24px;
-    @include overlay;
-    // @include primary;
+    @include primary;
   }
 
   &__credits {
-    grid-area: credits;
-    padding: 30px;
-    font-size: 14px;
-    line-height: 20px;
-    position: relative;
-    overflow-y: scroll;
-    @include overlay;
-    // @include secondary(30px);
+    float: left;
+    @include secondary;
   }
 
   &__tech {
-    grid-area: tech;
-    padding: 30px;
-    font-size: 14px;
-    line-height: 20px;
-    position: relative;
-    overflow-y: scroll;
-    @include hide-scroll;
-    @include overlay;
+    float: right;
+    @include secondary;
 
-    @include screen-size('small') {
-      padding-bottom: 120px;
+    &:after {
+      content: '';
+      display: block;
+      height: 120px;
     }
-    // @include secondary(calc(50vw + 30px));
   }
 }
 </style>
