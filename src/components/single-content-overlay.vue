@@ -40,7 +40,7 @@ export default {
     }
   },
   mounted() {
-    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.$route.params.hash)
+    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.$route.params.singleHash)
     httpPromise.then(response => {
       this.payload = response.body
       if (this.payload.media === 'Text') {

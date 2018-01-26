@@ -38,7 +38,7 @@ export default new Router({
       component: singleWorkView
     },
     {
-      path: '/w/:hash/c/:hash',
+      path: '/w/:hash/c/:singleHash',
       name: 'singleContent',
       component: singleWorkView
     }

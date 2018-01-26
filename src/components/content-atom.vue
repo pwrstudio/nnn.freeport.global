@@ -8,7 +8,7 @@
          :id='hash'>
       <span v-html='text' />
       <router-link class='atom__text__link'
-                   :to='{name: "singleContent", params: {hash: hash}}'>
+                   :to='{name: "singleContent", params: {singleHash: hash}}'>
         <i class="material-icons">arrow_forward</i>
       </router-link>
     </div>
@@ -17,7 +17,7 @@
     <!-- IMAGE -->
     <router-link v-else-if='payload.media === "Image"'
                  class='atom__image'
-                 :to='{name: "singleContent", params: {hash: hash}}'
+                 :to='{name: "singleContent", params: {singleHash: hash}}'
                  :id='hash'>
       <img :src='getImageLink(payload.hash)'>
     </router-link>

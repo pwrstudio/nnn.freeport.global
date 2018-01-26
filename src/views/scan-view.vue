@@ -1,13 +1,23 @@
 <template>
   <div class='scanner'>
-    <video id='preview'
-           class='scanner__preview' />
-    <i class="material-icons scanner__crosshair">crop_free</i>
-    <div v-if='resultHash.length > 0' class='scanner__success'>
-      <div class='scanner__success__inner'>
-        <div v-html='resultHash'/>
+    <!-- IN BROWSER SCANNER -->
+    <template v-if='!iOS.check'>
+      <video id='preview'
+             class='scanner__preview' />
+      <i class="material-icons scanner__crosshair">crop_free</i>
+      <div v-if='resultHash.length > 0' class='scanner__success'>
+        <div class='scanner__success__inner'>
+          <div v-html='resultHash'/>
+        </div>
       </div>
-    </div>
+    </template>
+
+    <!-- Try opening the iOS camera (built in QR scan support) -->
+    <!-- Using answer from Stackoverflow https://stackoverflow.com/questions/2607067/can-you-access-the-iphone-camera-from-mobile-safari -->
+    <template v-else-if='iOS.check && iOS.version >= 11'>
+      <i class="material-icons scanner__crosshair">crop_free</i>
+      <input type="file" accept="video/*" capture="camera">
+    </template>
   </div>
 </template>
 
@@ -19,6 +29,10 @@ export default {
   name: 'scanView',
   data() {
     return {
+      iOS: {
+        check: false,
+        version: ''
+      },
       scanner: {},
       resultHash: ''
     }
@@ -27,36 +41,52 @@ export default {
     ...mapState(['main'])
   },
   mounted() {
-    this.scanner = new Instascan.Scanner({
-      video: document.getElementById('preview'),
-      continuous: true,
-      mirror: false
-    })
-    Instascan.Camera.getCameras()
-      .then(cameras => {
-        if (cameras[1]) {
-          this.scanner.start(cameras[1])
-        } else {
-          this.scanner.start(cameras[0])
+    this.checkiOS()
+    if (!this.iOS.check) {
+      this.scanner = new Instascan.Scanner({
+        video: document.getElementById('preview'),
+        continuous: true,
+        mirror: false
+      })
+      Instascan.Camera.getCameras()
+        .then(cameras => {
+          if (cameras[1]) {
+            this.scanner.start(cameras[1])
+          } else {
+            this.scanner.start(cameras[0])
+          }
+        })
+        .catch(e => {
+          console.log(e)
+        })
+      // Listen for scan events
+      this.scanner.addListener('scan', content => {
+        const matchingWork = this.main.container.works.find(w => {
+          return w.id === content
+        })
+        if (matchingWork) {
+          this.resultHash = matchingWork.hash
+          this.scanner.stop().then(() => {
+            window.setTimeout(() => {
+              this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
+            }, 2000)
+          })
         }
       })
-      .catch(e => {
-        console.log(e)
-      })
-    // Listen for scan events
-    this.scanner.addListener('scan', content => {
-      const matchingWork = this.main.container.works.find(w => {
-        return w.id === content
-      })
-      if (matchingWork) {
-        this.resultHash = matchingWork.hash
-        this.scanner.stop().then(() => {
-          window.setTimeout(() => {
-            this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
-          }, 2000)
-        })
-      }
-    })
+    }
+  },
+  methods: {
+    checkiOS() {
+      let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+      if (iOS) {
+        this.iOS.check = true
+        let ver = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/)
+        this.iOS.version = [
+          parseInt(ver[1], 10),
+          parseInt(ver[2], 10),
+          parseInt(ver[3] || 0, 10)]
+      } else this.iOS.check = false
+    }
   },
   beforeDestroy() {
     this.scanner.stop()
