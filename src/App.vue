@@ -61,7 +61,6 @@ export default {
       })
     },
     leave(data) {
-      console.log(data)
       this.UPDATE_USERLIST(data.list)
       this.WRITE_LOG({
         time: format(new Date(), 'HH:mm:ss'),
@@ -70,8 +69,6 @@ export default {
       })
     },
     view(data) {
-      console.log('view received')
-      console.log(data)
       this.WRITE_LOG({
         time: format(new Date(), 'HH:mm:ss'),
         text: data.id + ' opened <strong>' + data.title + '</strong>',
@@ -260,5 +257,102 @@ h3 {
 table {
   border-collapse: collapse;
   padding: 0;
+}
+
+.tooltip {
+  display: block !important;
+  z-index: 10000;
+  font-family: 'space mono', $sans-serif-stack;
+  font-size: $font-size-small;
+  font-weight: normal !important;
+
+  .tooltip-inner {
+    background: white;
+    color: $black;
+    padding: 10px;
+    font-weight: normal !important;
+  }
+
+  .tooltip-arrow {
+    width: 0;
+    height: 0;
+    border-style: solid;
+    position: absolute;
+    margin: 7px;
+    border-color: $white;
+    display: none;
+  }
+
+  &[x-placement^='top'] {
+    margin-bottom: 5px;
+
+    .tooltip-arrow {
+      border-width: 5px 5px 0 5px;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+      bottom: -7px;
+      left: calc(50% - 7px);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &[x-placement^='bottom'] {
+    margin-top: 5px;
+
+    .tooltip-arrow {
+      border-width: 0 5px 5px 5px;
+      border-left-color: transparent !important;
+      border-right-color: transparent !important;
+      border-top-color: transparent !important;
+      top: -5px;
+      left: calc(50% - 5px);
+      margin-top: 0;
+      margin-bottom: 0;
+    }
+  }
+
+  &[x-placement^='right'] {
+    margin-left: 5px;
+
+    .tooltip-arrow {
+      border-width: 5px 5px 5px 0;
+      border-left-color: transparent !important;
+      border-top-color: transparent !important;
+      border-bottom-color: transparent !important;
+      left: -5px;
+      top: calc(50% - 5px);
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  &[x-placement^='left'] {
+    margin-right: 7px;
+
+    .tooltip-arrow {
+      border-width: 7px 0 7px 7px;
+      border-top-color: transparent !important;
+      border-right-color: transparent !important;
+      border-bottom-color: transparent !important;
+      right: -7px;
+      top: calc(50% - 7px);
+      margin-left: 0;
+      margin-right: 0;
+    }
+  }
+
+  &[aria-hidden='true'] {
+    visibility: hidden;
+    opacity: 0;
+    transition: opacity 0.15s, visibility 0.15s;
+  }
+
+  &[aria-hidden='false'] {
+    visibility: visible;
+    opacity: 1;
+    transition: opacity 0.15s;
+  }
 }
 </style>

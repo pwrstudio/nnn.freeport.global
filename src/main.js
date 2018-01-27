@@ -5,6 +5,7 @@ import router from './router'
 import store from './store'
 import VueHead from 'vue-head'
 import VueSocketio from 'vue-socket.io'
+import VTooltip from 'v-tooltip'
 // import ga from 'vue-ga'
 // import Raven from 'raven-js'
 // import RavenVue from 'raven-js/plugins/vue'
@@ -19,6 +20,7 @@ import VueSocketio from 'vue-socket.io'
 Vue.config.productionTip = false
 
 Vue.use(VueHead)
+Vue.use(VTooltip)
 Vue.use(VueSocketio, 'https://nnnfreeportrelay.now.sh')
 // Vue.use(VueSocketio, 'localhost:9090')
 // Vue.use(VueSocketio, '192.168.178.25:9090')

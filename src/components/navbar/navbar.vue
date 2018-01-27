@@ -90,8 +90,8 @@
     <!-- SINGLE WORK-->
     <template v-if='$route.name === "singleWork" && !$route.params.info'>
       <router-link :to='{name: "singleWork", params: {hash: $route.params.hash, info: "info"}}'
-                   class='nav-button nav-button__left'>
-        {{main.currentWork.title}}
+                   v-tooltip.auto='"About work"'
+                   class='nav-button nav-button__left'> {{main.currentWork.title}}
       </router-link>
       <router-link v-if='main.currentSlide'
                    class='nav-button nav-button__right'

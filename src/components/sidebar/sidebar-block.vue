@@ -1,5 +1,6 @@
 <template>
   <router-link :to='{name: "stack", params: {unit: hash}}'
+               v-tooltip.left-start='payload.title'
                class='sidebar-block'
                :class='{"sidebar-block--active": (hash === $route.params.unit), "sidebar-block--open": payload.open, "sidebar-block--closed": !payload.open}' />
 </template>

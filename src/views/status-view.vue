@@ -5,23 +5,30 @@
     <!-- 1 ROW -->
     <div class='status__first'>
       <!-- IPFS -->
-      <div class='status__first__box'>
+      <a :href='"https://ipfs.io/ipfs/" + main.rootHash'
+         target=_blank
+         class='status__first__box'
+         v-tooltip.auto='"IPFS root hash"'>
         <div class="status__first__box__label">
           <i class="material-icons">flag</i>
         </div>
         <span class='status__first__box__info'
               v-html='main.rootHash' />
-      </div>
+      </a>
       <!-- Ethereum-->
-      <div class='status__first__box'>
+      <a href='https://rinkeby.etherscan.io/address/0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
+         target=_blank
+         class='status__first__box'
+         v-tooltip.auto='"Ethereum contract address"'>
         <div class="status__first__box__label">
           <i class=" material-icons">lock_outline</i>
         </div>
         <span class='status__first__box__info'
               v-html='"0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A"' />
-      </div>
+      </a>
       <!-- Last update -->
-      <div class='status__first__box'>
+      <div class='status__first__box'
+           v-tooltip.auto='"Last update"'>
         <div class="status__first__box__label">
           <i class="material-icons">query_builder</i>
         </div>
@@ -319,6 +326,8 @@ export default {
       font-size: $font-size-small;
       display: flex;
       align-items: center;
+      color: $white;
+      text-decoration: none;
 
       &__label {
         position: absolute;

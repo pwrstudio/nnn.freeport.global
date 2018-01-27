@@ -91,14 +91,15 @@ export default {
           this.$router.push({
             name: 'stack',
             params: {
-              unit: this.main.container.works[
-                Math.floor(Math.random() * (this.main.container.works.length - 1))
-              ].hash
+              unit: this.main.container.works[this.getRandom(this.main.container.works.length)].hash
             }
           })
         }
         this.loaded = true
       })
+    },
+    getRandom(max) {
+      return Math.floor(Math.random() * (max - 1))
     },
     checkiOS() {
       let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
