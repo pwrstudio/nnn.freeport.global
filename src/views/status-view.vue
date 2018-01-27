@@ -40,7 +40,7 @@
     <!-- 2 ROW -->
     <!-- 2 ROW -->
     <div class='status__second'>
-      <div v-show='activeMobileTab === "list"'
+      <div :class='{"mobile-show":activeMobileTab === "list"}'
            class='status__second__table'>
         <table>
           <thead class='status__second__table__header'>
@@ -65,8 +65,8 @@
           </tbody>
         </table>
       </div>
-      <div v-show='activeMobileTab === "map"'
-           id='map'
+      <div id='map'
+           :class='{"mobile-show":activeMobileTab === "map"}'
            class='status__second__map' />
       <!-- Mobile tabs -->
       <div class='status__second__tabs'>
@@ -340,7 +340,11 @@ export default {
     &__table {
       @include table;
       @include screen-size('small') {
+        display: none;
         height: calc(100% - 80px);
+        &.mobile-show {
+          display: block;
+        }
       }
     }
 
@@ -352,7 +356,11 @@ export default {
       border: 1px solid $white;
 
       @include screen-size('small') {
+        display: none;
         height: calc(100% - 60px);
+        &.mobile-show {
+          display: block;
+        }
       }
     }
 

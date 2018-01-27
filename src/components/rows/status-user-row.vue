@@ -1,7 +1,7 @@
 <template>
   <tr class='status__users__table__body__row'>
-    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'>
-      @click='openChat(user.id)'>
+    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
+        @click='openChat(user.id)'>
       <i class="material-icons">chat_bubble_outline</i>
     </td>
     <td class='status__users__table__body__row__cell status__users__table__body__row__cell--capped'>

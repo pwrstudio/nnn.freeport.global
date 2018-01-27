@@ -223,6 +223,7 @@ export default {
     text-decoration: none !important;
 
     &__title {
+      font-size: $font-size-small;
       margin-bottom: $line-height;
     }
 

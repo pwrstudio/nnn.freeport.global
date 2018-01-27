@@ -22,13 +22,13 @@ export default {
         description:
           'nnn.freeport.global is an alternative space for the distribution of artworks, using the backstreets, black markets and divergent parts of the internet to create, exhibit and debate the value of art.',
         type: 'website',
-        image: 'https:///nnn.freeport.global',
+        image: 'http://nnn.freeport.global/static/nnnfreeport.jpg',
         url: 'https:///nnn.freeport.global',
         defaults: {
           title: 'NNN.FREEPORT.GLOBAL',
           description:
             'nnn.freeport.global is an alternative space for the distribution of artworks, using the backstreets, black markets and divergent parts of the internet to create, exhibit and debate the value of art.',
-          image: 'http://nnn.freeport.global',
+          image: 'http://nnn.freeport.global/static/nnnfreeport.jpg',
           type: 'website'
         }
       }
@@ -97,7 +97,7 @@ export default {
       this.meta.description = meta.description || this.meta.defaults.description
       this.meta.image = meta.image || this.meta.defaults.image
       this.meta.type = meta.type || this.meta.defaults.type
-      this.meta.url = meta.url || 'https://nnn.freeport.global' + this.$route.fullPath
+      this.meta.url = meta.url || 'https://nnn.freeport.global'
       this.$emit('updateHead')
     },
     $_fetchData(routeName) {
@@ -170,7 +170,7 @@ export default {
     'main.currentWork'() {
       const meta = {
         title: this.main.currentWork.title,
-        url: 'https://nnn.freeport.global' + this.main.currentWork.id
+        url: 'https://nnn.freeport.global/tracking/' + this.main.currentWork.id
       }
       this.$_setMetaTags(meta)
     },

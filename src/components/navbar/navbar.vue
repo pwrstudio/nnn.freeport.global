@@ -91,15 +91,15 @@
     <template v-if='$route.name === "singleWork" && !$route.params.info'>
       <router-link :to='{name: "singleWork", params: {hash: $route.params.hash, info: "info"}}'
                    v-tooltip.auto='"About work"'
-                   class='nav-button nav-button__left'> {{main.currentWork.title}}
+                   class='nav-button nav-button__left nav-button--opaque'> {{main.currentWork.title}}
       </router-link>
       <router-link v-if='main.currentSlide'
-                   class='nav-button nav-button__right'
+                   class='nav-button nav-button__right nav-button--opaque'
                    :to='{name: "stack", params: {unit: main.currentSlide}}'>
         <i class="material-icons">menu</i>
       </router-link>
       <router-link v-else
-                   class='nav-button nav-button__right'
+                   class='nav-button nav-button__right nav-button--opaque'
                    :to='{name: "stack"}'>
         <i class="material-icons">menu</i>
       </router-link>
@@ -175,6 +175,12 @@ export default {
 @import '../../style/helpers/_responsive.scss';
 @import '../../style/_variables.scss';
 
+.nav-button {
+  &--opaque {
+    background: $black;
+  }
+}
+
 .nav-button__left {
   @include screen-size('small') {
     width: calc(70vw - 20px);
@@ -182,6 +188,9 @@ export default {
     &:active {
       background: $white;
       color: $black;
+    }
+    &--opaque {
+      background: $black;
     }
   }
 }
