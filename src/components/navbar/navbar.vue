@@ -161,11 +161,9 @@ export default {
       if (from.name === 'status') {
         this.fromStatus = true
         this.fromStack = false
-        console.log('coming from status')
       } else {
         this.fromStatus = false
         this.fromStack = true
-        console.log('coming from stack')
       }
     }
   }

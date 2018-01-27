@@ -312,7 +312,7 @@ export default {
     &__box {
       background: $black;
       border: 1px solid $white;
-      flex: 1 2 200px;
+      flex: 2 2 200px;
       margin: 10px;
       padding: 10px;
       position: relative;
@@ -338,6 +338,10 @@ export default {
       &__info {
         margin-left: 60px;
       }
+    }
+
+    @include screen-size('small') {
+      display: none;
     }
   }
 

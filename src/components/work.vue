@@ -7,16 +7,15 @@
 
     <!-- OPEN-->
     <router-link v-if='payload.open'
-         :to='{name: "singleWork", params: {hash: hash}}'
-         class='work__text'
-         @mousedown.native='handleMouse'>
+                 :to='{name: "singleWork", params: {hash: hash}}'
+                 class='work__text'
+                 @mousedown.native='handleMouse'>
       <section>
         <div v-html='payload.title' />
         <div v-html='artistList' />
       </section>
     </router-link>
     <!-- END: OPEN-->
-
 
     <!--CLOSED -->
     <div v-if='!payload.open'
@@ -114,9 +113,7 @@ export default {
     }
   },
   watch: {
-    loaded() {
-      console.log('loaded work')
-    },
+    loaded() {},
     $route() {
       this.setIcons()
     },

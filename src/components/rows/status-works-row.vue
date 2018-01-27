@@ -13,7 +13,7 @@
       <td class='status__users__table__body__row__cell'
           v-html='payload.title' />
       <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
-          v-html='getArtistList()' />
+          v-html='payload.artistList' />
   </tr>
 </template>
 
@@ -32,7 +32,7 @@ export default {
     return {
       payload: {
         artists: [],
-        artistList: '',
+        artistList: [],
         content: [],
         data: '',
         open: false,
