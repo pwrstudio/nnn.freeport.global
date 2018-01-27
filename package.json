@@ -24,6 +24,7 @@
     "instascan": "^1.0.0",
     "mapbox-gl": "^0.44.0",
     "marked": "^0.3.12",
+    "oembed-parser": "^1.0.8",
     "raven-js": "^3.21.0",
     "sw-precache-webpack-plugin": "^0.11.4",
     "swiper": "^4.0.7",

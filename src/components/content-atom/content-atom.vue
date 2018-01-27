@@ -84,6 +84,7 @@
 import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
 import marked from 'marked'
+// import {extract} from 'oembed-parser'
 import AudioPlayer from '@/components/content-atom/audio-player'
 import VideoPlayer from '@/components/content-atom/video-player'
 
@@ -136,6 +137,13 @@ export default {
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
         this.externalLink = response.body
+        // extract(this.externalLink)
+        //   .then(data => {
+        //     console.log(data)
+        //   })
+        //   .catch(err => {
+        //     console.log(err)
+        //   })
       })
       httpPromise.catch(console.log)
     },

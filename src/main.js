@@ -6,7 +6,6 @@ import store from './store'
 import VueHead from 'vue-head'
 import VueSocketio from 'vue-socket.io'
 import VTooltip from 'v-tooltip'
-import Vue from 'vue'
 import Raven from 'raven-js'
 import RavenVue from 'raven-js/plugins/vue'
 

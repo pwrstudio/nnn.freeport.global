@@ -166,6 +166,8 @@ export default {
   background: $black;
   padding: 30px;
   padding-top: 80px;
+  overflow-y: auto;
+  background: red;
 
   &__hash {
     @include box;
@@ -216,6 +218,7 @@ export default {
     &__label {
       @include label;
     }
+    margin-bottom: 180px;
   }
 }
 </style>

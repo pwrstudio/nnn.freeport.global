@@ -1123,6 +1123,10 @@ bcrypt-pbkdf@^1.0.0:
   dependencies:
     tweetnacl "^0.14.3"
 
+bellajs@^7.2.0:
+  version "7.2.0"
+  resolved "https://registry.yarnpkg.com/bellajs/-/bellajs-7.2.0.tgz#01cbd4a0d169249263d21de96efc773f0f1eb6fe"
+
 better-assert@~1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/better-assert/-/better-assert-1.0.2.tgz#40866b9e1b9e0b55b481894311e68faffaebc522"
@@ -2683,6 +2687,12 @@ emojis-list@^2.0.0:
 encodeurl@~1.0.1:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/encodeurl/-/encodeurl-1.0.2.tgz#ad3ff4c86ec2d029322f5a02c3a9a606c95b3f59"
+
+encoding@^0.1.11:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/encoding/-/encoding-0.1.12.tgz#538b66f3ee62cd1ab51ec323829d1f9480c74beb"
+  dependencies:
+    iconv-lite "~0.4.13"
 
 end-of-stream@^1.0.0, end-of-stream@^1.1.0:
   version "1.4.1"
@@ -4276,7 +4286,7 @@ https-proxy-agent@1:
     debug "2"
     extend "3"
 
-iconv-lite@^0.4.17, iconv-lite@0.4.19:
+iconv-lite@^0.4.17, iconv-lite@~0.4.13, iconv-lite@0.4.19:
   version "0.4.19"
   resolved "https://registry.yarnpkg.com/iconv-lite/-/iconv-lite-0.4.19.tgz#f7468f60135f5e5dad3399c0a81be9a1603a082b"
 
@@ -6100,6 +6110,13 @@ node-cache@^4.1.1:
     clone "2.x"
     lodash "4.x"
 
+node-fetch@^1.7.3:
+  version "1.7.3"
+  resolved "https://registry.yarnpkg.com/node-fetch/-/node-fetch-1.7.3.tgz#980f6f72d85211a5347c6b2bc18c5b84c3eb47ef"
+  dependencies:
+    encoding "^0.1.11"
+    is-stream "^1.0.1"
+
 node-forge@0.6.33:
   version "0.6.33"
   resolved "https://registry.yarnpkg.com/node-forge/-/node-forge-0.6.33.tgz#463811879f573d45155ad6a9f43dc296e8e85ebc"
@@ -6388,6 +6405,14 @@ object.pick@^1.3.0:
 obuf@^1.0.0, obuf@^1.1.1:
   version "1.1.1"
   resolved "https://registry.yarnpkg.com/obuf/-/obuf-1.1.1.tgz#104124b6c602c6796881a042541d36db43a5264e"
+
+oembed-parser:
+  version "1.0.8"
+  resolved "https://registry.yarnpkg.com/oembed-parser/-/oembed-parser-1.0.8.tgz#0d832aee1fa18539b37126221b9146a7e83023a5"
+  dependencies:
+    bellajs "^7.2.0"
+    node-fetch "^1.7.3"
+    promise-wtf "^1.2.11"
 
 on-finished@~2.3.0:
   version "2.3.0"
@@ -7211,6 +7236,10 @@ progress@^2.0.0:
 promise-inflight@^1.0.1:
   version "1.0.1"
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
+
+promise-wtf@^1.2.11:
+  version "1.2.11"
+  resolved "https://registry.yarnpkg.com/promise-wtf/-/promise-wtf-1.2.11.tgz#327a71e33e853648424ffd1b9c06322224224e23"
 
 proto-list@~1.2.1:
   version "1.2.4"
