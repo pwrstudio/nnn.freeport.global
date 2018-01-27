@@ -167,7 +167,6 @@ export default {
   padding: 30px;
   padding-top: 80px;
   overflow-y: auto;
-  background: red;
 
   &__hash {
     @include box;

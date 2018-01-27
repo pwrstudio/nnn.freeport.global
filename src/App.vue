@@ -170,6 +170,7 @@ export default {
     'main.currentWork'() {
       const meta = {
         title: this.main.currentWork.title,
+        description: this.main.currentWork.description,
         url: 'https://nnn.freeport.global/tracking/' + this.main.currentWork.id
       }
       this.$_setMetaTags(meta)

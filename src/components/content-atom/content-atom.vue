@@ -168,7 +168,11 @@ export default {
       }
     },
     getImageClass() {
-      if (this.payload.media === 'Image') {
+      if (
+        this.payload.media === 'Image' ||
+        this.payload.media === 'Audio' ||
+        this.payload.media === 'Video'
+      ) {
         return 'atom--image'
       } else {
         return ''

@@ -112,11 +112,11 @@
     <template v-if='$route.name === "singleWork" && $route.params.info'>
 
       <router-link :to='{name: "singleWork", params: {hash: $route.params.hash}}'
-                   class='nav-button nav-button__left'>
+                   class='nav-button nav-button__left nav-button--opaque'>
         {{main.currentWork.title}}
       </router-link>
 
-      <router-link class='nav-button nav-button__right'
+      <router-link class='nav-button nav-button__right nav-button--opaque'
                    :to='{name: "singleWork", params: {hash: $route.params.hash}}'>
         <i class="material-icons">close</i>
       </router-link>
@@ -129,10 +129,10 @@
     <!-- SINGLE CONTENT -->
     <template v-if='$route.name === "singleContent" && !$route.params.info'>
       <div @click='$router.go(-1)'
-           class='nav-button nav-button__left'>
+           class='nav-button nav-button__left nav-button--opaque'>
         {{main.currentWork.title}}
       </div>
-      <div class='nav-button nav-button__right'
+      <div class='nav-button nav-button__right nav-button--opaque'
            @click='$router.go(-1)'>
         <i class="material-icons">arrow_back</i>
       </div>
