@@ -6,6 +6,7 @@ const scanView = () => import('@/views/scan-view')
 const singleWorkView = () => import('@/views/single-work-view')
 const statusView = () => import('@/views/status-view')
 const infoView = () => import('@/views/info-view')
+const tracking = () => import('@/views/tracking')
 
 Vue.use(Router)
 
@@ -41,6 +42,11 @@ export default new Router({
       path: '/w/:hash/c/:singleHash',
       name: 'singleContent',
       component: singleWorkView
+    },
+    {
+      path: '/tracking/:id',
+      name: 'tracking',
+      component: tracking
     }
   ]
 })

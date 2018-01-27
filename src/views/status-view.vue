@@ -39,26 +39,26 @@
     <!-- 2 ROW -->
     <!-- 2 ROW -->
     <!-- 2 ROW -->
-    <div class='status__users'>
+    <div class='status__second'>
       <!-- User list -->
-      <div class='status__users__table'>
+      <div class='status__second__table'>
         <table>
-          <thead class='status__users__table__header'>
-            <th class='status__users__table__header__cell'></th>
-            <th class='status__users__table__header__cell'>
+          <thead class='status__second__table__header'>
+            <th class='status__second__table__header__cell'></th>
+            <th class='status__second__table__header__cell'>
               ID
             </th>
-            <th class='status__users__table__header__cell'>
+            <th class='status__second__table__header__cell'>
               IP
             </th>
-            <th class='status__users__table__header__cell'>
+            <th class='status__second__table__header__cell'>
               Location
             </th>
-            <th class='status__users__table__header__cell'>
+            <th class='status__second__table__header__cell'>
               Time on Site
             </th>
           </thead>
-          <tbody class='status__users__table__body'>
+          <tbody class='status__second__table__body'>
             <statusUserRow v-for='user in main.userList'
                            :key='user.id'
                            :user='user' />
@@ -66,7 +66,7 @@
         </table>
       </div>
       <div id='map'
-           class='status__users__map' />
+           class='status__second__map' />
     </div>
     <!-- 3 ROW -->
     <!-- 3 ROW -->
@@ -115,9 +115,6 @@
 import {mapState} from 'vuex'
 import mapboxgl from 'mapbox-gl'
 import {format, parse} from 'date-fns'
-// import statusLogRow from '@/components/rows/status-log-row'
-// import statusWorksRow from '@/components/rows/status-works-row'
-// import statusExhibitionsRow from '@/components/rows/status-exhibitions-row'
 
 const statusUserRow = () => import('@/components/rows/status-user-row')
 const statusLogRow = () => import('@/components/rows/status-log-row')
@@ -224,63 +221,10 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
-@mixin quad {
-  align-content: stretch;
-  display: flex;
-  height: 50%;
-  width: 50%;
-  overflow: hidden;
-}
-
-@mixin small-type {
-  font-size: $font-size-small;
-}
-
-@mixin large-type {
-  font-size: $font-size-small;
-}
-
-@mixin counter {
-  flex: 1 2 200px;
-  background: $black;
-  border: 1px solid $white;
-  padding: 10px;
-  margin: 10px;
-  position: relative;
-
-  &__header {
-    @include small-type;
-    text-align: center;
-  }
-  &__number {
-    text-align: center;
-    @include large-type;
-    @include center;
-  }
-}
-
-@mixin small-counter {
-  flex: 1 1 100px;
-  background: $black;
-  border: 1px solid $white;
-  padding: 20px;
-  margin: 10px;
-  position: relative;
-
-  &__header {
-    @include small-type;
-    text-align: center;
-    text-decoration: underline;
-  }
-  &__number {
-    text-align: center;
-    @include small-type;
-  }
-}
-
 @mixin table {
   border: 1px solid $white;
   flex: 1 1 500px;
+  font-size: $font-size-small;
   margin: 10px;
   max-height: 100%;
   overflow-x: hidden;
@@ -291,7 +235,6 @@ export default {
     width: 100%;
   }
 
-  @include small-type;
   @include hide-scroll;
 
   &__header {
@@ -354,29 +297,10 @@ export default {
     }
   }
 
-  &__content {
-    @include quad;
-    width: 100%;
-    height: 10%;
-    &__table {
-      @include table;
-    }
-
-    &__counter {
-      @include small-counter;
-    }
-
-    @include screen-size('short') {
-      display: none;
-    }
-
-    @include screen-size('small') {
-      display: none;
-    }
-  }
-
-  &__users {
-    @include quad;
+  &__second {
+    align-content: stretch;
+    display: flex;
+    overflow: hidden;
     width: 100%;
     height: 50%;
 
@@ -385,10 +309,6 @@ export default {
       @include screen-size('small') {
         display: none;
       }
-    }
-
-    &__counter {
-      @include counter;
     }
 
     &__map {
@@ -401,7 +321,9 @@ export default {
   }
 
   &__third {
-    @include quad;
+    align-content: stretch;
+    display: flex;
+    overflow: hidden;
     width: 100%;
     height: 40%;
 
@@ -412,6 +334,12 @@ export default {
     &__inventory {
       font-size: $font-size-small;
       overflow: hidden;
+      flex: 1 2 200px;
+      background: $black;
+      border: 1px solid $white;
+      padding: 10px;
+      margin: 10px;
+      position: relative;
 
       &__tabs {
         display: flex;
@@ -438,8 +366,6 @@ export default {
 
         @include hide-scroll;
       }
-
-      @include counter;
 
       @include screen-size('small') {
         display: none !important;
