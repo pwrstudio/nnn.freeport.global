@@ -19,13 +19,15 @@ export default {
         facebook: 'xxxxxxxxx',
         twitter: '@xxxxx',
         title: 'NNN.FREEPORT.GLOBAL',
-        description: 'xxxx',
+        description:
+          'nnn.freeport.global is an alternative space for the distribution of artworks, using the backstreets, black markets and divergent parts of the internet to create, exhibit and debate the value of art.',
         type: 'website',
         image: 'https:///nnn.freeport.global',
         url: 'https:///nnn.freeport.global',
         defaults: {
           title: 'NNN.FREEPORT.GLOBAL',
-          description: 'xxxx',
+          description:
+            'nnn.freeport.global is an alternative space for the distribution of artworks, using the backstreets, black markets and divergent parts of the internet to create, exhibit and debate the value of art.',
           image: 'http://nnn.freeport.global',
           type: 'website'
         }
@@ -173,6 +175,14 @@ export default {
         },
         {itemprop: 'image', content: this.meta.image}
       ]
+    }
+  },
+  watch: {
+    'main.currentWork'() {
+      const meta = {
+        title: this.main.currentWork.title
+      }
+      this.$_setMetaTags(meta)
     }
   }
 }
