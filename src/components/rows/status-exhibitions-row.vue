@@ -7,11 +7,21 @@
          v-else>clear</i>
       </div>
       <td class='status__users__table__body__row__cell'
+          v-html='payload.start_date' />
+      <td class='status__users__table__body__row__cell'
           v-html='payload.title' />
-      <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
+      <td class='status__users__table__body__row__cell'
           v-html='payload.festival' />
-      <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
-          v-html='payload.location.city + ", " + payload.location.country' />
+      <!-- <td class='
+          status__users__table__body__row__cell
+          status__users__table__body__row__cell--mobile-hide
+          '
+          v-html='payload.location.city
+          +
+          ", "
+          +
+          payload.location.country
+          ' /> -->
   </tr>
 </template>
 
