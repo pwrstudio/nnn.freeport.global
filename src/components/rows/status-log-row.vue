@@ -1,9 +1,11 @@
 <template>
-  <tr class='status__users__table__body__row' 
+  <tr class='status__users__table__body__row'
       :class='"status__users__table__body__row--" + msg.type'
       @click='goToWork'>
-    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html='msg.time'/>
-    <td class='status__users__table__body__row__cell' v-html='msg.text'/>
+    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
+        v-html='msg.time' />
+    <td class='status__users__table__body__row__cell'
+        v-html='msg.text' />
   </tr>
 </template>
 
@@ -34,6 +36,8 @@ export default {
 .status__users__table {
   &__body {
     &__row {
+      font-size: $font-size-small;
+
       &--positive {
         background: $green;
         color: $black;

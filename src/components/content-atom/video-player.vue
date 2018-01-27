@@ -2,22 +2,26 @@
   <div class='video-player'>
     <video class='video-player__video'>
       <source :type='type'
-      :src='"http://ipfs.io/ipfs/" + hash'/>
+              :src='"http://ipfs.io/ipfs/" + hash' />
     </video>
     <progress class='video-player__progress'
               :class='{"video-player__progress--playing": playing}'
               max="1"
               :value="progress" />
     <div class='video-player__toggle'
-          @click="toggleVideo">
+         @click="toggleVideo">
       <i v-if='playing'
-          class="material-icons video-player__toggle__icon">pause</i>
+         class="material-icons video-player__toggle__icon">pause</i>
       <i v-else
-          class="material-icons video-player__toggle__icon">play_arrow</i>
+         class="material-icons video-player__toggle__icon">play_arrow</i>
     </div>
     <div class='video-player__controls'>
-      <div class='video-player__controls__title' v-html='title'/>
-      <div class='video-player__controls__timecode'><span v-html='formatTime(seek)'></span> / <span v-html='formatTime(duration)'></span></div>
+      <div class='video-player__controls__title'
+           v-html='title' />
+      <div class='video-player__controls__timecode'>
+        <span v-html='formatTime(seek)'></span> /
+        <span v-html='formatTime(duration)'></span>
+      </div>
     </div>
   </div>
 </template>
@@ -66,9 +70,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import '../style/helpers/_mixins.scss';
-@import '../style/helpers/_responsive.scss';
-@import '../style/_variables.scss';
+@import '../../style/helpers/_mixins.scss';
+@import '../../style/helpers/_responsive.scss';
+@import '../../style/_variables.scss';
 
 @mixin progress-bar {
   background-color: yellow;
@@ -128,7 +132,7 @@ export default {
 
     &__timecode {
       float: right;
-      font-size: 14px;
+      font-size: $font-size-small;
     }
 
     &__title {

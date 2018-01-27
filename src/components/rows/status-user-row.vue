@@ -1,6 +1,7 @@
 <template>
   <tr class='status__users__row'>
-    <td class='status__users__table__body__row__cell' @click='openChat(user.id)'>
+    <td class='status__users__table__body__row__cell'
+        @click='openChat(user.id)'>
       <i class="material-icons">chat_bubble_outline</i>
     </td>
     <td class='status__users__table__body__row__cell'>
@@ -36,20 +37,13 @@ export default {
     }
   },
   mounted() {
-    countdown.setLabels(
-      'ms| |:|h|d|w|m|y|d|s|m',
-      'ms| |:|h|d|w|m|y|d|s|m',
-      '',
-      ':',
-      '0',
-      n => {
-        if (n < 10) {
-          return '0' + n.toString()
-        } else {
-          return n.toString()
-        }
+    countdown.setLabels('ms| |:|h|d|w|m|y|d|s|m', 'ms| |:|h|d|w|m|y|d|s|m', '', ':', '0', n => {
+      if (n < 10) {
+        return '0' + n.toString()
+      } else {
+        return n.toString()
       }
-    )
+    })
     countdown(
       new Date(this.user.time),
       ts => {
@@ -84,11 +78,13 @@ export default {
 
   &__body {
     &__row {
+      font-size: $font-size-small;
+
       &__cell {
         border-bottom: 1px solid $white;
         padding: 10px;
-        .material-icons {
-          font-size: 20px;
+        i {
+          font-size: $font-size-small;
           line-height: 20px;
           text-align: center;
           position: relative;

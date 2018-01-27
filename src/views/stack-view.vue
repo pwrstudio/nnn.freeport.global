@@ -8,7 +8,7 @@
              v-for='(work, index) in main.container.works'
              :key='work.hash'
              :id='work.hash'>
-          <work :hash='work.hash'/>
+          <work :hash='work.hash' />
         </div>
       </div>
     </div>
@@ -22,15 +22,16 @@
     </div>
 
     <!-- Scanner nav button on mobile -->
-    <router-link :to='{name: "scan"}' class="scanner-nav">
+    <router-link :to='{name: "scan"}'
+                 class="scanner-nav">
       <i class="material-icons material-icons--on">center_focus_weak</i>
     </router-link>
   </div>
 </template>
 
 <script>
-import sidebar from '@/components/sidebar'
 import {mapState, mapActions} from 'vuex'
+import sidebar from '@/components/sidebar/sidebar'
 import work from '@/components/work'
 import Swiper from 'swiper'
 

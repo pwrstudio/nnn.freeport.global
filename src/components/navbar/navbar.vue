@@ -5,16 +5,18 @@
     <!-- INFO -->
     <!-- INFO -->
     <template v-if='$route.name === "info"'>
-      <router-link v-if='fromStatus' class='nav-button nav-button__left'
+      <router-link v-if='fromStatus'
+                   class='nav-button nav-button__left'
                    to='/'>
-                   nnn.freeport.global
+        nnn.freeport.global
       </router-link>
       <router-link v-if='fromStack'
                    class='nav-button nav-button__left'
                    :to='{name: "stack", params: {unit: main.currentSlide}}'>
-                   nnn.freeport.global
+        nnn.freeport.global
       </router-link>
-      <router-link v-if='fromStatus' class='nav-button nav-button__right'
+      <router-link v-if='fromStatus'
+                   class='nav-button nav-button__right'
                    to='/'>
         <i class="material-icons">trending_up</i>
       </router-link>
@@ -169,9 +171,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import '../style/helpers/_mixins.scss';
-@import '../style/helpers/_responsive.scss';
-@import '../style/_variables.scss';
+@import '../../style/helpers/_mixins.scss';
+@import '../../style/helpers/_responsive.scss';
+@import '../../style/_variables.scss';
 
 .nav-button__left {
   @include screen-size('small') {
@@ -192,6 +194,16 @@ export default {
       background: $white;
       color: $black;
     }
+  }
+}
+
+.material-icons {
+  font-size: 48px;
+  line-height: 60px;
+
+  @include screen-size('small') {
+    font-size: 38px;
+    line-height: 65px;
   }
 }
 </style>

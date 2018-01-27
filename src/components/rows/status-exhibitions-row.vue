@@ -1,12 +1,17 @@
 <template>
   <tr class='status__user__table__body__row'>
     <td class='status__users__table__body__row__cell'>
-      <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--open' v-if='payload.open'>done</i>
-      <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--closed' v-else>clear</i>
-    </div>
-    <td class='status__users__table__body__row__cell' v-html='payload.title'/>
-    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html='payload.festival'/>
-    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html='payload.location.city + ", " + payload.location.country'/>
+      <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--open'
+         v-if='payload.open'>done</i>
+      <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--closed'
+         v-else>clear</i>
+      </div>
+      <td class='status__users__table__body__row__cell'
+          v-html='payload.title' />
+      <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
+          v-html='payload.festival' />
+      <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
+          v-html='payload.location.city + ", " + payload.location.country' />
   </tr>
 </template>
 
@@ -54,6 +59,7 @@ export default {
   &__body {
     &__row {
       border-bottom: 2px solid $white;
+      font-size: $font-size-small;
 
       &__cell {
         margin: 0;
@@ -62,7 +68,7 @@ export default {
         user-select: none;
 
         &__icon {
-          font-size: 24px;
+          font-size: $font-size-medium;
           line-height: 20px;
           position: relative;
           top: 5px;

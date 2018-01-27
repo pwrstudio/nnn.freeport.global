@@ -80,11 +80,8 @@ export default {
       let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
       if (iOS) {
         this.iOS.check = true
-        let ver = (navigator.appVersion).match(/OS (\d+)_(\d+)_?(\d+)?/)
-        this.iOS.version = [
-          parseInt(ver[1], 10),
-          parseInt(ver[2], 10),
-          parseInt(ver[3] || 0, 10)]
+        let ver = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)
+        this.iOS.version = [parseInt(ver[1], 10), parseInt(ver[2], 10), parseInt(ver[3] || 0, 10)]
       } else this.iOS.check = false
     }
   },
@@ -141,7 +138,7 @@ export default {
 
     &__inner {
       word-wrap: break-word;
-      font-size: 32px;
+      font-size: $font-size-medium;
       line-height: 32px;
       max-width: 95vw;
     }

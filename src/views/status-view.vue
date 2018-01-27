@@ -3,18 +3,30 @@
     <!-- 1 ROW -->
     <!-- 1 ROW -->
     <!-- 1 ROW -->
-    <div class='status__content'>
+    <div class='status__first'>
       <!-- IPFS -->
-      <div class='status__users__counter'>
-        <div class='status__users__counter__number' v-html='main.rootHash'/>
+      <div class='status__first__box'>
+        <div class="status__first__box__label">
+          <i class="material-icons">flag</i>
+        </div>
+        <span class='status__first__box__info'
+              v-html='main.rootHash' />
       </div>
       <!-- Ethereum-->
-      <div class='status__users__counter'>
-        <div class='status__users__counter__number' v-html='"0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A"' />
+      <div class='status__first__box'>
+        <div class="status__first__box__label">
+          <i class=" material-icons">lock_outline</i>
+        </div>
+        <span class='status__first__box__info'
+              v-html='"0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A"' />
       </div>
       <!-- Last update -->
-      <div class='status__users__counter'>
-        <div class='status__users__counter__number' v-html='main.container.updated' />
+      <div class='status__first__box'>
+        <div class="status__first__box__label">
+          <i class="material-icons">query_builder</i>
+        </div>
+        <span class='status__first__box__info'
+              v-html='formatDate(main.container.updated)' />
       </div>
     </div>
     <!-- 2 ROW -->
@@ -41,8 +53,8 @@
           </thead>
           <tbody class='status__users__table__body'>
             <statusUserRow v-for='user in main.userList'
-                :key='user.id' 
-                :user='user'/>
+                           :key='user.id'
+                           :user='user' />
           </tbody>
         </table>
       </div>
@@ -58,32 +70,34 @@
         <table>
           <tbody class='status__third__table__body'>
             <statusLogRow v-for='msg in main.log'
-                :key='makeId()'
-                :msg='msg'/>
+                          :key='makeId()'
+                          :msg='msg' />
           </tbody>
         </table>
       </div>
       <!-- Works/exhibitions list-->
       <div class='status__third__inventory'>
         <div class='status__third__inventory__tabs'>
-          <div @click='activeTab = "works"' 
+          <div @click='activeTab = "works"'
                class='status__third__inventory__tabs__tab'
                :class='{"status__third__inventory__tabs__tab--active": activeTab === "works"}'
-               v-html='"Works (" + main.container.works.length  + ")"'/>
-          <div @click='activeTab = "exhibitions"' 
+               v-html='"Works (" + main.container.works.length  + ")"' />
+          <div @click='activeTab = "exhibitions"'
                class='status__third__inventory__tabs__tab'
                :class='{"status__third__inventory__tabs__tab--active": activeTab === "exhibitions"}'
-               v-html='"Exhibitions (" + main.container.exhibitions.length  + ")"'/>
+               v-html='"Exhibitions (" + main.container.exhibitions.length  + ")"' />
         </div>
-        <div v-if='activeTab === "works"' class='status__third__inventory__container'>
+        <div v-if='activeTab === "works"'
+             class='status__third__inventory__container'>
           <statusWorksRow v-for='work in main.container.works'
                           :key='work.id'
-                          :work='work'/>
+                          :work='work' />
         </div>
-        <div v-if='activeTab === "exhibitions"' class='status__third__inventory__container'>
+        <div v-if='activeTab === "exhibitions"'
+             class='status__third__inventory__container'>
           <statusExhibitionsRow v-for='exhibition in main.container.exhibitions'
                                 :key='exhibition.id'
-                                :exhibition='exhibition'/>
+                                :exhibition='exhibition' />
         </div>
       </div>
     </div>
@@ -93,6 +107,7 @@
 <script>
 import {mapState} from 'vuex'
 import mapboxgl from 'mapbox-gl'
+import {format, parse} from 'date-fns'
 // import statusLogRow from '@/components/rows/status-log-row'
 // import statusWorksRow from '@/components/rows/status-works-row'
 // import statusExhibitionsRow from '@/components/rows/status-exhibitions-row'
@@ -137,6 +152,9 @@ export default {
       }
 
       return text
+    },
+    formatDate(date) {
+      return format(parse(date), 'YYYY-MM-DD HH:MM')
     }
   },
   mounted() {
@@ -208,11 +226,11 @@ export default {
 }
 
 @mixin small-type {
-  font-size: 14px;
+  font-size: $font-size-small;
 }
 
 @mixin large-type {
-  font-size: 14px;
+  font-size: $font-size-small;
 }
 
 @mixin counter {
@@ -284,6 +302,45 @@ export default {
   padding-top: 60px;
   padding-bottom: 20px;
 
+  &__first {
+    align-content: stretch;
+    display: flex;
+    overflow: hidden;
+    width: 100%;
+    height: 10%;
+
+    &__box {
+      background: $black;
+      border: 1px solid $white;
+      flex: 1 2 200px;
+      margin: 10px;
+      padding: 10px;
+      position: relative;
+      font-size: $font-size-small;
+      display: flex;
+      align-items: center;
+
+      &__label {
+        position: absolute;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 50px;
+        font-size: 26px;
+        line-height: 100%;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-right: 1px solid $white;
+      }
+
+      &__info {
+        margin-left: 60px;
+      }
+    }
+  }
+
   &__content {
     @include quad;
     width: 100%;
@@ -340,7 +397,7 @@ export default {
     }
 
     &__inventory {
-      font-size: 16px;
+      font-size: $font-size-small;
       overflow: hidden;
 
       &__tabs {

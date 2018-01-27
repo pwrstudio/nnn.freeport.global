@@ -7,8 +7,8 @@
 
 <script>
 import {mapState, mapActions} from 'vuex'
+import navbar from '@/components/navbar/navbar'
 import {format} from 'date-fns'
-import navbar from '@/components/navbar'
 
 export default {
   name: 'app',
@@ -197,12 +197,12 @@ body {
 
 .app {
   font-family: 'space mono', $sans-serif-stack;
-  font-size: $font-size;
+  font-size: $font-size-medium;
   @include screen-size('small') {
-    font-size: 16px;
-    line-height: 16px;
+    font-size: $font-size-small;
+    line-height: $line-height-small;
   }
-  line-height: $line-height;
+  line-height: $line-height-medium;
   color: $black;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -214,7 +214,7 @@ body {
   height: 100vh;
 
   @include screen-size('small') {
-    overflow-y: scroll;  
+    overflow-y: scroll;
   }
 }
 
@@ -232,23 +232,12 @@ body {
   }
 }
 
-.material-icons {
-  font-size: 48px;
-  line-height: 60px;
-
-  @include screen-size('small') {
-    font-size: 38px;
-    line-height: 65px;
-  }
-}
-
 .mapboxgl-control-container {
   display: none !important;
   opacity: 0;
 }
 
 .marker {
-  // background-image: url('assets/img/ic_place_black_24px.svg');
   background-image: url('assets/img/ic_clear_black_24px.svg');
   background-size: cover;
   width: 30px;
@@ -259,7 +248,7 @@ body {
 h1,
 h2,
 h3 {
-  font-size: 22px;
+  font-size: $font-size-medium;
 }
 
 // i,

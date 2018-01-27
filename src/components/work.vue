@@ -86,7 +86,9 @@ export default {
     }
   },
   methods: {
-    handleMouse() { this.green = true },
+    handleMouse() {
+      this.green = true
+    },
     setIcons() {
       if (this.payload.hash === this.$route.params.unit) {
         if (!this.payload.open) this.showIcons = true
@@ -112,10 +114,10 @@ export default {
     }
   },
   watch: {
-    loaded () {
+    loaded() {
       console.log('loaded work')
     },
-    $route () {
+    $route() {
       this.setIcons()
     },
     'payload.date'() {
@@ -206,11 +208,11 @@ export default {
     align-items: center;
     color: $white;
     display: flex;
-    font-size: 64px !important;
+    font-size: 64px;
     height: 100%;
     justify-content: center;
     left: 0;
-    line-height: 64px !important;
+    line-height: 64px;
     position: absolute;
     text-align: center;
     text-decoration: none;
@@ -229,13 +231,13 @@ export default {
     }
 
     @include screen-size('small') {
-      font-size: 30px !important;
-      line-height: 30px !important;
+      font-size: 30px;
+      line-height: 30px;
     }
 
     @include screen-size('large') {
-      font-size: 92px !important;
-      line-height: 90px !important;
+      font-size: 92px;
+      line-height: 90px;
     }
   }
 }
@@ -250,5 +252,4 @@ export default {
     font-size: 90vw;
   }
 }
-
 </style>

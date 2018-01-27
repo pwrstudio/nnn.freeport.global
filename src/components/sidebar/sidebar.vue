@@ -1,12 +1,14 @@
 <template>
   <div class='sidebar'>
-    <sidebarBlock v-for='item in main.container.works' :key='item.hash' :hash='item.hash'/>
+    <sidebarBlock v-for='item in main.container.works'
+                  :key='item.hash'
+                  :hash='item.hash' />
   </div>
 </template>
 
 <script>
 import {mapState} from 'vuex'
-import sidebarBlock from '@/components/sidebar-block.vue'
+import sidebarBlock from '@/components/sidebar/sidebar-block.vue'
 
 export default {
   name: 'sidebar',
@@ -23,9 +25,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import '../style/helpers/_mixins.scss';
-@import '../style/helpers/_responsive.scss';
-@import '../style/_variables.scss';
+@import '../../style/helpers/_mixins.scss';
+@import '../../style/helpers/_responsive.scss';
+@import '../../style/_variables.scss';
 
 .sidebar {
   position: fixed;

@@ -6,7 +6,8 @@
     <div v-if='payload.media === "Text"'
          class='atom__text'
          :id='hash'>
-      <div class='atom__text__title' v-html='payload.title'/>
+      <div class='atom__text__title'
+           v-html='payload.title' />
       <span v-html='text' />
       <router-link class='atom__text__link'
                    :to='{name: "singleContent", params: {singleHash: hash}}'>
@@ -41,7 +42,7 @@
     <div v-else-if='payload.media === "Video"'
          class='atom__video'
          :id='hash'>
-               <video-player :sources='["https://ipfs.io/ipfs/" + payload.hash]'
+      <video-player :sources='["https://ipfs.io/ipfs/" + payload.hash]'
                     image='/static/test.jpg'
                     :title='payload.title'
                     :hash='payload.hash'
@@ -83,8 +84,8 @@
 import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
 import marked from 'marked'
-import AudioPlayer from '@/components/audio-player.vue'
-import VideoPlayer from '@/components/video-player.vue'
+import AudioPlayer from '@/components/content-atom/audio-player'
+import VideoPlayer from '@/components/content-atom/video-player'
 
 export default {
   name: 'contentAtom',
@@ -174,9 +175,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import '../style/helpers/_mixins.scss';
-@import '../style/helpers/_responsive.scss';
-@import '../style/_variables.scss';
+@import '../../style/helpers/_mixins.scss';
+@import '../../style/helpers/_responsive.scss';
+@import '../../style/_variables.scss';
 
 .atom {
   display: none;

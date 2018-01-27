@@ -2,20 +2,18 @@
 $line-height: 26px;
 $serif-stack: 'times new roman', times, georgia, serif;
 $sans-serif-stack: helvetica, arial, sans-serif;
-$font-size: 22px;
-$line-height: 22px;
+// Type sizes
+$font-size-medium: 22px;
+$line-height-medium: 22px;
+$font-size-small: 16px;
+$line-height-small: 16px;
 /* Color */
 $background-color: #fff;
 /* Space */
-// $black: rgba(10, 10, 10, 1);
-// $white: rgba(250, 250, 250, 1);
 $black: rgba(0, 0, 0, 1);
 $white: rgba(256, 256, 256, 1);
 $green: rgb(52, 202, 52);
 $red: rgb(241, 64, 64);
-// $yellow: rgb(253, 255, 109);
-// $yellow: orangered;
-// $yellow: rgb(0, 172, 237);
 $yellow: #fcff41;
 $blue: rgb(0, 172, 237);
 $border-width: 1px;
@@ -37,7 +35,6 @@ $breakpoints: (
   line-height: $bar-height;
   color: $white;
   user-select: none;
-  // font-size: 12px;
   text-decoration: none;
   &:active {
     background: $white;

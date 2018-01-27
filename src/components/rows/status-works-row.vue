@@ -3,12 +3,17 @@
       :class='{"status__users__table__body__row--positive": payload.open, "status__users__table__body__row--negative": !payload.open, }'
       @click='goToWork'>
     <td class='status__users__table__body__row__cell'>
-      <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--open' v-if='payload.open'>done</i>
-      <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--closed' v-else>clear</i>
-    </div>
-    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html=''/>
-    <td class='status__users__table__body__row__cell' v-html='payload.title'/>
-    <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide' v-html='artistList()'/>
+      <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--open'
+         v-if='payload.open'>done</i>
+      <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--closed'
+         v-else>clear</i>
+      </div>
+      <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
+          v-html='' />
+      <td class='status__users__table__body__row__cell'
+          v-html='payload.title' />
+      <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
+          v-html='artistList()' />
   </tr>
 </template>
 
@@ -69,6 +74,7 @@ export default {
     &__row {
       cursor: pointer;
       border-bottom: 2px solid $white !important;
+      font-size: $font-size-small;
 
       &--positive {
         &:active {
@@ -89,11 +95,10 @@ export default {
         border-bottom: 2px solid $black;
         padding: 10px;
         user-select: none;
-        // white-space: nowrap;
         overflow: hidden;
 
         &__icon {
-          font-size: 24px;
+          font-size: $font-size-medium;
           line-height: 20px;
           position: relative;
           top: 5px;

@@ -1,5 +1,7 @@
 <template>
-    <router-link :to='{name: "stack", params: {unit: hash}}' class='sidebar-block' :class='{"sidebar-block--active": (hash === $route.params.unit), "sidebar-block--open": payload.open, "sidebar-block--closed": !payload.open}'/>
+  <router-link :to='{name: "stack", params: {unit: hash}}'
+               class='sidebar-block'
+               :class='{"sidebar-block--active": (hash === $route.params.unit), "sidebar-block--open": payload.open, "sidebar-block--closed": !payload.open}' />
 </template>
 
 <script>
@@ -41,9 +43,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import '../style/helpers/_mixins.scss';
-@import '../style/helpers/_responsive.scss';
-@import '../style/_variables.scss';
+@import '../../style/helpers/_mixins.scss';
+@import '../../style/helpers/_responsive.scss';
+@import '../../style/_variables.scss';
 
 .sidebar-block {
   width: 100%;

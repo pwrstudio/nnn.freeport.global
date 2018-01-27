@@ -87,7 +87,7 @@ export default {
 }
 
 @mixin primary {
-  font-size: 20px;
+  font-size: $font-size-medium;
   line-height: 24px;
   position: relative;
   overflow: hidden;
@@ -101,7 +101,7 @@ export default {
 }
 
 @mixin secondary {
-  font-size: 14px;
+  font-size: $font-size-small;
   line-height: 20px;
   position: relative;
   clear: none;

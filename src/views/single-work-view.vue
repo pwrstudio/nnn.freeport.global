@@ -6,17 +6,18 @@
       <div class='work__inner masonry'
            @scroll='updateScroll'>
         <contentAtom v-for='item in payload.content'
-                    :key='item.hash'
-                    :hash='item.hash'/>
-     </div>
+                     :key='item.hash'
+                     :hash='item.hash' />
+      </div>
     </div>
 
     <!-- Single content overlay -->
-    <singleContentOverlay v-if='$route.name === "singleContent"'/>
+    <singleContentOverlay v-if='$route.name === "singleContent"' />
 
     <!-- Roll-down info overlay -->
-    <div v-if='$route.params.info' class='info-overlay'>
-       <div class='info-overlay__hash'>
+    <div v-if='$route.params.info'
+         class='info-overlay'>
+      <div class='info-overlay__hash'>
         <span class='info-overlay__hash__label'
               v-html='"hash"' />
         <span v-html='$route.params.hash' />
@@ -46,7 +47,9 @@
         <span v-html='"Berlin, Germany"' />
       </div>
 
-      <div v-if='payload.description' class='info-overlay__description' v-html='payload.description'/>
+      <div v-if='payload.description'
+           class='info-overlay__description'
+           v-html='payload.description' />
 
     </div>
   </div>
@@ -54,7 +57,7 @@
 
 <script>
 import {mapActions} from 'vuex'
-import contentAtom from '@/components/content-atom'
+import contentAtom from '@/components/content-atom/content-atom'
 import singleContentOverlay from '@/components/single-content-overlay'
 
 export default {
@@ -83,11 +86,6 @@ export default {
       this.SET_CURRENT_WORK(this.payload)
       this.$socket.emit('view', {title: this.payload.title, hash: this.$route.params.hash})
       this.loaded = true
-      // this.masonry = Macy({
-      //   container: '.masonry',
-      //   margin: 24,
-      //   columns: 2
-      // })
     })
     httpPromise.catch(console.log)
   },
@@ -103,12 +101,6 @@ export default {
     updateScroll(event) {
       console.log(event)
     }
-  },
-  watch: {
-    // payload() {
-    //   console.log('casdcs')
-    //   this.masonry.recalculate()
-    // }
   }
 }
 </script>
@@ -129,7 +121,7 @@ export default {
 
 @mixin label {
   display: inline-block;
-  font-size: 14px;
+  font-size: $font-size-small;
   letter-spacing: 1px;
   text-transform: uppercase;
   width: 12ch;
@@ -144,7 +136,6 @@ export default {
   @include hide-scroll;
 
   height: 100vh;
-  // justify-content: space-around;
   left: 0;
   overflow-y: auto;
   overflow-x: hidden;
@@ -163,11 +154,6 @@ export default {
     display: flex;
     flex-wrap: wrap;
     padding-bottom: 200px;
-
-    // display: grid;
-    // grid-gap: 10px;
-    // grid-template-columns: repeat(auto-fill, minmax(500px, 1fr));
-    // grid-auto-rows: 20px;
   }
 }
 

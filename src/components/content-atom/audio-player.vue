@@ -1,21 +1,26 @@
 <template>
   <div class='audio-player'>
-    <img class='audio-player__image' :src='image'/>
+    <img class='audio-player__image'
+         :src='image' />
     <progress class='audio-player__progress'
               :class='{"audio-player__progress--playing": playing}'
               max="1"
               :value="progress" />
     <div class='audio-player__toggle'
-          @click="togglePlayback">
+         @click="togglePlayback">
       <i v-if='playing'
-          class="material-icons audio-player__toggle__icon">pause</i>
+         class="material-icons audio-player__toggle__icon">pause</i>
       <i v-else
-          class="material-icons audio-player__toggle__icon">play_arrow</i>
+         class="material-icons audio-player__toggle__icon">play_arrow</i>
     </div>
     <div class='audio-player__controls'>
 
-      <div class='audio-player__controls__title' v-html='title'/>
-      <div class='audio-player__controls__timecode'><span v-html='formatTime(seek)'></span> / <span v-html='formatTime(duration)'></span></div>
+      <div class='audio-player__controls__title'
+           v-html='title' />
+      <div class='audio-player__controls__timecode'>
+        <span v-html='formatTime(seek)'></span> /
+        <span v-html='formatTime(duration)'></span>
+      </div>
     </div>
   </div>
 </template>
@@ -46,10 +51,9 @@ export default {
 </script>
 
 <style scoped lang='scss'>
-@import '../style/helpers/_mixins.scss';
-@import '../style/helpers/_responsive.scss';
-@import '../style/_variables.scss';
-
+@import '../../style/helpers/_mixins.scss';
+@import '../../style/helpers/_responsive.scss';
+@import '../../style/_variables.scss';
 @mixin progress-bar {
   background-color: transparent;
 }
@@ -114,7 +118,7 @@ export default {
 
     &__timecode {
       float: right;
-      font-size: 14px;
+      font-size: $font-size-small;
     }
 
     &__title {
