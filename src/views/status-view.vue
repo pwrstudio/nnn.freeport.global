@@ -40,15 +40,15 @@
     <!-- 2 ROW -->
     <!-- 2 ROW -->
     <div class='status__second'>
-      <!-- User list -->
-      <div class='status__second__table'>
+      <div v-show='activeMobileTab === "list"'
+           class='status__second__table'>
         <table>
           <thead class='status__second__table__header'>
-            <th class='status__second__table__header__cell'></th>
+            <th class='status__second__table__header__cell status__second__table__header__cell--mobile-hide' />
             <th class='status__second__table__header__cell'>
               ID
             </th>
-            <th class='status__second__table__header__cell'>
+            <th class='status__second__table__header__cell status__second__table__header__cell--mobile-hide'>
               IP
             </th>
             <th class='status__second__table__header__cell'>
@@ -65,8 +65,22 @@
           </tbody>
         </table>
       </div>
-      <div id='map'
+      <div v-show='activeMobileTab === "map"'
+           id='map'
            class='status__second__map' />
+      <!-- Mobile tabs -->
+      <div class='status__second__tabs'>
+        <div @click='activeMobileTab = "map"'
+             class='status__second__tabs__tab'
+             :class='{"status__second__tabs__tab--active": activeMobileTab === "map"}'>
+          <i class="material-icons">place</i>
+        </div>
+        <div @click='activeMobileTab = "list"'
+             class='status__second__tabs__tab'
+             :class='{"status__second__tabs__tab--active": activeMobileTab === "list"}'>
+          <i class="material-icons">list</i>
+        </div>
+      </div>
     </div>
     <!-- 3 ROW -->
     <!-- 3 ROW -->
@@ -133,7 +147,8 @@ export default {
     return {
       map: {},
       markers: [],
-      activeTab: 'works'
+      activeTab: 'works',
+      activeMobileTab: 'map'
     }
   },
   computed: {
@@ -241,6 +256,16 @@ export default {
     &__cell {
       border-bottom: 1px solid $white;
       padding: 10px;
+
+      @include screen-size('small') {
+        font-size: $font-size-xs !important;
+      }
+
+      &--mobile-hide {
+        @include screen-size('small') {
+          display: none;
+        }
+      }
     }
   }
 }
@@ -295,6 +320,10 @@ export default {
     @include screen-size('small') {
       display: none;
     }
+
+    @include screen-size('short') {
+      display: none;
+    }
   }
 
   &__second {
@@ -304,10 +333,14 @@ export default {
     width: 100%;
     height: 50%;
 
+    @include screen-size('small') {
+      display: block;
+    }
+
     &__table {
       @include table;
       @include screen-size('small') {
-        display: none;
+        height: calc(100% - 80px);
       }
     }
 
@@ -317,6 +350,38 @@ export default {
       margin: 10px;
       overflow: hidden;
       border: 1px solid $white;
+
+      @include screen-size('small') {
+        height: calc(100% - 60px);
+      }
+    }
+
+    &__tabs {
+      display: none;
+      height: 40px;
+      width: calc(100% - 20px);
+      margin-left: 10px;
+      margin-right: 10px;
+      cursor: pointer;
+      @include screen-size('small') {
+        display: flex;
+      }
+
+      &__tab {
+        background: transparent;
+        width: 50%;
+        line-height: 40px;
+        text-align: center;
+
+        &--active {
+          background: $white;
+          color: $black;
+        }
+        i {
+          position: relative;
+          top: 5px;
+        }
+      }
     }
   }
 
@@ -326,6 +391,9 @@ export default {
     overflow: hidden;
     width: 100%;
     height: 40%;
+    @include screen-size('small') {
+      height: 40%;
+    }
 
     &__table {
       @include table;

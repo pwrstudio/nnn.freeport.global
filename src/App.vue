@@ -40,15 +40,6 @@ export default {
   components: {
     navbar
   },
-  watch: {
-    'main.rootHash'() {
-      this.WRITE_LOG({
-        time: format(new Date(), 'HH:mm:ss'),
-        text: 'IPFS root hash: ' + this.main.rootHash,
-        type: 'network'
-      })
-    }
-  },
   sockets: {
     enter(data) {
       this.UPDATE_USERLIST(data.list)
@@ -106,7 +97,7 @@ export default {
       this.meta.description = meta.description || this.meta.defaults.description
       this.meta.image = meta.image || this.meta.defaults.image
       this.meta.type = meta.type || this.meta.defaults.type
-      this.meta.url = 'https://nnn.freeport.global' + this.$route.fullPath
+      this.meta.url = meta.url || 'https://nnn.freeport.global' + this.$route.fullPath
       this.$emit('updateHead')
     },
     $_fetchData(routeName) {
@@ -165,8 +156,6 @@ export default {
         {property: 'og:type', content: this.meta.type},
         {property: 'og:url', content: this.meta.url},
         {property: 'og:image', content: this.meta.image},
-        // {property: 'fb:admins', content: this.meta.facebook},
-        // {property: 'fb:app_id', content: this.meta.facebook},
         // Google+ / Schema.org
         {itemprop: 'name', content: this.meta.title},
         {
@@ -180,9 +169,17 @@ export default {
   watch: {
     'main.currentWork'() {
       const meta = {
-        title: this.main.currentWork.title
+        title: this.main.currentWork.title,
+        url: 'https://nnn.freeport.global' + this.main.currentWork.id
       }
       this.$_setMetaTags(meta)
+    },
+    'main.rootHash'() {
+      this.WRITE_LOG({
+        time: format(new Date(), 'HH:mm:ss'),
+        text: 'IPFS root hash: ' + this.main.rootHash,
+        type: 'network'
+      })
     }
   }
 }
@@ -219,6 +216,7 @@ body {
 #main-view {
   width: 100vw;
   height: 100vh;
+  @include hide-scroll;
 
   @include screen-size('small') {
     overflow-y: scroll;
@@ -258,12 +256,6 @@ h3 {
   font-size: $font-size-medium;
 }
 
-// i,
-// em {
-//   font-weight: bold;
-//   font-style: normal;
-// }
-
 table {
   border-collapse: collapse;
   padding: 0;
@@ -275,6 +267,10 @@ table {
   font-family: 'space mono', $sans-serif-stack;
   font-size: $font-size-small;
   font-weight: normal !important;
+
+  @include screen-size('small') {
+    display: none !important;
+  }
 
   .tooltip-inner {
     background: white;
