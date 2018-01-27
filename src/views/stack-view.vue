@@ -99,6 +99,14 @@ export default {
         }
         this.loaded = true
       })
+    },
+    checkiOS() {
+      let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+      if (iOS) {
+        this.iOS.check = true
+        let ver = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)
+        this.iOS.version = [parseInt(ver[1], 10), parseInt(ver[2], 10), parseInt(ver[3] || 0, 10)]
+      } else this.iOS.check = false
     }
   },
   watch: {

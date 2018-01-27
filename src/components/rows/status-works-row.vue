@@ -32,6 +32,7 @@ export default {
     return {
       payload: {
         artists: [],
+        artistList: '',
         content: [],
         data: '',
         open: false,
@@ -49,7 +50,7 @@ export default {
     httpPromise.catch(console.log)
   },
   methods: {
-    artistList() {
+    getArtistList() {
       return this.payload.artists.reduce(
         (accumulator, currentValue) => accumulator + ', ' + currentValue
       )
@@ -60,7 +61,11 @@ export default {
       }
     }
   },
-  computed: {}
+  watch: {
+    payload() {
+      this.payload.artistList = this.getArtistList()
+    }
+  }
 }
 </script>
 

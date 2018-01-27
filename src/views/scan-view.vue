@@ -5,19 +5,21 @@
       <video id='preview'
              class='scanner__preview' />
       <i class="material-icons scanner__crosshair">crop_free</i>
-      <div v-if='resultHash.length > 0' class='scanner__success'>
+      <div v-if='resultHash.length > 0'
+           class='scanner__success'>
         <div class='scanner__success__inner'>
-          <div v-html='resultHash'/>
+          <div v-html='resultHash' />
         </div>
       </div>
     </template>
 
-    <!-- Try opening the iOS camera (built in QR scan support) -->
-    <!-- Using answer from Stackoverflow https://stackoverflow.com/questions/2607067/can-you-access-the-iphone-camera-from-mobile-safari -->
-    <template v-else-if='iOS.check && iOS.version >= 11'>
-      <i class="material-icons scanner__crosshair">crop_free</i>
-      <input type="file" accept="video/*" capture="camera">
+    <template v-else>
+      <i class="material-icons scanner__crosshair scanner__crosshair--error">crop_free</i>
+      <p class="scanner__error">
+        QR SCANNER<br/> UNAVAILABLE
+      </p>
     </template>
+
   </div>
 </template>
 
@@ -85,8 +87,14 @@ export default {
       } else this.iOS.check = false
     }
   },
+  watch: {
+    'iOS.check'() {
+      // redirect to list view
+      if (this.iOS.check) this.$router.push({name: 'stack'})
+    }
+  },
   beforeDestroy() {
-    this.scanner.stop()
+    if (!this.iOS.check) this.scanner.stop()
   }
 }
 </script>
@@ -106,6 +114,15 @@ export default {
   overflow: hidden;
   @include hide-scroll;
 
+  &__input {
+    font-family: 'space mono', $sans-serif-stack;
+    padding: 30px;
+    background: $red;
+    color: $black;
+
+    @include center;
+  }
+
   &__preview {
     width: 100vw;
     height: 100vh;
@@ -119,6 +136,24 @@ export default {
     font-size: 70vw;
     opacity: 0.7;
     color: $white;
+
+    &--error {
+      color: $red;
+      opacity: 1;
+      transform: translateX(-35vw) rotate(45deg);
+    }
+  }
+
+  &__error {
+    color: $red;
+    width: 100%;
+    height: auto;
+    position: fixed;
+    display: block;
+    text-align: center;
+    margin: 0;
+
+    @include center;
   }
 
   &__success {
