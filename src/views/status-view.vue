@@ -283,16 +283,18 @@ export default {
   padding-bottom: 20px;
 
   &__first {
-    align-content: stretch;
     display: flex;
+    align-content: stretch;
     overflow: hidden;
     width: 100%;
     height: 10%;
+    @include hide-scroll;
 
     &__box {
       background: $black;
       border: 1px solid $white;
-      flex: 2 2 200px;
+      width: 200px;
+      overflow-x: scroll;
       margin: 10px;
       padding: 10px;
       position: relative;
@@ -301,6 +303,13 @@ export default {
       align-items: center;
       color: $white;
       text-decoration: none;
+      flex-grow: 4;
+      @include hide-scroll;
+
+      &:last-child {
+        width: 150px;
+        flex-grow: 1;
+      }
 
       &__label {
         position: absolute;
@@ -319,6 +328,7 @@ export default {
 
       &__info {
         margin-left: 60px;
+        @include hide-scroll;
       }
     }
 
