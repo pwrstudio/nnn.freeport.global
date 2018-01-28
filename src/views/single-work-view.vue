@@ -3,7 +3,7 @@
 
     <div class='work'
          :class='{"work--show": loaded}'>
-      <div class='work__inner masonry'
+      <div class='work__inner'
            @scroll='updateScroll'>
         <contentAtom v-for='item in payload.content'
                      :key='item.hash'
@@ -75,8 +75,7 @@ export default {
         data: '',
         id: '',
         title: ''
-      },
-      masonry: {}
+      }
     }
   },
   mounted() {

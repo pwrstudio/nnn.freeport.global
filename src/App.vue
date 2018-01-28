@@ -262,6 +262,25 @@ table {
   padding: 0;
 }
 
+a {
+  color: $white;
+  text-decoration: none;
+}
+
+em {
+  font-weight: bold !important;
+  font-style: normal !important;
+}
+
+p {
+  a {
+    border-bottom: 2px solid $green !important;
+    &:hover {
+      border-bottom: 2px solid $white !important;
+    }
+  }
+}
+
 .tooltip {
   display: block !important;
   z-index: 10000;

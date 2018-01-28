@@ -1,16 +1,20 @@
 <template>
   <div class='info'>
-    <div class='info__main'>
-      <span class='info__main__text'
-            v-html='formattedInfo' />
-    </div>
-    <div class='info__credits'>
-      <span class='info__credits__text'
-            v-html='formattedCredits' />
-    </div>
-    <div class='info__tech'>
-      <span class="info__tech__text"
-            v-html='formattedTech' />
+    <div class='info__inner'>
+      <!-- Main -->
+      <div class='info__inner__main'>
+        <span class='info__inner__main__text'
+              v-html='formattedInfo' />
+        <div>- - - - - - - - -</div>
+        <span class="info__inner__tech__text"
+              v-html='formattedTech' />
+      </div>
+      <!-- Sidebar -->
+      <div class='info__inner__sidebar'>
+        <div class='info__inner__sidebar__divider'>- - - - - - - - -</div>
+        <span class='info__inner__sidebar__text'
+              v-html='formattedCredits' />
+      </div>
     </div>
   </div>
 </template>
@@ -41,103 +45,51 @@ export default {
 @import '../style/helpers/_responsive.scss';
 @import '../style/_variables.scss';
 
-@mixin gradient-scroll {
-  &__text {
-    z-index: 1;
-    position: absolute;
-    height: 100%;
-    padding: 0 30px;
-    overflow-y: scroll;
-    @include hide-scroll;
-
-    &:after {
-      content: '';
-      display: block;
-      height: 30px;
-    }
-
-    @include screen-size('small') {
-      position: relative;
-      height: auto;
-      display: block;
-
-      &:after {
-        height: 0;
-      }
-    }
-  }
-
-  &:before {
-    content: '';
-    position: absolute;
-    width: 100%;
-    height: 30px;
-    left: 0;
-    bottom: 0;
-    display: block;
-    z-index: 2;
-    background: linear-gradient(0deg, rgba(0, 0, 0, 1), rgba(0, 0, 0, 0));
-    background-size: 100% 100%;
-    pointer-events: none;
-
-    @include screen-size('small') {
-      display: none;
-    }
-  }
-}
-
-@mixin primary {
-  font-size: $font-size-medium;
-  line-height: 24px;
-  position: relative;
-  overflow: hidden;
-  height: 35vh;
-  margin-bottom: 30px;
-  @include gradient-scroll;
-
-  @include screen-size('small') {
-    height: auto;
-  }
-}
-
-@mixin secondary {
-  font-size: $font-size-small;
-  line-height: 20px;
-  position: relative;
-  clear: none;
-  overflow: hidden;
-  width: 50%;
-  height: 28vh;
-  @include gradient-scroll;
-
-  @include screen-size('small') {
-    height: auto;
-    width: 100%;
-  }
-}
-
 .info {
   color: $white;
   padding-top: 80px;
-  height: calc(100vh - 80px);
+  // height: calc(100vh - 80px);
+  overflow-y: auto;
 
-  &__main {
-    @include primary;
-  }
+  &__inner {
+    margin-bottom: 200px;
 
-  &__credits {
-    float: left;
-    @include secondary;
-  }
+    &__main {
+      width: calc(70vw - 80px);
+      float: left;
+      padding-left: 40px;
+      padding-right: 40px;
+      font-size: $font-size-medium;
+      line-height: $line-height-medium;
+      margin-bottom: 200px;
 
-  &__tech {
-    float: right;
-    @include secondary;
+      @include screen-size('small') {
+        font-size: $font-size-small;
+        line-height: $line-height-small;
+        width: calc(100vw - 80px);
+        margin-bottom: 0;
+      }
+    }
 
-    &:after {
-      content: '';
-      display: block;
-      height: 120px;
+    &__sidebar {
+      width: calc(30vw - 80px);
+      float: left;
+      padding-left: 40px;
+      padding-right: 40px;
+      font-size: $font-size-small;
+      line-height: 24px;
+
+      &__divider {
+        display: none;
+        @include screen-size('small') {
+          display: block;
+        }
+      }
+
+      @include screen-size('small') {
+        width: calc(100vw - 80px);
+        margin-bottom: 200px;
+      }
     }
   }
 }

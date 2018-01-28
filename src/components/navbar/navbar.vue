@@ -6,22 +6,26 @@
     <!-- INFO -->
     <template v-if='$route.name === "info"'>
       <router-link v-if='fromStatus'
-                   class='nav-button nav-button__left'
+                   v-tooltip.auto='"Terminal"'
+                   class='nav-button nav-button__left nav-button--opaque'
                    to='/'>
         nnn.freeport.global
       </router-link>
       <router-link v-if='fromStack'
-                   class='nav-button nav-button__left'
+                   v-tooltip.auto='"Stack"'
+                   class='nav-button nav-button__left nav-button--opaque'
                    :to='{name: "stack", params: {unit: main.currentSlide}}'>
         nnn.freeport.global
       </router-link>
       <router-link v-if='fromStatus'
-                   class='nav-button nav-button__right'
+                   v-tooltip.auto='"Terminal"'
+                   class='nav-button nav-button__right nav-button--opaque'
                    to='/'>
         <i class="material-icons">trending_up</i>
       </router-link>
       <router-link v-if='fromStack'
-                   class='nav-button nav-button__right'
+                   v-tooltip.auto='"Stack"'
+                   class='nav-button nav-button__right nav-button--opaque'
                    :to='{name: "stack", params: {unit: main.currentSlide}}'>
         <i class="material-icons">menu</i>
       </router-link>
@@ -33,16 +37,19 @@
     <!-- STATUS -->
     <template v-if='$route.name === "status"'>
       <router-link class='nav-button nav-button__left'
+                   v-tooltip.auto='"About the platform"'
                    to='/info'>
         nnn.freeport.global
       </router-link>
       <router-link v-if='main.currentSlide'
                    class='nav-button nav-button__right'
+                   v-tooltip.auto='"Stack"'
                    :to='{name: "stack", params: {unit: main.currentSlide}}'>
         <i class="material-icons">menu</i>
       </router-link>
       <router-link v-else
                    class='nav-button nav-button__right'
+                   v-tooltip.auto='"Stack"'
                    :to='{name: "stack"}'>
         <i class="material-icons">menu</i>
       </router-link>
@@ -54,10 +61,12 @@
     <!-- STACK -->
     <template v-if='$route.name === "stack"'>
       <router-link class='nav-button nav-button__left'
+                   v-tooltip.auto='"About the platform"'
                    to='/info'>
         nnn.freeport.global
       </router-link>
       <router-link class='nav-button nav-button__right'
+                   v-tooltip.auto='"Terminal"'
                    to='/'>
         <i class="material-icons">trending_up</i>
       </router-link>
@@ -95,11 +104,13 @@
       </router-link>
       <router-link v-if='main.currentSlide'
                    class='nav-button nav-button__right nav-button--opaque'
+                   v-tooltip.auto='"Stack"'
                    :to='{name: "stack", params: {unit: main.currentSlide}}'>
         <i class="material-icons">menu</i>
       </router-link>
       <router-link v-else
                    class='nav-button nav-button__right nav-button--opaque'
+                   v-tooltip.auto='"Stack"'
                    :to='{name: "stack"}'>
         <i class="material-icons">menu</i>
       </router-link>
