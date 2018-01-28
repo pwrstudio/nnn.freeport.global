@@ -87,6 +87,8 @@ export default {
       &__cell {
         border-bottom: 1px solid $white;
         padding: 10px;
+        white-space: nowrap;
+        text-overflow: ellipsis;
 
         &:first-child {
           &:active {

@@ -52,10 +52,10 @@
               IP
             </th>
             <th class='status__second__table__header__cell'>
-              Location
+              <i class="material-icons">location_on</i>
             </th>
             <th class='status__second__table__header__cell'>
-              Time on Site
+              <i class="material-icons">timer</i>
             </th>
           </thead>
           <tbody class='status__second__table__body'>
@@ -262,6 +262,11 @@ export default {
       border-bottom: 1px solid $white;
       padding: 10px;
 
+      i {
+        position: relative;
+        top: 3px;
+      }
+
       @include screen-size('small') {
         font-size: $font-size-xs !important;
       }
@@ -347,6 +352,10 @@ export default {
     overflow: hidden;
     width: 100%;
     height: 50%;
+
+    @include screen-size('short') {
+      height: 60%;
+    }
 
     @include screen-size('small') {
       display: block;
@@ -436,6 +445,7 @@ export default {
         display: flex;
         height: 40px;
         width: 100%;
+        overflow: hidden;
         cursor: pointer;
 
         &__tab {

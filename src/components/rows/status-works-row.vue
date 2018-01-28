@@ -77,11 +77,17 @@ export default {
 @import '../../style/_variables.scss';
 
 .status__users__table {
+  // padding-bottom: 140px;
+
   &__body {
     &__row {
       cursor: pointer;
       border-bottom: 2px solid $white !important;
       font-size: $font-size-small;
+
+      // &:last-child {
+      //   margin-bottom: 140px;
+      // }
 
       &--positive {
         &:active {
