@@ -152,6 +152,16 @@ export default {
   left: 0;
   z-index: 1000;
 
+  .material-icons {
+    font-size: 48px;
+    line-height: 60px;
+
+    @include screen-size('small') {
+      font-size: 38px;
+      line-height: 65px;
+    }
+  }
+
   @include screen-size('small') {
     display: none;
   }
@@ -164,6 +174,16 @@ export default {
   bottom: 0;
   left: 50vw;
   z-index: 1000;
+
+  .material-icons {
+    font-size: 48px;
+    line-height: 60px;
+
+    @include screen-size('small') {
+      font-size: 38px;
+      line-height: 65px;
+    }
+  }
 
   @include screen-size('small') {
     display: none;
@@ -204,6 +224,16 @@ export default {
     color: darkgrey;
   }
 
+  .material-icons {
+    font-size: 48px;
+    line-height: 60px;
+
+    @include screen-size('small') {
+      font-size: 38px;
+      line-height: 65px;
+    }
+  }
+
   .material-icons--off {
     display: block;
   }
@@ -221,6 +251,7 @@ export default {
     background: $black;
     border-radius: 80px;
     bottom: 20px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.5);
     display: flex;
     height: 80px;
     justify-content: center;

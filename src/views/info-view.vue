@@ -56,8 +56,10 @@ export default {
       @include screen-size('small') {
         font-size: $font-size-small;
         line-height: $line-height-small;
-        width: calc(100vw - 80px);
+        width: calc(100vw - 40px);
         margin-bottom: 0;
+        padding-left: 20px;
+        padding-right: 20px;
       }
     }
 
@@ -77,7 +79,9 @@ export default {
       }
 
       @include screen-size('small') {
-        width: calc(100vw - 80px);
+        width: calc(100vw - 40px);
+        padding-left: 20px;
+        padding-right: 20px;
         margin-bottom: 200px;
       }
     }

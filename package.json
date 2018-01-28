@@ -23,7 +23,6 @@
     "imgix-core-js": "^1.1.1",
     "instascan": "^1.0.0",
     "mapbox-gl": "^0.44.0",
-    "marked": "^0.3.12",
     "oembed-parser": "^1.0.8",
     "oembetter": "^0.1.19",
     "raven-js": "^3.21.0",
@@ -103,9 +102,5 @@
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }

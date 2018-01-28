@@ -1,6 +1,7 @@
 <template>
   <div class='app'>
     <navbar/>
+    <chat v-if='main.chat.active' />
     <router-view id='main-view' />
   </div>
 </template>
@@ -8,6 +9,7 @@
 <script>
 import {mapState, mapActions} from 'vuex'
 import navbar from '@/components/navbar/navbar'
+import chat from '@/components/chat/chat'
 import {format} from 'date-fns'
 
 export default {
@@ -32,13 +34,15 @@ export default {
           type: 'website'
         }
       }
+      // link: [{rel: 'canonical', href: 'https:///nnn.freeport.global', id: 'canonical'}]
     }
   },
   computed: {
     ...mapState(['main'])
   },
   components: {
-    navbar
+    navbar,
+    chat
   },
   sockets: {
     enter(data) {
@@ -70,8 +74,9 @@ export default {
       })
     },
     chat(data) {
-      console.log('chat received')
-      console.log(data)
+      if (!this.main.chat.active) {
+        this.TOGGLE_CHAT()
+      }
     }
   },
   mounted() {
@@ -91,13 +96,14 @@ export default {
     this.$_fetchData()
   },
   methods: {
-    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST', 'WRITE_LOG']),
+    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST', 'WRITE_LOG', 'TOGGLE_CHAT']),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
       this.meta.description = meta.description || this.meta.defaults.description
       this.meta.image = meta.image || this.meta.defaults.image
       this.meta.type = meta.type || this.meta.defaults.type
       this.meta.url = meta.url || 'https://nnn.freeport.global'
+      // this.link.url = link. || 'https://nnn.freeport.global'
       this.$emit('updateHead')
     },
     $_fetchData(routeName) {

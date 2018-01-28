@@ -162,6 +162,25 @@ export default {
       })
       this.markers = []
     },
+    setMarkers() {
+      mapboxgl.accessToken =
+        'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg'
+      this.map = new mapboxgl.Map({
+        container: 'map',
+        style: 'mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o',
+        center: [13.404954, 52.520008],
+        zoom: 0
+      })
+      if (this.main.userList.length > this.markers.length) {
+        this.main.userList.map(user => {
+          var el = document.createElement('div')
+          el.className = 'marker'
+          this.markers.push(
+            new mapboxgl.Marker(el).setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
+          )
+        })
+      }
+    },
     makeId() {
       let text = ''
       const possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
@@ -178,72 +197,40 @@ export default {
   },
   mounted() {
     this.$nextTick(() => {
-      mapboxgl.accessToken =
-        'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg'
-      this.map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o',
-        center: [13.404954, 52.520008],
-        zoom: 0
-      })
       // Set user-markers
-      this.main.userList.map(user => {
-        var el = document.createElement('div')
-        el.className = 'marker'
-        new mapboxgl.Marker(el).setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
-      })
+      this.setMarkers()
       // Set exhibition-markers
-      this.main.container.exhibitions.map(exhibition => {
-        const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + exhibition.hash)
-        httpPromise.then(response => {
-          if (response.body.location && response.body.location.geopoint) {
-            var el = document.createElement('div')
-            el.className = 'exhibition-marker'
-            new mapboxgl.Marker(el)
-              .setLngLat([
-                response.body.location.geopoint.longitude,
-                response.body.location.geopoint.latitude
-              ])
-              .addTo(this.map)
-          }
-        })
-        httpPromise.catch(console.log)
-      })
+      // this.main.container.exhibitions.map(exhibition => {
+      //   const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + exhibition.hash)
+      //   httpPromise.then(response => {
+      //     if (response.body.location && response.body.location.geopoint) {
+      //       var el = document.createElement('div')
+      //       el.className = 'exhibition-marker'
+      //       new mapboxgl.Marker(el)
+      //         .setLngLat([
+      //           response.body.location.geopoint.longitude,
+      //           response.body.location.geopoint.latitude
+      //         ])
+      //         .addTo(this.map)
+      //     }
+      //   })
+      //   httpPromise.catch(console.log)
+      // })
     })
   },
   watch: {
     'main.userList'() {
-      // TODO
       this.clearMarkers()
-      // TODO
-      if (this.main.userList.length > this.markers.length) {
-        this.main.userList.map(user => {
-          var el = document.createElement('div')
-          el.className = 'marker'
-          this.markers.push(
-            new mapboxgl.Marker(el).setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
-          )
-        })
-      }
+      this.setMarkers()
     },
-    'main.exhibitionLocations'() {
-      // TODO
-      this.exhibitionMarkers.map(marker => {
-        marker.remove()
+    activeMobileTab() {
+      this.$nextTick(() => {
+        if (this.activeMobileTab === 'map') {
+          this.setMarkers()
+        } else {
+          this.clearMarkers()
+        }
       })
-      this.exhibitionMarkers = []
-      // TODO
-      if (this.main.exhibitionLocations.length > this.markers.length) {
-        this.main.userList.map(exhibition => {
-          var el = document.createElement('div')
-          el.className = 'exhibition-marker'
-          this.exhibitionMarkers.push(
-            new mapboxgl.Marker(el)
-              .setLngLat([exhibition.geo.ll[1], exhibition.geo.ll[0]])
-              .addTo(this.map)
-          )
-        })
-      }
     }
   }
 }

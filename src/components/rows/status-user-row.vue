@@ -87,6 +87,13 @@ export default {
       &__cell {
         border-bottom: 1px solid $white;
         padding: 10px;
+
+        &:first-child {
+          &:active {
+            background: $yellow;
+          }
+        }
+
         i {
           font-size: $font-size-small;
           line-height: 20px;

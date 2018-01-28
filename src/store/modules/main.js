@@ -21,7 +21,10 @@ const state = {
   userList: [],
   currentSlide: '',
   currentWork: {},
-  log: []
+  log: [],
+  chat: {
+    active: false
+  }
 }
 
 const actions = {
@@ -42,6 +45,9 @@ const actions = {
   },
   [actionTypes.WRITE_LOG]({commit, state}, data) {
     commit(mutationTypes.WRITE_LOG, data)
+  },
+  [actionTypes.TOGGLE_CHAT]({commit, state}) {
+    commit(mutationTypes.TOGGLE_CHAT)
   }
 }
 
@@ -81,6 +87,9 @@ const mutations = {
       state.log.splice(-1, 200)
     }
     state.log.unshift(data)
+  },
+  [mutationTypes.TOGGLE_CHAT](state) {
+    state.chat.active = !state.chat.active
   }
 }
 

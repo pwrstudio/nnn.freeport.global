@@ -23,7 +23,8 @@
       <section>
         <div v-html='payload.title' />
         <div v-html='artistList' />
-        <div v-html='timeToPublish' />
+        <div class='work__text__timer'
+             v-html='timeToPublish' />
         <i class="material-icons material-icons--large"
            v-if='showIcons'>close</i>
       </section>
@@ -117,6 +118,7 @@ export default {
     },
     'payload.date'() {
       countdown.setLabels('ms|s|m|h|d|w|m|y|d|s|m', 'ms|s|m|h|d|w|m|y|d|s|m', ':', ':', 'now')
+      // countdown.setLabels('||:|:|:|:|:|:|:|:|:', '||:|:|:|:|:|:|:|:|:', '', '', 'now')
       this.timerId = countdown(
         new Date(this.payload.date),
         ts => {
@@ -221,6 +223,10 @@ export default {
     top: 0;
     width: 100%;
     z-index: 1000;
+
+    &__timer {
+      word-break: break-all;
+    }
 
     section {
       position: relative;
