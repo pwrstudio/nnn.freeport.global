@@ -186,10 +186,29 @@ export default {
         center: [13.404954, 52.520008],
         zoom: 0
       })
+      // Set user-markers
       this.main.userList.map(user => {
         var el = document.createElement('div')
         el.className = 'marker'
         new mapboxgl.Marker(el).setLngLat([user.geo.ll[1], user.geo.ll[0]]).addTo(this.map)
+      })
+      // Set exhibition-markers
+      this.main.container.exhibitions.map(exhibition => {
+        const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + exhibition.hash)
+        httpPromise.then(response => {
+          if (response.body.location && response.body.location.geopoint) {
+            var el = document.createElement('div')
+            el.className = 'exhibition-marker'
+            console.log(response.body.location.geopoint)
+            new mapboxgl.Marker(el)
+              .setLngLat([
+                response.body.location.geopoint.longitude,
+                response.body.location.geopoint.latitude
+              ])
+              .addTo(this.map)
+          }
+        })
+        httpPromise.catch(console.log)
       })
     })
   },

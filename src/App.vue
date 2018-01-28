@@ -246,9 +246,17 @@ body {
 .marker {
   background-image: url('assets/img/ic_clear_black_24px.svg');
   background-size: cover;
+  cursor: normal;
   width: 30px;
   height: 30px;
-  cursor: pointer;
+}
+
+.exhibition-marker {
+  background-image: url('assets/img/ic_gps_not_fixed_black_24px.svg');
+  background-size: cover;
+  cursor: normal;
+  width: 25px;
+  height: 25px;
 }
 
 h1,
