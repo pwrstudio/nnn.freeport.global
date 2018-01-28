@@ -199,7 +199,6 @@ export default {
           if (response.body.location && response.body.location.geopoint) {
             var el = document.createElement('div')
             el.className = 'exhibition-marker'
-            console.log(response.body.location.geopoint)
             new mapboxgl.Marker(el)
               .setLngLat([
                 response.body.location.geopoint.longitude,

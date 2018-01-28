@@ -4,16 +4,16 @@
       <!-- Main -->
       <div class='info__inner__main'>
         <span class='info__inner__main__text'
-              v-html='formattedInfo' />
+              v-html='main.container.about.info' />
         <div>- - - - - - - - -</div>
         <span class="info__inner__tech__text"
-              v-html='formattedTech' />
+              v-html='main.container.about.tech' />
       </div>
       <!-- Sidebar -->
       <div class='info__inner__sidebar'>
         <div class='info__inner__sidebar__divider'>- - - - - - - - -</div>
         <span class='info__inner__sidebar__text'
-              v-html='formattedCredits' />
+              v-html='main.container.about.credits' />
       </div>
     </div>
   </div>
@@ -21,21 +21,11 @@
 
 <script>
 import {mapState} from 'vuex'
-import marked from 'marked'
 
 export default {
   name: 'infoView',
   computed: {
-    ...mapState(['main']),
-    formattedInfo() {
-      return marked(this.main.container.about.info)
-    },
-    formattedCredits() {
-      return marked(this.main.container.about.credits)
-    },
-    formattedTech() {
-      return marked(this.main.container.about.tech)
-    }
+    ...mapState(['main'])
   }
 }
 </script>

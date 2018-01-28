@@ -2,21 +2,23 @@
   <div class='single-content'>
     <div v-if='payload.media === "Text"'
          class='single-content__text'>
-         <div class='single-content__text__inner'>
-           <div v-html='payload.title'/>
-           <div v-html='text'/>
-         </div>
+      <div class='single-content__text__inner'>
+        <div v-html='payload.title' />
+        <div v-html='text' />
+      </div>
     </div>
-    <div v-else-if='payload.media === "Image"'class='single-content__image'>
+    <div v-else-if='payload.media === "Image"'
+         class='single-content__image'>
       <div class='single-content__image__inner'>
-        <img :src='getImageLink(payload.hash)'/>
-        <div v-if='payload.caption' v-html='payload.caption'/>
+        <img :src='getImageLink(payload.hash)' />
+        <div v-if='payload.caption'
+             v-html='payload.caption' />
       </div>
     </div>
     <div v-else-if='payload.media === "Audio"'
-        class='single-content__audio'>
+         class='single-content__audio'>
       <audio :src='"https://ipfs.io/ipfs/" + payload.hash'
-            controls/>
+             controls/>
     </div>
     <div v-else-if='payload.media === "Video"'
          class='single-content__audio'>
@@ -28,7 +30,6 @@
 
 <script>
 import ImgixClient from 'imgix-core-js'
-import marked from 'marked'
 
 export default {
   name: 'singleContentOverlay',
@@ -58,7 +59,7 @@ export default {
     setIPFSText() {
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
-        this.text = marked(response.body)
+        this.text = response.body
       })
       httpPromise.catch(console.log)
     },

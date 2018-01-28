@@ -89,7 +89,6 @@
 <script>
 import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
-import marked from 'marked'
 // import oembetter from 'oembetter'
 import AudioPlayer from '@/components/content-atom/audio-player'
 import VideoPlayer from '@/components/content-atom/video-player'
@@ -135,7 +134,7 @@ export default {
     setIPFSText() {
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
-        this.text = marked(ellipsize(response.body, 480))
+        this.text = ellipsize(response.body, 480)
       })
       httpPromise.catch(console.log)
     },
