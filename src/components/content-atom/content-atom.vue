@@ -55,6 +55,8 @@
          class='atom__file'
          :id='hash'>
       <span v-html='payload.title + " (" + payload.size + ")"' />
+      <img v-if='payload.poster'
+           :src='"https://ipfs.io/ipfs/" + payload.poster' />
       <a :href='"https://ipfs.io/ipfs/" + payload.hash'
          class='atom__file__link'
          target=_blank>
@@ -67,8 +69,12 @@
     <div v-if='payload.media === "External link"'
          class='atom__external'
          :id='hash'>
-      <span v-html='text' />
+      <span class='atom__external__reference'
+            v-if='payload.hierarchy === "Reference"'
+            v-html='"Reference"' />
       <span v-html='payload.title' />
+      <img v-if='payload.poster'
+           :src='"https://ipfs.io/ipfs/" + payload.poster' />
       <a :href='externalLink'
          class='atom__external__link'
          target=_blank>
@@ -84,7 +90,7 @@
 import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
 import marked from 'marked'
-// import {extract} from 'oembed-parser'
+// import oembetter from 'oembetter'
 import AudioPlayer from '@/components/content-atom/audio-player'
 import VideoPlayer from '@/components/content-atom/video-player'
 
@@ -137,13 +143,11 @@ export default {
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
         this.externalLink = response.body
-        // extract(this.externalLink)
-        //   .then(data => {
-        //     console.log(data)
-        //   })
-        //   .catch(err => {
-        //     console.log(err)
-        //   })
+        // oembetter.fetch(this.externalLink, (err, embed) => {
+        //   if (!err) {
+        //     console.log(embed)
+        //   }
+        // })
       })
       httpPromise.catch(console.log)
     },
@@ -299,6 +303,9 @@ export default {
     padding: 20px;
     color: white !important;
     text-decoration: none !important;
+    &__reference {
+      float: right;
+    }
     &__link {
       border: 1px solid $white;
       color: $white;

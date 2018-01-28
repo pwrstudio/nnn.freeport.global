@@ -64,7 +64,8 @@ export default {
       content: [],
       timeToPublish: '',
       timerId: {},
-      open: false
+      open: false,
+      artistList: ''
     }
   },
   mounted() {
@@ -76,13 +77,6 @@ export default {
       this.setIcons()
     })
     httpPromise.catch(console.log)
-  },
-  computed: {
-    artistList() {
-      return this.payload.artists.reduce(
-        (accumulator, currentValue) => accumulator + ', ' + currentValue
-      )
-    }
   },
   methods: {
     handleMouse() {
@@ -110,10 +104,14 @@ export default {
         let url = client.buildURL('https://ipfs.io/ipfs/' + img.hash, options)
         this.firstImage = url
       }
+    },
+    getArtistList() {
+      this.artistList = this.payload.artists.reduce(
+        (accumulator, currentValue) => accumulator + ', ' + currentValue
+      )
     }
   },
   watch: {
-    loaded() {},
     $route() {
       this.setIcons()
     },
@@ -128,15 +126,22 @@ export default {
       )
     },
     'payload.content'() {
-      this.payload.content.map(c => {
-        const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + c.hash)
-        httpPromise.then(response => {
-          this.content.push(response.body)
-          this.setFirstImage()
-          this.loaded = true
+      if (this.payload.content.length === 0) {
+        this.loaded = true
+      } else {
+        this.payload.content.map(c => {
+          const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + c.hash)
+          httpPromise.then(response => {
+            this.content.push(response.body)
+            this.setFirstImage()
+            this.loaded = true
+          })
+          httpPromise.catch(console.log)
         })
-        httpPromise.catch(console.log)
-      })
+      }
+    },
+    payload() {
+      this.payload.artistList = this.getArtistList()
     }
   }
 }
