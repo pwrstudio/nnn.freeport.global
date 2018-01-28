@@ -107,9 +107,12 @@ export default {
       }
     },
     getArtistList() {
-      this.artistList = this.payload.artists.reduce(
-        (accumulator, currentValue) => accumulator + ', ' + currentValue
-      )
+      console.log(this.payload.artists.length)
+      if (this.payload.artists.length > 0) {
+        return this.payload.artists.reduce(
+          (accumulator, currentValue) => accumulator + ', ' + currentValue
+        )
+      }
     }
   },
   watch: {
@@ -143,7 +146,7 @@ export default {
       }
     },
     payload() {
-      this.payload.artistList = this.getArtistList()
+      this.artistList = this.getArtistList()
     }
   }
 }

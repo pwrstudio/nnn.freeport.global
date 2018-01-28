@@ -51,9 +51,11 @@ export default {
   },
   methods: {
     getArtistList() {
-      return this.payload.artists.reduce(
-        (accumulator, currentValue) => accumulator + ', ' + currentValue
-      )
+      if (this.payload.artists.length > 0) {
+        return this.payload.artists.reduce(
+          (accumulator, currentValue) => accumulator + ', ' + currentValue
+        )
+      }
     },
     goToWork() {
       if (this.payload.open) {
