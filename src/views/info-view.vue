@@ -3,11 +3,20 @@
     <div class='info__inner'>
       <!-- Main -->
       <div class='info__inner__main'>
-        <span class='info__inner__main__text'
-              v-html='main.container.about.info' />
-        <div>- - - - - - - - -</div>
-        <span class="info__inner__tech__text"
-              v-html='main.container.about.tech' />
+        <div class='info__inner__main__text'
+             v-html='main.container.about.info' />
+        <div id='tech'>- - - - - - - - -</div>
+        <div class="info__inner__tech__text">
+          <p>This platform experiments with the peer to peer, content-addressed system Inter Planetary File System (IPFS) as backend, with the platform acting as a hybrid HTTP/IPFS gateway to the artworks and content.</p>
+          <img class="info__inner__tech__image"
+               src='static/architecture.svg' />
+          <p>IPFS is one component in an emerging stack of web technologies. While still in its infancy, it promises to steer the development of digital communications in a distributed, peer-to-peer direction. Replacing central points of authority with protocol mechanisms, relying on blockchain related techniques for control and governance. And moving storage and computation from data centers to the devices of the users.</p>
+          <img class="info__inner__tech__image"
+               src='static/stack.svg' />
+          <p>Instead of referring to objects by their location, which server they are stored on, IPFS refers to them by what they are, by making a cryptographic fingerprint – a hash – of the content. This allows information to be addressed in a permanent manner and located on a peer to peer network.</p>
+          <img class="info__inner__tech__image"
+               src='static/hash.svg' />
+        </div>
       </div>
       <!-- Sidebar -->
       <div class='info__inner__sidebar'>
@@ -43,6 +52,18 @@ export default {
 
   &__inner {
     margin-bottom: 200px;
+
+    &__tech {
+      &__image {
+        display: block;
+        width: 80%;
+        // margin-right: auto;
+        // margin-left: auto;
+        @include screen-size('small') {
+          width: 100%;
+        }
+      }
+    }
 
     &__main {
       width: calc(70vw - 80px);

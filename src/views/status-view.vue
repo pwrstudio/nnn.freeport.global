@@ -5,8 +5,7 @@
     <!-- 1 ROW -->
     <div class='status__first'>
       <!-- IPFS -->
-      <a :href='"https://ipfs.io/ipfs/" + main.rootHash'
-         target=_blank
+      <a href='/info#hash'
          class='status__first__box'
          v-tooltip.auto='"IPFS root hash"'>
         <div class="status__first__box__label">
@@ -16,8 +15,7 @@
               v-html='main.rootHash' />
       </a>
       <!-- Ethereum-->
-      <a href='https://rinkeby.etherscan.io/address/0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
-         target=_blank
+      <a href='/info#hash'
          class='status__first__box'
          v-tooltip.auto='"Ethereum contract address"'>
         <div class="status__first__box__label">
@@ -27,14 +25,16 @@
               v-html='"0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A"' />
       </a>
       <!-- Last update -->
-      <div class='status__first__box'
-           v-tooltip.auto='"Last update"'>
+      <a href='https://rinkeby.etherscan.io/address/0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
+         target=_blank
+         class='status__first__box'
+         v-tooltip.auto='"Last update"'>
         <div class="status__first__box__label">
           <i class="material-icons">query_builder</i>
         </div>
         <span class='status__first__box__info'
               v-html='formatDate(main.container.updated)' />
-      </div>
+      </a>
     </div>
     <!-- 2 ROW -->
     <!-- 2 ROW -->
