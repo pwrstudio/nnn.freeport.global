@@ -100,16 +100,16 @@
     <template v-if='$route.name === "singleWork" && !$route.params.info'>
       <router-link :to='{name: "singleWork", params: {hash: $route.params.hash, info: "info"}}'
                    v-tooltip.auto='"About work"'
-                   class='nav-button nav-button__left nav-button--opaque'> {{main.currentWork.title}}
+                   class='nav-button nav-button__left nav-button--opaque nav-button--hoverable'> {{main.currentWork.title}}
       </router-link>
       <router-link v-if='main.currentSlide'
-                   class='nav-button nav-button__right nav-button--opaque'
+                   class='nav-button nav-button__right nav-button--opaque nav-button--hoverable'
                    v-tooltip.auto='"Stack"'
                    :to='{name: "stack", params: {unit: main.currentSlide}}'>
         <i class="material-icons">menu</i>
       </router-link>
       <router-link v-else
-                   class='nav-button nav-button__right nav-button--opaque'
+                   class='nav-button nav-button__right nav-button--opaque nav-button--hoverable'
                    v-tooltip.auto='"Stack"'
                    :to='{name: "stack"}'>
         <i class="material-icons">menu</i>
@@ -123,11 +123,11 @@
     <template v-if='$route.name === "singleWork" && $route.params.info'>
 
       <router-link :to='{name: "singleWork", params: {hash: $route.params.hash}}'
-                   class='nav-button nav-button__left nav-button--opaque'>
+                   class='nav-button nav-button__left nav-button--opaque nav-button--hoverable'>
         {{main.currentWork.title}}
       </router-link>
 
-      <router-link class='nav-button nav-button__right nav-button--opaque'
+      <router-link class='nav-button nav-button__right nav-button--opaque nav-button--hoverable'
                    :to='{name: "singleWork", params: {hash: $route.params.hash}}'>
         <i class="material-icons">close</i>
       </router-link>
@@ -140,10 +140,10 @@
     <!-- SINGLE CONTENT -->
     <template v-if='$route.name === "singleContent" && !$route.params.info'>
       <div @click='$router.go(-1)'
-           class='nav-button nav-button__left nav-button--opaque'>
+           class='nav-button nav-button__left nav-button--opaque nav-button--hoverable'>
         {{main.currentWork.title}}
       </div>
-      <div class='nav-button nav-button__right nav-button--opaque'
+      <div class='nav-button nav-button__right nav-button--opaque nav-button--hoverable'
            @click='$router.go(-1)'>
         <i class="material-icons">arrow_back</i>
       </div>
@@ -189,6 +189,14 @@ export default {
 .nav-button {
   &--opaque {
     background: $black;
+  }
+
+  &--hoverable {
+    &:hover {
+      background: $white;
+      color: $black;
+      cursor: pointer;
+    }
   }
 }
 
