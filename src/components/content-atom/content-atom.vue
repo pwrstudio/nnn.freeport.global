@@ -91,7 +91,7 @@
 <script>
 import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
-// import oembetter from 'oembetter'
+import Embedza from 'embedza'
 import AudioPlayer from '@/components/content-atom/audio-player'
 import VideoPlayer from '@/components/content-atom/video-player'
 
@@ -143,13 +143,23 @@ export default {
     getLink() {
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
-        this.externalLink = response.body
-        // oembetter.fetch(this.externalLink, (err, embed) => {
-        //   if (!err) {
-        //     console.log(embed)
-        //   }
-        // })
+        const embedza = new Embedza(['https://youtube.com/*', 'https://vimeo.com/*', 'http://soundcloud.com/*'])
+        embedza.render(response.body, 'block')
+          .then(result => {
+            if (result) console.log(result.html, result.type)
+            else this.externalLink = response.body
+          })
       })
+      // httpPromise.then(response => {
+      //   const embedza = new Embedza(['https://youtube.com/*', 'https://vimeo.com/*', 'http://soundcloud.com/*'])
+      //   embedza.render(response.body, 'block')
+      //     .then(result => {
+      //       if (result) {
+      //         console.log(result.html, result.type)
+      //       }
+      //       else this.externalLink = response.body
+      //     })
+      // })
       httpPromise.catch(console.log)
     },
     getImageLink(imageHash) {
