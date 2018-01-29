@@ -169,7 +169,7 @@ export default {
         container: 'map',
         style: 'mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o',
         center: [13.404954, 52.520008],
-        zoom: 0
+        zoom: 1
       })
       if (this.main.userList.length > this.markers.length) {
         this.main.userList.map(user => {

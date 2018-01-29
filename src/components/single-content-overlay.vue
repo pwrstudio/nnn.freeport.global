@@ -117,6 +117,7 @@ export default {
     // flex-wrap: wrap;
     // align-items: center;
     // justify-content: center;
+    font-size: $font-size-small;
 
     &__inner {
       @include center;
