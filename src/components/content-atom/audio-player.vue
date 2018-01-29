@@ -3,6 +3,8 @@
     <img class='audio-player__image'
          :src='image' />
     <progress class='audio-player__progress'
+              id='timeline'
+              @click='scrub'
               :class='{"audio-player__progress--playing": playing}'
               max="1"
               :value="progress" />
@@ -30,6 +32,11 @@ import VueHowler from 'vue-howler'
 
 export default {
   mixins: [VueHowler],
+  mounted() {
+    this.$nextTick(() => {
+      this.timelineElement = document.getElementById('timeline')
+    })
+  },
   methods: {
     formatTime(time) {
       const minutes = Math.floor(time / 60)
@@ -37,6 +44,13 @@ export default {
       return (
         (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds)
       )
+    },
+    scrub(e) {
+      const progress =
+        (e.pageX - this.timelineElement.closest('.atom').offsetLeft) /
+        this.timelineElement.offsetWidth
+      this.setProgress(progress)
+      this.play()
     }
   },
   props: {
@@ -81,6 +95,7 @@ export default {
     width: 100%;
     height: 100px;
     z-index: 100;
+    cursor: pointer;
     @include progress-bar;
     &--playing {
       &::-webkit-progress-value {
