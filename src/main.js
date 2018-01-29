@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import 'babel-polyfill'
+import 'whatwg-fetch'
+import 'proxy-polyfill'
 import App from './App'
 import router from './router'
 import store from './store'

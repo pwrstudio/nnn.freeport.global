@@ -127,7 +127,7 @@ const webpackConfig = merge(baseWebpackConfig, {
       stripPrefix: 'dist/'
     }),
     new WebpackPwaManifest({
-      name: 'NNN FREEPORT',
+      name: 'NNN.FREEPORT.GLOBAL',
       short_name: 'NNN FREEPORT',
       description: 'Description!',
       background_color: '#000000',

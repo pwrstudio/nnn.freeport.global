@@ -25,6 +25,7 @@
     "mapbox-gl": "^0.44.0",
     "oembed-parser": "^1.0.8",
     "oembetter": "^0.1.19",
+    "proxy-polyfill": "^0.1.7",
     "raven-js": "^3.21.0",
     "sw-precache-webpack-plugin": "^0.11.4",
     "swiper": "^4.0.7",
@@ -37,7 +38,8 @@
     "vue-router": "^3.0.1",
     "vue-socket.io": "^2.1.1-a",
     "vuex": "^3.0.1",
-    "webpack-pwa-manifest": "^3.4.1"
+    "webpack-pwa-manifest": "^3.4.1",
+    "whatwg-fetch": "^2.0.3"
   },
   "devDependencies": {
     "autoprefixer": "^7.2.3",
