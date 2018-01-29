@@ -23,7 +23,8 @@
 
     <!-- Scanner nav button on mobile -->
     <router-link :to='{name: "scan"}'
-                 class="scanner-nav">
+                 class="scanner-nav"
+                 v-if='!main.mobile.os === "iOS"'>
       <i class="material-icons material-icons--on">center_focus_weak</i>
     </router-link>
   </div>

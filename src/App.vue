@@ -89,13 +89,12 @@ export default {
       text: 'Ethereum Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A',
       type: 'network'
     })
-    //
-    this.checkMobile()
+    this.CHECK_MOBILE()
     this.$_setMetaTags()
     this.$_fetchData()
   },
   methods: {
-    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST', 'WRITE_LOG', 'TOGGLE_CHAT']),
+    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST', 'WRITE_LOG', 'TOGGLE_CHAT', 'CHECK_MOBILE']),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
       this.meta.description = meta.description || this.meta.defaults.description
@@ -113,18 +112,6 @@ export default {
         return city + ', ' + country
       } else {
         return country
-      }
-    },
-    checkMobile() {
-      // mobile tests
-      let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-      let android = navigator.userAgent.toLowerCase().indexOf('android') > -1
-      if (iOS) {
-        this.mobile.check = true
-        this.mobile.os = 'iOS'
-      } else if (android) {
-        this.mobile.check = true
-        this.mobile.os = 'android'
       }
     }
   },
