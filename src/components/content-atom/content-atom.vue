@@ -150,16 +150,6 @@ export default {
             else this.externalLink = response.body
           })
       })
-      // httpPromise.then(response => {
-      //   const embedza = new Embedza(['https://youtube.com/*', 'https://vimeo.com/*', 'http://soundcloud.com/*'])
-      //   embedza.render(response.body, 'block')
-      //     .then(result => {
-      //       if (result) {
-      //         console.log(result.html, result.type)
-      //       }
-      //       else this.externalLink = response.body
-      //     })
-      // })
       httpPromise.catch(console.log)
     },
     getImageLink(imageHash) {
