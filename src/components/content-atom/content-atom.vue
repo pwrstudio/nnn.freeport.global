@@ -28,11 +28,10 @@
     <!-- AUDIO -->
     <div v-else-if='payload.media === "Audio"'
          class='atom__audio'
-         :to='{name: "singleContent", params: {hash: hash}}'
          :id='hash'>
       <audio-player :sources='["https://ipfs.io/ipfs/" + payload.hash]'
                     :loop='false'
-                    :image='"https://ipfs.io/ipfs/" + payload.poster'
+                    :image='getImageLink(payload.poster)'
                     :title='payload.title'
                     :formats='["mp3"]' />
     </div>
@@ -56,7 +55,7 @@
          :id='hash'>
       <span v-html='payload.title + " (" + payload.size + ")"' />
       <img v-if='payload.poster'
-           :src='"https://ipfs.io/ipfs/" + payload.poster' />
+           :src='getImageLink(payload.poster)' />
       <a :href='"https://ipfs.io/ipfs/" + payload.hash'
          class='atom__file__link'
          target=_blank>
@@ -68,13 +67,16 @@
     <!-- LINK -->
     <div v-if='payload.media === "External link"'
          class='atom__external'
+         :class='{"atom__external--has-image": payload.poster}'
          :id='hash'>
       <span class='atom__external__reference'
             v-if='payload.hierarchy === "Reference"'
             v-html='"Reference"' />
-      <span v-html='payload.title' />
+      <span v-if='!payload.poster'
+            v-html='payload.title' />
       <img v-if='payload.poster'
-           :src='"https://ipfs.io/ipfs/" + payload.poster' />
+           class='atom__external__image'
+           :src='getImageLink(payload.poster)' />
       <a :href='externalLink'
          class='atom__external__link'
          target=_blank>
@@ -171,10 +173,12 @@ export default {
       }
     },
     getImageClass() {
+      console.log(this.payload.poster)
       if (
         this.payload.media === 'Image' ||
         this.payload.media === 'Audio' ||
-        this.payload.media === 'Video'
+        this.payload.media === 'Video' ||
+        (this.payload.media === 'Link' && this.payload.poster)
       ) {
         return 'atom--image'
       } else {
@@ -318,6 +322,35 @@ export default {
         background: $green;
         color: $white;
       }
+    }
+    &--has-image {
+      padding: 0;
+      // width: 300px;
+      height: 300px;
+      border: none;
+    }
+    &--has-image &__link {
+      @include center;
+      border: none;
+      color: $white;
+      display: block;
+      padding: 40px;
+      padding: 40px;
+      i {
+        font-size: 96px;
+      }
+      text-align: center;
+      max-width: none;
+      float: right;
+      &:hover {
+        background: $green;
+        color: $white;
+      }
+    }
+    &__image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
     }
   }
 }

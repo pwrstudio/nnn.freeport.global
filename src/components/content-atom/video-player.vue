@@ -11,7 +11,7 @@
     <div class='video-player__toggle'
          @click="toggleVideo">
       <i v-if='playing'
-         class="material-icons video-player__toggle__icon">pause</i>
+         class="material-icons video-player__toggle__icon video-player__toggle__icon--pause">pause</i>
       <i v-else
          class="material-icons video-player__toggle__icon">play_arrow</i>
     </div>
@@ -19,8 +19,8 @@
       <div class='video-player__controls__title'
            v-html='title' />
       <div class='video-player__controls__timecode'>
-        <span v-html='formatTime(seek)'></span> /
-        <span v-html='formatTime(duration)'></span>
+        <span v-html='formatTime(video.currentTime)'></span> /
+        <span v-html='formatTime(video.duration)'></span>
       </div>
     </div>
   </div>
@@ -30,7 +30,10 @@
 export default {
   data() {
     return {
-      video: {},
+      video: {
+        duration: 0,
+        currentTime: 0
+      },
       playing: false
     }
   },
@@ -75,7 +78,7 @@ export default {
 @import '../../style/_variables.scss';
 
 @mixin progress-bar {
-  background-color: yellow;
+  background-color: transparent;
 }
 
 @mixin progress-value {
@@ -93,8 +96,9 @@ export default {
     bottom: 0;
     left: 0;
     width: 100%;
-    height: 20px;
+    height: 100px;
     z-index: 100;
+    cursor: pointer;
     @include progress-bar;
     &--playing {
       &::-webkit-progress-value {
@@ -120,6 +124,10 @@ export default {
       font-size: 96px;
       user-select: none;
       color: $white;
+
+      &--pause {
+        display: none;
+      }
     }
   }
 
@@ -152,5 +160,9 @@ progress::-webkit-progress-value {
 }
 progress::-moz-progress-bar {
   @include progress-bar;
+}
+
+.video-player:hover .video-player__toggle__icon--pause {
+  display: block;
 }
 </style>

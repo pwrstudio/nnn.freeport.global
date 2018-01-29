@@ -107,7 +107,6 @@ export default {
       }
     },
     getArtistList() {
-      console.log(this.payload.artists.length)
       if (this.payload.artists.length > 0) {
         return this.payload.artists.reduce(
           (accumulator, currentValue) => accumulator + ', ' + currentValue
