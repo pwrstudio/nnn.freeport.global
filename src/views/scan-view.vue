@@ -31,7 +31,7 @@ export default {
     ...mapState(['main'])
   },
   mounted() {
-    this.checkiOS()
+    // this.checkiOS()
     // if (!this.iOS.check) {
     this.scanner = new Instascan.Scanner({
       video: document.getElementById('preview'),
