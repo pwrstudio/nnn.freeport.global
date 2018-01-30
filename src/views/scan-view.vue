@@ -52,10 +52,11 @@ export default {
       // Listen for scan events
       this.scanner
         .addListener('scan', content => {
-          const id = content.slice(-16)
-          window.alert(id)
+          window.alert(content)
+          const scanResult = content.slice(-16)
+          window.alert(scanResult)
           const matchingWork = this.main.container.works.find(w => {
-            return w.id === id
+            return w.id === scanResult
           })
           if (matchingWork) {
             this.resultHash = matchingWork.hash
