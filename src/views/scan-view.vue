@@ -63,8 +63,10 @@ export default {
         })
       // Listen for scan events
       this.scanner.addListener('scan', content => {
+        const id = content.slice(-16)
+        window.alert(id)
         const matchingWork = this.main.container.works.find(w => {
-          return w.id === content
+          return w.id === id
         })
         if (matchingWork) {
           this.resultHash = matchingWork.hash
@@ -73,6 +75,8 @@ export default {
               this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
             }, 2000)
           })
+        } else {
+          // SHOW FAILURE MSG
         }
       })
     }

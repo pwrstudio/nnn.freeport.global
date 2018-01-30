@@ -129,6 +129,7 @@
 import {mapState} from 'vuex'
 import mapboxgl from 'mapbox-gl'
 import {format, parse} from 'date-fns'
+// import gremlins from 'gremlins.js'
 
 const statusUserRow = () => import('@/components/rows/status-user-row')
 const statusLogRow = () => import('@/components/rows/status-log-row')
@@ -199,6 +200,9 @@ export default {
     this.$nextTick(() => {
       // Set user-markers
       this.setMarkers()
+
+      // var horde = gremlins.createHorde()
+      // horde.unleash()
       // Set exhibition-markers
       // this.main.container.exhibitions.map(exhibition => {
       //   const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + exhibition.hash)

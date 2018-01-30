@@ -34,6 +34,7 @@ import {mapState, mapActions} from 'vuex'
 import sidebar from '@/components/sidebar/sidebar'
 import work from '@/components/work'
 import Swiper from 'swiper'
+// import gremlins from 'gremlins.js'
 
 export default {
   name: 'stackView',
@@ -53,6 +54,11 @@ export default {
   mounted() {
     if (this.main.container.works) {
       this.$nextTick(this.initSwiper)
+
+      // this.$nextTick(() => {
+      //   var horde = gremlins.createHorde()
+      //   horde.unleash()
+      // })
     }
   },
   methods: {

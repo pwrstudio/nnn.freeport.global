@@ -59,6 +59,7 @@
 import {mapActions} from 'vuex'
 import contentAtom from '@/components/content-atom/content-atom'
 import singleContentOverlay from '@/components/single-content-overlay'
+// import gremlins from 'gremlins.js'
 
 export default {
   name: 'singleWork',
@@ -85,6 +86,10 @@ export default {
       this.SET_CURRENT_WORK(this.payload)
       this.$socket.emit('view', {title: this.payload.title, hash: this.$route.params.hash})
       this.loaded = true
+      // this.$nextTick(() => {
+      //   var horde = gremlins.createHorde()
+      //   horde.unleash()
+      // })
     })
     httpPromise.catch(console.log)
   },

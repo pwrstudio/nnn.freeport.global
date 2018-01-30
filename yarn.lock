@@ -3931,6 +3931,10 @@ gray-matter@^3.0.8:
     kind-of "^5.0.2"
     strip-bom-string "^1.0.0"
 
+gremlins.js:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/gremlins.js/-/gremlins.js-0.1.0.tgz#8903d88710bedc8d18d0a1ddd48bfeca82a914cb"
+
 grid-index@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/grid-index/-/grid-index-1.0.0.tgz#ad2c5d54ce5b35437faff1d70a9aeb3d1d261110"
