@@ -32,47 +32,48 @@ export default {
   },
   mounted() {
     this.checkiOS()
-    if (!this.iOS.check) {
-      this.scanner = new Instascan.Scanner({
-        video: document.getElementById('preview'),
-        continuous: true,
-        mirror: false
+    // if (!this.iOS.check) {
+    this.scanner = new Instascan.Scanner({
+      video: document.getElementById('preview'),
+      continuous: true,
+      mirror: false
+    })
+    Instascan.Camera.getCameras()
+      .then(cameras => {
+        if (cameras[1]) {
+          this.scanner.start(cameras[1])
+        } else {
+          this.scanner.start(cameras[0])
+        }
       })
-      Instascan.Camera.getCameras()
-        .then(cameras => {
-          if (cameras[1]) {
-            this.scanner.start(cameras[1])
-          } else {
-            this.scanner.start(cameras[0])
-          }
+      .catch(e => {
+        console.log(e)
+      })
+
+    // Listen for scan events
+    this.scanner
+      .addListener('scan', content => {
+        window.alert(content)
+        const scanResult = content.slice(-16)
+        window.alert(scanResult)
+        const matchingWork = this.main.container.works.find(w => {
+          return w.id === scanResult
         })
-        .catch(e => {
-          console.log(e)
-        })
-      // Listen for scan events
-      this.scanner
-        .addListener('scan', content => {
-          window.alert(content)
-          const scanResult = content.slice(-16)
-          window.alert(scanResult)
-          const matchingWork = this.main.container.works.find(w => {
-            return w.id === scanResult
+        if (matchingWork) {
+          this.resultHash = matchingWork.hash
+          this.scanner.stop().then(() => {
+            window.setTimeout(() => {
+              this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
+            }, 2000)
           })
-          if (matchingWork) {
-            this.resultHash = matchingWork.hash
-            this.scanner.stop().then(() => {
-              window.setTimeout(() => {
-                this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
-              }, 2000)
-            })
-          } else {
-            // SHOW FAILURE MSG
-          }
-        })
-        .catch(e => {
-          console.log(e)
-        })
-    }
+        } else {
+          // SHOW FAILURE MSG
+        }
+      })
+      .catch(e => {
+        console.log(e)
+      })
+    // }
   },
   beforeDestroy() {
     this.scanner.stop()
