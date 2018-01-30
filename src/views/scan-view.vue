@@ -1,7 +1,7 @@
 <template>
   <div class='scanner'>
     <!-- IN BROWSER SCANNER -->
-    <template v-if='!iOS.check'>
+    <template>
       <video id='preview'
              class='scanner__preview' />
       <i class="material-icons scanner__crosshair">crop_free</i>
@@ -12,14 +12,6 @@
         </div>
       </div>
     </template>
-
-    <template v-else>
-      <i class="material-icons scanner__crosshair scanner__crosshair--error">crop_free</i>
-      <p class="scanner__error">
-        QR SCANNER<br/> UNAVAILABLE
-      </p>
-    </template>
-
   </div>
 </template>
 
@@ -31,10 +23,6 @@ export default {
   name: 'scanView',
   data() {
     return {
-      iOS: {
-        check: false,
-        version: ''
-      },
       scanner: {},
       resultHash: ''
     }
@@ -62,43 +50,31 @@ export default {
           console.log(e)
         })
       // Listen for scan events
-      this.scanner.addListener('scan', content => {
-        const id = content.slice(-16)
-        window.alert(id)
-        const matchingWork = this.main.container.works.find(w => {
-          return w.id === id
-        })
-        if (matchingWork) {
-          this.resultHash = matchingWork.hash
-          this.scanner.stop().then(() => {
-            window.setTimeout(() => {
-              this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
-            }, 2000)
+      this.scanner
+        .addListener('scan', content => {
+          const id = content.slice(-16)
+          window.alert(id)
+          const matchingWork = this.main.container.works.find(w => {
+            return w.id === id
           })
-        } else {
-          // SHOW FAILURE MSG
-        }
-      })
-    }
-  },
-  methods: {
-    checkiOS() {
-      let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-      if (iOS) {
-        this.iOS.check = true
-        let ver = navigator.appVersion.match(/OS (\d+)_(\d+)_?(\d+)?/)
-        this.iOS.version = [parseInt(ver[1], 10), parseInt(ver[2], 10), parseInt(ver[3] || 0, 10)]
-      } else this.iOS.check = false
-    }
-  },
-  watch: {
-    'iOS.check'() {
-      // redirect to list view
-      if (this.iOS.check) this.$router.push({name: 'stack'})
+          if (matchingWork) {
+            this.resultHash = matchingWork.hash
+            this.scanner.stop().then(() => {
+              window.setTimeout(() => {
+                this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
+              }, 2000)
+            })
+          } else {
+            // SHOW FAILURE MSG
+          }
+        })
+        .catch(e => {
+          console.log(e)
+        })
     }
   },
   beforeDestroy() {
-    if (!this.iOS.check) this.scanner.stop()
+    this.scanner.stop()
   }
 }
 </script>

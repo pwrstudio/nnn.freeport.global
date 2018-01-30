@@ -16,6 +16,10 @@ export default {
   name: 'app',
   data() {
     return {
+      mobile: {
+        check: false,
+        os: ''
+      },
       meta: {
         sitename: 'NNN.FREEPORT.GLOBAL',
         facebook: 'xxxxxxxxx',
@@ -85,18 +89,12 @@ export default {
       text: 'Ethereum Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A',
       type: 'network'
     })
-    // Check for mobile here. To be improved!
-    if (
-      typeof window.orientation !== 'undefined' ||
-      navigator.userAgent.indexOf('IEMobile') !== -1
-    ) {
-      this.$router.push({name: 'scan'})
-    }
+    this.CHECK_MOBILE()
     this.$_setMetaTags()
     this.$_fetchData()
   },
   methods: {
-    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST', 'WRITE_LOG', 'TOGGLE_CHAT']),
+    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST', 'WRITE_LOG', 'TOGGLE_CHAT', 'CHECK_MOBILE']),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
       this.meta.description = meta.description || this.meta.defaults.description

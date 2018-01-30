@@ -303,7 +303,8 @@ export default {
       background: $black;
       border: 1px solid $white;
       width: 200px;
-      overflow-x: scroll;
+      overflow: hidden;
+      text-overflow: ellipsis;
       margin: 10px;
       padding: 10px;
       position: relative;
@@ -336,6 +337,9 @@ export default {
       }
 
       &__info {
+        width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
         margin-left: 60px;
         @include hide-scroll;
       }
