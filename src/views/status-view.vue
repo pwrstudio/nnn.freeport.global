@@ -131,8 +131,6 @@ import mapboxgl from 'mapbox-gl'
 import {format, parse} from 'date-fns'
 import isWebGLEnabled from 'is-webgl-enabled'
 
-// import gremlins from 'gremlins.js'
-
 const statusUserRow = () => import('@/components/rows/status-user-row')
 const statusLogRow = () => import('@/components/rows/status-log-row')
 const statusWorksRow = () => import('@/components/rows/status-works-row')
