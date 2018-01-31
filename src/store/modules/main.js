@@ -53,8 +53,8 @@ const actions = {
   [actionTypes.TOGGLE_CHAT]({commit, state}) {
     commit(mutationTypes.TOGGLE_CHAT)
   },
-  [actionTypes.CHECK_MOBILE]({commit, state}) {
-    commit(mutationTypes.CHECK_MOBILE)
+  [actionTypes.CHECK_MOBILE]({commit, state}, data) {
+    commit(mutationTypes.CHECK_MOBILE, data)
   }
 }
 
@@ -98,16 +98,9 @@ const mutations = {
   [mutationTypes.TOGGLE_CHAT](state) {
     state.chat.active = !state.chat.active
   },
-  [mutationTypes.CHECK_MOBILE](state) {
-    let iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
-    let android = navigator.userAgent.toLowerCase().indexOf('android') > -1
-    if (iOS) {
-      state.mobile.check = true
-      state.mobile.os = 'iOS'
-    } else if (android) {
-      state.mobile.check = true
-      state.mobile.os = 'android'
-    }
+  [mutationTypes.CHECK_MOBILE](state, data) {
+    state.mobile.check = true
+    state.mobile.os = data
   }
 }
 

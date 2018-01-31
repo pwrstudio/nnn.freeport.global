@@ -84,12 +84,19 @@ export default {
     }
   },
   mounted() {
+    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+    const android = navigator.userAgent.toLowerCase().indexOf('android') > -1
+    if (iOS) {
+      this.CHECK_MOBILE('iOS')
+    } else if (android) {
+      this.CHECK_MOBILE('android')
+      this.$router.push({name: 'scan'})
+    }
     this.WRITE_LOG({
       time: format(new Date(), 'HH:mm:ss'),
       text: 'Ethereum Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A',
       type: 'network'
     })
-    this.CHECK_MOBILE()
     this.$_setMetaTags()
     this.$_fetchData()
   },

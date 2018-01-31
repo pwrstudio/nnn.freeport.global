@@ -22,7 +22,6 @@
     "ellipsize": "^0.0.3",
     "embedza": "^2.3.0",
     "favicons-webpack-plugin": "^0.0.7",
-    "gremlins.js": "^0.1.0",
     "imgix-core-js": "^1.1.1",
     "instascan": "^1.0.0",
     "is-webgl-enabled": "^1.0.2",
@@ -108,9 +107,5 @@
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }
