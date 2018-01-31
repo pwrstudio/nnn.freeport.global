@@ -129,6 +129,8 @@
 import {mapState} from 'vuex'
 import mapboxgl from 'mapbox-gl'
 import {format, parse} from 'date-fns'
+import isWebGLEnabled from 'is-webgl-enabled'
+
 // import gremlins from 'gremlins.js'
 
 const statusUserRow = () => import('@/components/rows/status-user-row')
@@ -163,15 +165,20 @@ export default {
       })
       this.markers = []
     },
-    setMarkers() {
-      mapboxgl.accessToken =
-        'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg'
-      this.map = new mapboxgl.Map({
-        container: 'map',
-        style: 'mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o',
-        center: [13.404954, 52.520008],
-        zoom: 1
+    initMap() {
+      return new Promise((resolve, reject) => {
+        mapboxgl.accessToken =
+          'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg'
+        this.map = new mapboxgl.Map({
+          container: 'map',
+          style: 'mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o',
+          center: [13.404954, 52.520008],
+          zoom: 1
+        })
+        resolve()
       })
+    },
+    setMarkers() {
       if (this.main.userList.length > this.markers.length) {
         this.main.userList.map(user => {
           var el = document.createElement('div')
@@ -197,39 +204,42 @@ export default {
     }
   },
   mounted() {
-    this.$nextTick(() => {
-      // Set user-markers
-      this.setMarkers()
+    if (isWebGLEnabled) {
+      this.$nextTick(() => {
+        this.initMap().then(() => {
+          this.setMarkers()
+        })
+      })
+    }
 
-      // var horde = gremlins.createHorde()
-      // horde.unleash()
-      // Set exhibition-markers
-      // this.main.container.exhibitions.map(exhibition => {
-      //   const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + exhibition.hash)
-      //   httpPromise.then(response => {
-      //     if (response.body.location && response.body.location.geopoint) {
-      //       var el = document.createElement('div')
-      //       el.className = 'exhibition-marker'
-      //       new mapboxgl.Marker(el)
-      //         .setLngLat([
-      //           response.body.location.geopoint.longitude,
-      //           response.body.location.geopoint.latitude
-      //         ])
-      //         .addTo(this.map)
-      //     }
-      //   })
-      //   httpPromise.catch(console.log)
-      // })
-    })
+    // Set exhibition-markers
+    // this.main.container.exhibitions.map(exhibition => {
+    //   const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + exhibition.hash)
+    //   httpPromise.then(response => {
+    //     if (response.body.location && response.body.location.geopoint) {
+    //       var el = document.createElement('div')
+    //       el.className = 'exhibition-marker'
+    //       new mapboxgl.Marker(el)
+    //         .setLngLat([
+    //           response.body.location.geopoint.longitude,
+    //           response.body.location.geopoint.latitude
+    //         ])
+    //         .addTo(this.map)
+    //     }
+    //   })
+    //   httpPromise.catch(console.log)
+    // })
   },
   watch: {
     'main.userList'() {
-      this.clearMarkers()
-      this.setMarkers()
+      if (isWebGLEnabled) {
+        this.clearMarkers()
+        this.setMarkers()
+      }
     },
     activeMobileTab() {
       this.$nextTick(() => {
-        if (this.activeMobileTab === 'map') {
+        if (this.activeMobileTab === 'map' && isWebGLEnabled) {
           this.setMarkers()
         } else {
           this.clearMarkers()

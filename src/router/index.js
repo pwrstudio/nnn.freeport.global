@@ -47,6 +47,10 @@ export default new Router({
       path: '/tracking/:id',
       name: 'tracking',
       component: tracking
+    },
+    {
+      path: '*',
+      redirect: '/404'
     }
   ]
 })
