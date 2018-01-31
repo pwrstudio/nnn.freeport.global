@@ -49,26 +49,22 @@ export default {
       })
 
     // Listen for scan events
-    this.scanner
-      .addListener('scan', content => {
-        const scanResult = content.slice(-16)
-        const matchingWork = this.main.container.works.find(w => {
-          return w.id === scanResult
+    this.scanner.addListener('scan', content => {
+      const scanResult = content.slice(-16)
+      const matchingWork = this.main.container.works.find(w => {
+        return w.id === scanResult
+      })
+      if (matchingWork) {
+        this.resultHash = matchingWork.hash
+        this.scanner.stop().then(() => {
+          window.setTimeout(() => {
+            this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
+          }, 2000)
         })
-        if (matchingWork) {
-          this.resultHash = matchingWork.hash
-          this.scanner.stop().then(() => {
-            window.setTimeout(() => {
-              this.$router.push({name: 'singleWork', params: {hash: this.resultHash}})
-            }, 2000)
-          })
-        } else {
-          // SHOW FAILURE MSG
-        }
-      })
-      .catch(e => {
-        console.log(e)
-      })
+      } else {
+        this.$router.push({name: 'notFound'})
+      }
+    })
   },
   beforeDestroy() {
     this.scanner.stop()
