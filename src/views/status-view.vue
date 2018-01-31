@@ -211,24 +211,6 @@ export default {
         })
       })
     }
-
-    // Set exhibition-markers
-    // this.main.container.exhibitions.map(exhibition => {
-    //   const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + exhibition.hash)
-    //   httpPromise.then(response => {
-    //     if (response.body.location && response.body.location.geopoint) {
-    //       var el = document.createElement('div')
-    //       el.className = 'exhibition-marker'
-    //       new mapboxgl.Marker(el)
-    //         .setLngLat([
-    //           response.body.location.geopoint.longitude,
-    //           response.body.location.geopoint.latitude
-    //         ])
-    //         .addTo(this.map)
-    //     }
-    //   })
-    //   httpPromise.catch(console.log)
-    // })
   },
   watch: {
     'main.userList'() {
@@ -240,7 +222,11 @@ export default {
     activeMobileTab() {
       this.$nextTick(() => {
         if (this.activeMobileTab === 'map' && isWebGLEnabled) {
-          this.setMarkers()
+          this.$nextTick(() => {
+            this.initMap().then(() => {
+              this.setMarkers()
+            })
+          })
         } else {
           this.clearMarkers()
         }
