@@ -90,7 +90,9 @@ export default {
       this.CHECK_MOBILE('iOS')
     } else if (android) {
       this.CHECK_MOBILE('android')
-      this.$router.push({name: 'scan'})
+      if (this.$route.path === '/') {
+        this.$router.push({name: 'scan'})
+      }
     }
     this.WRITE_LOG({
       time: format(new Date(), 'HH:mm:ss'),
