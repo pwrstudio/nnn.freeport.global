@@ -31,8 +31,6 @@ export default {
     ...mapState(['main'])
   },
   mounted() {
-    // this.checkiOS()
-    // if (!this.iOS.check) {
     this.scanner = new Instascan.Scanner({
       video: document.getElementById('preview'),
       continuous: true,
@@ -53,9 +51,7 @@ export default {
     // Listen for scan events
     this.scanner
       .addListener('scan', content => {
-        window.alert(content)
         const scanResult = content.slice(-16)
-        window.alert(scanResult)
         const matchingWork = this.main.container.works.find(w => {
           return w.id === scanResult
         })
@@ -73,7 +69,6 @@ export default {
       .catch(e => {
         console.log(e)
       })
-    // }
   },
   beforeDestroy() {
     this.scanner.stop()
