@@ -1,6 +1,7 @@
 <template>
   <div class='video-player'>
-    <video class='video-player__video'>
+    <video preload='auto'
+           class='video-player__video'>
       <source :type='type'
               :src='"http://ipfs.io/ipfs/" + hash' />
     </video>
