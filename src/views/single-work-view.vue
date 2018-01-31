@@ -91,13 +91,17 @@ export default {
       //   horde.unleash()
       // })
     })
-    httpPromise.catch(console.log)
+    httpPromise.catch(e => {
+      this.$router.push({name: 'notFound'})
+    })
   },
   computed: {
     artistList() {
-      return this.payload.artists.reduce(
-        (accumulator, currentValue) => accumulator + ', ' + currentValue
-      )
+      if (this.payload.artists.length > 0) {
+        return this.payload.artists.reduce(
+          (accumulator, currentValue) => accumulator + ', ' + currentValue
+        )
+      }
     }
   },
   methods: {

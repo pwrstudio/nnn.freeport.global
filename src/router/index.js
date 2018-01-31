@@ -7,6 +7,7 @@ const singleWorkView = () => import('@/views/single-work-view')
 const statusView = () => import('@/views/status-view')
 const infoView = () => import('@/views/info-view')
 const tracking = () => import('@/views/tracking')
+const notFound = () => import('@/views/not-found')
 
 Vue.use(Router)
 
@@ -17,6 +18,11 @@ export default new Router({
       path: '/',
       name: 'status',
       component: statusView
+    },
+    {
+      path: '/tracking/:id',
+      name: 'tracking',
+      component: tracking
     },
     {
       path: '/stack/:unit?',
@@ -34,23 +40,19 @@ export default new Router({
       component: infoView
     },
     {
-      path: '/w/:hash/:info?',
+      path: '/:hash/:info?',
       name: 'singleWork',
       component: singleWorkView
     },
     {
-      path: '/w/:hash/c/:singleHash',
+      path: '/:hash/+/:singleHash',
       name: 'singleContent',
       component: singleWorkView
     },
     {
-      path: '/tracking/:id',
-      name: 'tracking',
-      component: tracking
-    },
-    {
-      path: '*',
-      redirect: '/404'
+      path: '/404',
+      name: 'notFound',
+      component: notFound
     }
   ]
 })
