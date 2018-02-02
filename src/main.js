@@ -26,6 +26,15 @@ Vue.use(VueSocketio, 'https://nnnfreeportrelay.now.sh')
 // Vue.use(VueSocketio, 'localhost:9090')
 // Vue.use(VueSocketio, '192.168.178.25:9090')
 
+router.beforeEach((to, from, next) => {
+  document.getElementsByTagName('body')[0].classList.add('loading')
+  next()
+})
+
+router.afterEach((to, from) => {
+  document.getElementsByTagName('body')[0].classList.remove('loading')
+})
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

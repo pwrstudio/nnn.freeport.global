@@ -19,10 +19,12 @@
 </head>
 
 <body>
-  <div id="app">
-    <div id='loading' />
+  <div id="app"></div>
 
+  <div id='loading'>
+    <div id='spinner' />
   </div>
+
   <!-- built files will be auto injected -->
 
   <style>
@@ -32,7 +34,18 @@
     }
 
     #loading {
-      display: block;
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 10000;
+      background: rgba(0, 0, 0, 0.9);
+    }
+
+    #spinner {
+      display: none;
       position: fixed;
       top: 50%;
       left: 50%;
@@ -46,6 +59,15 @@
       animation: spin 1s ease-in-out infinite;
       -webkit-animation: spin 1s ease-in-out infinite;
     }
+
+    .loading #loading {
+      display: block
+    }
+
+    .loading #spinner {
+      display: block
+    }
+
 
     @keyframes spin {
       to {
