@@ -82,7 +82,7 @@ export default {
   overflow: hidden;
   padding: 20px;
   margin-bottom: 20px;
-  width: calc(100% - 100px);
+  // width: calc(100% - 100px);
 }
 
 @mixin label {

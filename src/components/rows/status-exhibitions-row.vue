@@ -1,6 +1,6 @@
 <template>
   <router-link :to='"/&/" + exhibition.hash'
-               class='status__user__table__body__row'>
+               class='status__users__table__body__row'>
     <td class='status__users__table__body__row__cell'>
       <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--open'
          v-if='payload.open'>done</i>
@@ -71,6 +71,8 @@ export default {
     &__row {
       border-bottom: 2px solid $white;
       font-size: $font-size-small;
+      cursor: pointer;
+      display: table-row;
 
       &__cell {
         margin: 0;

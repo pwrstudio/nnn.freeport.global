@@ -211,6 +211,8 @@ export default {
 @import '../../style/_variables.scss';
 
 .nav-button {
+  overflow: hidden;
+
   &--opaque {
     background: $black;
   }

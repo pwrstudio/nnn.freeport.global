@@ -227,6 +227,12 @@ export default {
   &__exhibition {
     @include box;
     display: block;
+    cursor: pointer;
+
+    &:hover {
+      background: $white;
+      color: $black;
+    }
 
     &__label {
       @include label;
