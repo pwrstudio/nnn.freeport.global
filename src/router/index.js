@@ -9,6 +9,7 @@ const statusView = () => import('@/views/status-view')
 const infoView = () => import('@/views/info-view')
 const tracking = () => import('@/views/tracking')
 const notFound = () => import('@/views/not-found')
+const refuse = () => import('@/views/refuse')
 
 Vue.use(Router)
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/404',
       name: 'notFound',
       component: notFound
+    },
+    {
+      path: '/403',
+      name: 'refuse',
+      component: refuse
     }
   ]
 })

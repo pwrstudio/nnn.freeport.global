@@ -66,6 +66,7 @@
 import {mapState, mapActions} from 'vuex'
 import contentAtom from '@/components/content-atom/content-atom'
 import singleContentOverlay from '@/components/single-content-overlay'
+import {isPast} from 'date-fns'
 
 export default {
   name: 'singleWork',
@@ -93,11 +94,16 @@ export default {
   mounted() {
     const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.$route.params.hash)
     httpPromise.then(response => {
-      this.payload = response.body
-      this.SET_CURRENT_WORK(this.payload)
-      this.$socket.emit('view', {title: this.payload.title, hash: this.$route.params.hash})
-      this.getExhibition()
-      this.loaded = true
+      console.log(response.body.date)
+      if (isPast(response.body.date)) {
+        this.payload = response.body
+        this.SET_CURRENT_WORK(this.payload)
+        this.$socket.emit('view', {title: this.payload.title, hash: this.$route.params.hash})
+        this.getExhibition()
+        this.loaded = true
+      } else {
+        this.$router.push({name: 'refuse'})
+      }
     })
     httpPromise.catch(e => {
       this.$router.push({name: 'notFound'})
