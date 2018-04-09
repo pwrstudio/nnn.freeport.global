@@ -4,6 +4,7 @@ import Router from 'vue-router'
 const stackView = () => import('@/views/stack-view')
 const scanView = () => import('@/views/scan-view')
 const singleWorkView = () => import('@/views/single-work-view')
+const exhibitionView = () => import('@/views/exhibition-view')
 const statusView = () => import('@/views/status-view')
 const infoView = () => import('@/views/info-view')
 const tracking = () => import('@/views/tracking')
@@ -38,6 +39,11 @@ export default new Router({
       path: '/info',
       name: 'info',
       component: infoView
+    },
+    {
+      path: '/&/:exhibitionHash',
+      name: 'exhibitionView',
+      component: exhibitionView
     },
     {
       path: '/:hash/:info?',

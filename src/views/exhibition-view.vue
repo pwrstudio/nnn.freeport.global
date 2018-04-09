@@ -1,57 +1,32 @@
 <template>
   <div>
-
-    <div class='work'
-         :class='{"work--show": loaded}'>
-      <div class='work__inner'
-           @scroll='updateScroll'>
-        <contentAtom v-for='item in payload.content'
-                     :key='item.hash'
-                     :hash='item.hash' />
-      </div>
-    </div>
-
-    <!-- Single content overlay -->
-    <singleContentOverlay v-if='$route.name === "singleContent"' />
-
-    <!-- Roll-down info overlay -->
-    <div v-if='$route.params.info'
-         class='info-overlay'>
-      <div class='info-overlay__hash'>
-        <span class='info-overlay__hash__label'
-              v-html='"hash"' />
-        <span v-html='$route.params.hash' />
-      </div>
-
+    <div class='exhibition'
+         :class='{"exhibition--show": loaded}'>
       <div class='info-overlay__title'>
         <span class='info-overlay__title__label'
               v-html='"title"' />
         <span v-html='payload.title' />
       </div>
-
-      <div class='info-overlay__artist'>
-        <span class='info-overlay__artist__label'
-              v-html='"artist"' />
-        <span v-html='artistList' />
-      </div>
-
-      <router-link to='/'
-                   class='info-overlay__exhibition'>
-        <span class='info-overlay__exhibition__label'
-              v-html='"exhibition"' />
-        <span v-html='"Territories of Complicity"' />
-      </router-link>
-
-      <div class='info-overlay__location'>
+      <div class='info-overlay__title'>
         <span class='info-overlay__title__label'
-              v-html='"location"' />
-        <span v-html='"Berlin, Germany"' />
+              v-html='"Festival"' />
+        <span v-html='payload.festival' />
+      </div>
+      <div class='info-overlay__title'>
+        <span class='info-overlay__title__label'
+              v-html='"Location"' />
+        <span>{{payload.location.venue}}, {{payload.location.city}}, {{payload.location.country}}</span>
       </div>
 
+      <div class='info-overlay__title'>
+        <span class='info-overlay__title__label'
+              v-html='"title"' />
+        <span v-html='payload.start_date' /> –
+        <span v-html='payload.end_date' />
+      </div>
       <div v-if='payload.description'
            class='info-overlay__description'
            v-html='payload.description' />
-
     </div>
   </div>
 </template>
@@ -59,19 +34,16 @@
 <script>
 import {mapActions} from 'vuex'
 import contentAtom from '@/components/content-atom/content-atom'
-import singleContentOverlay from '@/components/single-content-overlay'
 
 export default {
-  name: 'singleWork',
+  name: 'exhibitionView',
   components: {
-    contentAtom,
-    singleContentOverlay
+    contentAtom
   },
   data() {
     return {
       loaded: false,
       payload: {
-        artists: [],
         content: [],
         data: '',
         id: '',
@@ -80,28 +52,18 @@ export default {
     }
   },
   mounted() {
-    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.$route.params.hash)
+    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.$route.params.exhibitionHash)
     httpPromise.then(response => {
       this.payload = response.body
-      this.SET_CURRENT_WORK(this.payload)
-      this.$socket.emit('view', {title: this.payload.title, hash: this.$route.params.hash})
       this.loaded = true
     })
     httpPromise.catch(e => {
       this.$router.push({name: 'notFound'})
     })
   },
-  computed: {
-    artistList() {
-      if (this.payload.artists.length > 0) {
-        return this.payload.artists.reduce(
-          (accumulator, currentValue) => accumulator + ', ' + currentValue
-        )
-      }
-    }
-  },
+  computed: {},
   methods: {
-    ...mapActions(['SET_CURRENT_WORK']),
+    ...mapActions(['SET_CURRENT_exhibition']),
     updateScroll(event) {
       console.log(event)
     }
@@ -136,22 +98,23 @@ export default {
   }
 }
 
-.work {
+.exhibition {
   @include hide-scroll;
 
   height: 100vh;
   left: 0;
   overflow-y: auto;
   overflow-x: hidden;
-  padding-top: 60px;
-  position: fixed;
-  top: 0;
-  width: 100vw;
   display: none;
 
   &--show {
     display: block;
   }
+
+  max-width: 90vw;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 80px;
 
   &__inner {
     align-items: center;
@@ -201,7 +164,6 @@ export default {
 
   &__exhibition {
     @include box;
-    display: block;
 
     &__label {
       @include label;

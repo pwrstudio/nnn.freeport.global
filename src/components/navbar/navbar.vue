@@ -56,6 +56,30 @@
     </template>
     <!-- END: STATUS -->
 
+    <!-- EXHIBITION -->
+    <!-- EXHIBITION -->
+    <!-- EXHIBITION -->
+    <template v-if='$route.name === "exhibitionView"'>
+      <router-link class='nav-button nav-button--opaque nav-button__left'
+                   v-tooltip.auto='"About the platform"'
+                   to='/info'>
+        nnn.freeport.global
+      </router-link>
+      <router-link v-if='main.currentSlide'
+                   class='nav-button nav-button--opaque nav-button__right'
+                   v-tooltip.auto='"Stack"'
+                   :to='{name: "stack", params: {unit: main.currentSlide}}'>
+        <i class="material-icons">menu</i>
+      </router-link>
+      <router-link v-else
+                   class='nav-button nav-button--opaque nav-button__right'
+                   v-tooltip.auto='"Stack"'
+                   :to='{name: "stack"}'>
+        <i class="material-icons">menu</i>
+      </router-link>
+    </template>
+    <!-- END: Exhibition-->
+
     <!-- STACK -->
     <!-- STACK -->
     <!-- STACK -->

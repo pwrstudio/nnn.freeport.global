@@ -21,6 +21,22 @@
       <!-- Sidebar -->
       <div class='info__inner__sidebar'>
         <div class='info__inner__sidebar__divider'>- - - - - - - - -</div>
+        <svg version="1.1"
+             id="Layer_1"
+             xmlns="http://www.w3.org/2000/svg"
+             xmlns:xlink="http://www.w3.org/1999/xlink"
+             x="0px"
+             y="0px"
+             width="841.89px"
+             viewBox="0 0 841.89 595.28"
+             enable-background="new 0 0 841.89 595.28"
+             xml:space="preserve">
+          <polygon fill="#FFFFFF"
+                   points="772.229,194.521 673.657,405.165 671.903,147.574 588.979,108.771 450.3,405.165 448.546,147.574 
+	365.621,108.771 226.941,405.165 225.188,147.574 142.264,108.771 17.016,376.424 71.064,401.717 175.004,179.598 174.721,450.222 
+	253.571,487.121 398.362,179.598 398.077,450.222 476.93,487.121 621.721,179.598 621.437,450.222 700.287,487.121 825.535,219.467 
+	" />
+        </svg>
         <span class='info__inner__sidebar__text'
               v-html='main.container.about.credits' />
       </div>
@@ -91,6 +107,11 @@ export default {
       padding-right: 40px;
       font-size: $font-size-small;
       line-height: 24px;
+
+      svg {
+        background: $green;
+        width: 100%;
+      }
 
       &__divider {
         display: none;
