@@ -103,7 +103,14 @@ export default {
     this.$_fetchData()
   },
   methods: {
-    ...mapActions(['GET_CONTAINER', 'UPDATE_USERLIST', 'WRITE_LOG', 'TOGGLE_CHAT', 'CHECK_MOBILE']),
+    ...mapActions([
+      'GET_EXHIBITION',
+      'GET_CONTAINER',
+      'UPDATE_USERLIST',
+      'WRITE_LOG',
+      'TOGGLE_CHAT',
+      'CHECK_MOBILE'
+    ]),
     $_setMetaTags(meta = {}) {
       this.meta.title = meta.title || this.meta.defaults.title
       this.meta.description = meta.description || this.meta.defaults.description
@@ -187,6 +194,10 @@ export default {
         url: 'https://nnn.freeport.global/tracking/' + this.main.currentWork.id
       }
       this.$_setMetaTags(meta)
+    },
+    'main.container'() {
+      console.log(this.main.container.exhibitions)
+      this.main.container.exhibitions.forEach(e => this.GET_EXHIBITION(e.hash))
     },
     'main.rootHash'() {
       this.WRITE_LOG({

@@ -35,17 +35,23 @@
         <span v-html='artistList' />
       </div>
 
-      <router-link to='/'
+      <router-link :to='"/&/" + exhibition.hash'
                    class='info-overlay__exhibition'>
         <span class='info-overlay__exhibition__label'
               v-html='"exhibition"' />
-        <span v-html='"Territories of Complicity"' />
+        <span v-html='exhibition.title' />
       </router-link>
 
       <div class='info-overlay__location'>
         <span class='info-overlay__title__label'
+              v-html='"festival"' />
+        <span>{{exhibition.festival}}</span>
+      </div>
+
+      <div class='info-overlay__location'>
+        <span class='info-overlay__title__label'
               v-html='"location"' />
-        <span v-html='"Berlin, Germany"' />
+        <span>{{exhibition.location.venue}}, {{exhibition.location.city}}, {{exhibition.location.country}}</span>
       </div>
 
       <div v-if='payload.description'
@@ -57,7 +63,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import {mapState, mapActions} from 'vuex'
 import contentAtom from '@/components/content-atom/content-atom'
 import singleContentOverlay from '@/components/single-content-overlay'
 
@@ -70,9 +76,14 @@ export default {
   data() {
     return {
       loaded: false,
+      exhibition: {
+        hash: '',
+        title: ''
+      },
       payload: {
         artists: [],
         content: [],
+
         data: '',
         id: '',
         title: ''
@@ -85,6 +96,7 @@ export default {
       this.payload = response.body
       this.SET_CURRENT_WORK(this.payload)
       this.$socket.emit('view', {title: this.payload.title, hash: this.$route.params.hash})
+      this.getExhibition()
       this.loaded = true
     })
     httpPromise.catch(e => {
@@ -92,6 +104,7 @@ export default {
     })
   },
   computed: {
+    ...mapState(['main']),
     artistList() {
       if (this.payload.artists.length > 0) {
         return this.payload.artists.reduce(
@@ -104,6 +117,18 @@ export default {
     ...mapActions(['SET_CURRENT_WORK']),
     updateScroll(event) {
       console.log(event)
+    },
+    getExhibition() {
+      this.main.exhibitions.forEach(e => {
+        console.log(e.works)
+        e.works.find(w => {
+          if (w.hash === this.$route.params.hash) {
+            console.log('found')
+            console.log(e)
+            this.exhibition = e
+          }
+        })
+      })
     }
   }
 }

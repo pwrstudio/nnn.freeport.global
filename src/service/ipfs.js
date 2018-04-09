@@ -63,5 +63,23 @@ export default {
         .then(resolve)
         .catch(reject)
     })
+  },
+  getExhibition(hash) {
+    return new Promise((resolve, reject) => {
+      const URL = 'https://ipfs.io/ipfs/' + String(hash)
+
+      fetch(URL)
+        .then(function(response) {
+          return response.json()
+        })
+        .then(json => {
+          json.hash = hash
+          resolve(json)
+        })
+        .catch(ex => {
+          console.log('parsing failed', ex)
+          reject(ex)
+        })
+    })
   }
 }

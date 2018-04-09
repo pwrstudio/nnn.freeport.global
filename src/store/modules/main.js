@@ -4,6 +4,7 @@ import * as mutationTypes from '../mutationTypes'
 
 const state = {
   rootHash: 'Loading root hash...',
+  exhibitions: [],
   container: {
     about: {},
     exhibitions: [
@@ -34,6 +35,9 @@ const state = {
 const actions = {
   async [actionTypes.GET_CONTAINER]({commit, state}) {
     commit(mutationTypes.SET_CONTAINER, await ipfs.getContainer())
+  },
+  async [actionTypes.GET_EXHIBITION]({commit, state}, hash) {
+    commit(mutationTypes.SET_EXHIBITION, await ipfs.getExhibition(hash))
   },
   [actionTypes.UPDATE_USERLIST]({commit, state}, data) {
     commit(mutationTypes.SET_USERLIST, data)
@@ -80,6 +84,9 @@ const mutations = {
   },
   [mutationTypes.SET_CURRENT_WORK](state, data) {
     state.currentWork = data
+  },
+  [mutationTypes.SET_EXHIBITION](state, data) {
+    state.exhibitions.push(data)
   },
   [mutationTypes.UPDATE_WORK](state, data) {
     // TODO: nicer solution....
