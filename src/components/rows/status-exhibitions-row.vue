@@ -1,5 +1,6 @@
 <template>
-  <tr class='status__user__table__body__row'>
+  <router-link :to='"/&/" + exhibition.hash'
+               class='status__user__table__body__row'>
     <td class='status__users__table__body__row__cell'>
       <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--open'
          v-if='payload.open'>done</i>
@@ -22,7 +23,7 @@
           +
           payload.location.country
           ' /> -->
-  </tr>
+  </router-link>
 </template>
 
 <script>
