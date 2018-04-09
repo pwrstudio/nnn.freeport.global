@@ -90,6 +90,7 @@ export default {
       this.CHECK_MOBILE('iOS')
     } else if (android) {
       this.CHECK_MOBILE('android')
+      // Scanner redirect on phone
       // if (this.$route.path === '/') {
       //   this.$router.push({name: 'scan'})
       // }
@@ -412,5 +413,23 @@ p {
     opacity: 1;
     transition: opacity 0.15s;
   }
+}
+
+.video-container {
+  position: relative;
+  padding-bottom: 56.25%;
+  padding-top: 35px;
+  height: 0;
+  overflow: hidden;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>

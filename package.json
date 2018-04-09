@@ -20,14 +20,12 @@
     "date-fns": "^1.29.0",
     "electron": "^1.7.11",
     "ellipsize": "^0.0.3",
-    "embedza": "^2.3.0",
+    "embed-video": "^2.0.4",
     "favicons-webpack-plugin": "^0.0.7",
     "imgix-core-js": "^1.1.1",
     "instascan": "^1.0.0",
     "is-webgl-enabled": "^1.0.2",
     "mapbox-gl": "^0.44.0",
-    "oembed-parser": "^1.0.8",
-    "oembetter": "^0.1.19",
     "proxy-polyfill": "^0.1.7",
     "raven-js": "^3.21.0",
     "sw-precache-webpack-plugin": "^0.11.4",
@@ -107,9 +105,5 @@
     "node": ">= 4.0.0",
     "npm": ">= 3.0.0"
   },
-  "browserslist": [
-    "> 1%",
-    "last 2 versions",
-    "not ie <= 8"
-  ]
+  "browserslist": ["> 1%", "last 2 versions", "not ie <= 8"]
 }

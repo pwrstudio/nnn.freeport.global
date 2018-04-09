@@ -77,11 +77,15 @@
       <img v-if='payload.poster'
            class='atom__external__image'
            :src='getImageLink(payload.poster)' />
+      <div v-if='embed.length > 1'
+           class='video-container'
+           v-html='embed' />
       <a :href='externalLink'
          class='atom__external__link'
          target=_blank>
         <i class="material-icons">open_in_new</i>
       </a>
+
     </div>
     <!-- END: LINK -->
 
@@ -92,6 +96,9 @@
 import ImgixClient from 'imgix-core-js'
 import ellipsize from 'ellipsize'
 // import Embedza from 'embedza'
+// import EmbedJS from 'embed-js'
+import embed from 'embed-video'
+
 import AudioPlayer from '@/components/content-atom/audio-player'
 import VideoPlayer from '@/components/content-atom/video-player'
 
@@ -108,6 +115,7 @@ export default {
       },
       text: '',
       externalLink: '',
+      embed: '',
       video: {
         options: {}
       }
@@ -145,18 +153,8 @@ export default {
     getLink() {
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
-        console.log('response')
-        console.log(response)
         this.externalLink = response.body
-        // const embedza = new Embedza([
-        //   'https://youtube.com/*',
-        //   'https://vimeo.com/*',
-        //   'http://soundcloud.com/*'
-        // ])
-        // embedza.render(response.body, 'block').then(result => {
-        //   if (result) console.log(result.html, result.type)
-        //   else this.externalLink = response.body
-        // })
+        this.embed = embed(response.body)
       })
       httpPromise.catch(console.log)
     },
