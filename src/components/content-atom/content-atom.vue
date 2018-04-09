@@ -134,8 +134,6 @@ export default {
       if (this.payload.media === 'Text') {
         this.setIPFSText()
       } else if (this.payload.media === 'External link') {
-        console.log('link')
-        console.log(this.payload)
         this.getLink()
       }
       this.payload.loaded = true
@@ -153,8 +151,11 @@ export default {
     getLink() {
       const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
       httpPromise.then(response => {
+        console.log(response.body)
         this.externalLink = response.body
-        this.embed = embed(response.body)
+        if (response.body.includes('youtube') || response.body.includes('vimeo')) {
+          this.embed = embed(response.body)
+        }
       })
       httpPromise.catch(console.log)
     },
@@ -179,7 +180,6 @@ export default {
       }
     },
     getImageClass() {
-      console.log(this.payload.poster)
       if (
         this.payload.media === 'Image' ||
         this.payload.media === 'Audio' ||
