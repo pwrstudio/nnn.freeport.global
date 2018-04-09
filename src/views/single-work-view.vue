@@ -51,7 +51,11 @@
       <div class='info-overlay__location'>
         <span class='info-overlay__title__label'
               v-html='"location"' />
-        <span>{{exhibition.location.venue}}, {{exhibition.location.city}}, {{exhibition.location.country}}</span>
+        <span>
+          <span v-if='exhibition.location.venue'>{{exhibition.location.venue}},</span>
+          <span v-if='exhibition.location.city'>{{exhibition.location.city}},</span>
+          <span v-if='exhibition.location.country'>{{exhibition.location.country}}</span>
+        </span>
       </div>
 
       <div v-if='payload.description'
