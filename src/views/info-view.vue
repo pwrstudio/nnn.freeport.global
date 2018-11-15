@@ -105,6 +105,9 @@ export default {
         margin-bottom: 0;
         padding-left: 20px;
         padding-right: 20px;
+        video {
+          max-width: 100%;
+        }
       }
     }
 
