@@ -7,9 +7,8 @@
          v-if='payload.open'>done</i>
       <i class='material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--closed'
          v-else>clear</i>
-      </div>
-      <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'
-          v-html='' />
+      </td>
+      <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'/>
       <td class='status__users__table__body__row__cell'
           v-html='payload.title' />
       <td class='status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide'

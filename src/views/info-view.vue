@@ -3,6 +3,7 @@
     <div class='info__inner'>
       <!-- Main -->
       <div class='info__inner__main'>
+        <video src='https://cloudflare-ipfs.com/ipfs/QmfQU5sQPSAd67Fn9Jz2NUp56TURLKKFArrcCMcygDCXTZ' controls poster="https://cloudflare-ipfs.com/ipfs/QmYjRx5do6QyDEPrxYfV44g67GuRDMFX6A1X8kvdQYSBMV"/>
         <div class='info__inner__main__text'
              v-html='main.container.about.info' />
         <div id='tech'>- - - - - - - - -</div>
@@ -45,7 +46,7 @@
 </template>
 
 <script>
-import {mapState} from 'vuex'
+import { mapState } from 'vuex'
 
 export default {
   name: 'infoView',
@@ -89,6 +90,13 @@ export default {
       font-size: $font-size-medium;
       line-height: $line-height-medium;
       margin-bottom: 200px;
+
+      video {
+        display: block;
+        // margin-right: auto;
+        // margin-left: auto;
+        max-width: 80%;
+      }
 
       @include screen-size('small') {
         font-size: $font-size-small;

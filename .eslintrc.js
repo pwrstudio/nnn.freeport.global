@@ -21,7 +21,7 @@ module.exports = {
     // to avoid conflict between prettier formatter and standard js linter
     // ref. https://github.com/prettier/prettier/issues/1139
     'space-before-function-paren': 0,
-    globals: {fetch: false}
+    "no-control-regex": 0
   },
-  globals: {fetch: false}
+  globals: { fetch: false }
 }
