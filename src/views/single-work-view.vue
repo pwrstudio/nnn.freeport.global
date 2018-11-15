@@ -97,7 +97,7 @@ export default {
   },
   mounted() {
     const httpPromise = this.$http.get(
-      'https:/cloudflare-ipfs.com/ipfs/' + this.$route.params.hash
+      'https://cloudflare-ipfs.com/ipfs/' + this.$route.params.hash
     )
     httpPromise.then(response => {
       console.log(response.body.date)

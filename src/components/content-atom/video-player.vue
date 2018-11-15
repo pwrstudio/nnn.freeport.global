@@ -3,7 +3,7 @@
     <video preload='auto'
            class='video-player__video'>
       <source :type='type'
-              :src='"https:/cloudflare-ipfs.com/ipfs/" + hash' />
+              :src='"https://cloudflare-ipfs.com/ipfs/" + hash' />
     </video>
     <progress class='video-player__progress'
               :class='{"video-player__progress--playing": playing}'

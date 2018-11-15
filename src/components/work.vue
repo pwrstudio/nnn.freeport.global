@@ -71,7 +71,7 @@ export default {
   },
   mounted() {
     const httpPromise = this.$http.get(
-      'https:/cloudflare-ipfs.com/ipfs/' + this.hash
+      'https://cloudflare-ipfs.com/ipfs/' + this.hash
     )
     httpPromise.then(response => {
       this.payload = response.body
@@ -105,7 +105,7 @@ export default {
           secureURLToken: 'A8qQj2zw8eqcXqEW'
         })
         let url = client.buildURL(
-          'https:/cloudflare-ipfs.com/ipfs/' + img.hash,
+          'https://cloudflare-ipfs.com/ipfs/' + img.hash,
           options
         )
         this.firstImage = url
@@ -146,7 +146,7 @@ export default {
       } else {
         this.payload.content.map(c => {
           const httpPromise = this.$http.get(
-            'https:/cloudflare-ipfs.com/ipfs/' + c.hash
+            'https://cloudflare-ipfs.com/ipfs/' + c.hash
           )
           httpPromise.then(response => {
             this.content.push(response.body)

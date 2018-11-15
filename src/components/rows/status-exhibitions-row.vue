@@ -52,7 +52,7 @@ export default {
   },
   mounted() {
     const httpPromise = this.$http.get(
-      'https:/cloudflare-ipfs.com/ipfs/' + this.exhibition.hash
+      'https://cloudflare-ipfs.com/ipfs/' + this.exhibition.hash
     )
     httpPromise.then(response => {
       this.payload = response.body
