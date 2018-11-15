@@ -32,7 +32,7 @@
 </template>
 
 <script>
-import {mapActions} from 'vuex'
+import { mapActions } from 'vuex'
 import contentAtom from '@/components/content-atom/content-atom'
 
 export default {
@@ -52,13 +52,15 @@ export default {
     }
   },
   mounted() {
-    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.$route.params.exhibitionHash)
+    const httpPromise = this.$http.get(
+      'https:/cloudflare-ipfs.com/ipfs/' + this.$route.params.exhibitionHash
+    )
     httpPromise.then(response => {
       this.payload = response.body
       this.loaded = true
     })
     httpPromise.catch(e => {
-      this.$router.push({name: 'notFound'})
+      this.$router.push({ name: 'notFound' })
     })
   },
   computed: {},

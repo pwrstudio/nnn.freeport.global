@@ -36,10 +36,10 @@ const getRootHash = contractAddress => {
 
 const callIPFS = rootHash => {
   return new Promise((resolve, reject) => {
-    const URL = 'https://ipfs.io/ipfs/' + String(rootHash)
+    const URL = 'https:/cloudflare-ipfs.com/ipfs/' + String(rootHash)
 
     fetch(URL)
-      .then(function(response) {
+      .then(function (response) {
         return response.json()
       })
       .then(json => {
@@ -66,10 +66,10 @@ export default {
   },
   getExhibition(hash) {
     return new Promise((resolve, reject) => {
-      const URL = 'https://ipfs.io/ipfs/' + String(hash)
+      const URL = 'https:/cloudflare-ipfs.com/ipfs/' + String(hash)
 
       fetch(URL)
-        .then(function(response) {
+        .then(function (response) {
           return response.json()
         })
         .then(json => {

@@ -17,12 +17,12 @@
     </div>
     <div v-else-if='payload.media === "Audio"'
          class='single-content__audio'>
-      <audio :src='"https://ipfs.io/ipfs/" + payload.hash'
+      <audio :src='"https:/cloudflare-ipfs.com/ipfs/" + payload.hash'
              controls/>
     </div>
     <div v-else-if='payload.media === "Video"'
          class='single-content__audio'>
-      <video :src='"https://ipfs.io/ipfs/" + payload.hash'
+      <video :src='"https:/cloudflare-ipfs.com/ipfs/" + payload.hash'
              controls/>
     </div>
   </div>
@@ -44,7 +44,9 @@ export default {
     }
   },
   mounted() {
-    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.$route.params.singleHash)
+    const httpPromise = this.$http.get(
+      'https:/cloudflare-ipfs.com/ipfs/' + this.$route.params.singleHash
+    )
     httpPromise.then(response => {
       this.payload = response.body
       if (this.payload.media === 'Text') {
@@ -57,19 +59,24 @@ export default {
   },
   methods: {
     setIPFSText() {
-      const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
+      const httpPromise = this.$http.get(
+        'https:/cloudflare-ipfs.com/ipfs/' + this.payload.hash
+      )
       httpPromise.then(response => {
         this.text = response.body
       })
       httpPromise.catch(console.log)
     },
     getImageLink(imageHash) {
-      const options = {w: 1600, auto: 'compress,format'}
+      const options = { w: 1600, auto: 'compress,format' }
       const client = new ImgixClient({
         host: 'nnnfreeport.imgix.net',
         secureURLToken: 'A8qQj2zw8eqcXqEW'
       })
-      let url = client.buildURL('https://ipfs.io/ipfs/' + imageHash, options)
+      let url = client.buildURL(
+        'https:/cloudflare-ipfs.com/ipfs/' + imageHash,
+        options
+      )
       return url
     }
   }

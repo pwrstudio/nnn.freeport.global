@@ -15,7 +15,9 @@ const SWPrecacheWebpackPlugin = require('sw-precache-webpack-plugin')
 const WebpackPwaManifest = require('webpack-pwa-manifest')
 
 const env =
-  process.env.NODE_ENV === 'testing' ? require('../config/test.env') : require('../config/prod.env')
+  process.env.NODE_ENV === 'testing'
+    ? require('../config/test.env')
+    : require('../config/prod.env')
 
 const webpackConfig = merge(baseWebpackConfig, {
   module: {
@@ -58,14 +60,15 @@ const webpackConfig = merge(baseWebpackConfig, {
     // duplicated CSS from different components can be deduped.
     new OptimizeCSSPlugin({
       cssProcessorOptions: config.build.productionSourceMap
-        ? {safe: true, map: {inline: false}}
-        : {safe: true}
+        ? { safe: true, map: { inline: false } }
+        : { safe: true }
     }),
     // generate dist index.html with correct asset hash for caching.
     // you can customize output by editing /index.html
     // see https://github.com/ampedandwired/html-webpack-plugin
     new HtmlWebpackPlugin({
-      filename: process.env.NODE_ENV === 'testing' ? 'index.html' : config.build.index,
+      filename:
+        process.env.NODE_ENV === 'testing' ? 'index.html' : config.build.index,
       template: 'index.html',
       inject: true,
       minify: {
@@ -116,7 +119,8 @@ const webpackConfig = merge(baseWebpackConfig, {
         to: config.build.assetsSubDirectory,
         ignore: ['.*']
       },
-      {from: 'src/config/_redirects', to: './'}
+      { from: 'src/config/_redirects', to: './' },
+      { from: 'src/config/dat', to: './.well-known' }
     ]),
     new FaviconsWebpackPlugin('./src/assets/img/favicon.png'),
     new SWPrecacheWebpackPlugin({
@@ -145,7 +149,9 @@ if (config.build.productionGzip) {
     new CompressionWebpackPlugin({
       asset: '[path].gz[query]',
       algorithm: 'gzip',
-      test: new RegExp('\\.(' + config.build.productionGzipExtensions.join('|') + ')$'),
+      test: new RegExp(
+        '\\.(' + config.build.productionGzipExtensions.join('|') + ')$'
+      ),
       threshold: 10240,
       minRatio: 0.8
     })
@@ -153,7 +159,8 @@ if (config.build.productionGzip) {
 }
 
 if (config.build.bundleAnalyzerReport) {
-  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+  const BundleAnalyzerPlugin = require('webpack-bundle-analyzer')
+    .BundleAnalyzerPlugin
   webpackConfig.plugins.push(new BundleAnalyzerPlugin())
 }
 

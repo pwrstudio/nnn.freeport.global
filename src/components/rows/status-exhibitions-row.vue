@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import {isPast, parse} from 'date-fns'
+import { isPast, parse } from 'date-fns'
 
 export default {
   name: 'statusExhibitionsRow',
@@ -51,7 +51,9 @@ export default {
     }
   },
   mounted() {
-    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.exhibition.hash)
+    const httpPromise = this.$http.get(
+      'https:/cloudflare-ipfs.com/ipfs/' + this.exhibition.hash
+    )
     httpPromise.then(response => {
       this.payload = response.body
       this.payload.open = isPast(parse(this.payload.start_date))

@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import {isPast, parse} from 'date-fns'
+import { isPast, parse } from 'date-fns'
 
 export default {
   name: 'statusWorksRow',
@@ -42,7 +42,9 @@ export default {
     }
   },
   mounted() {
-    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.work.hash)
+    const httpPromise = this.$http.get(
+      'https:/cloudflare-ipfs.com/ipfs/' + this.work.hash
+    )
     httpPromise.then(response => {
       this.payload = response.body
       this.payload.open = isPast(parse(this.payload.date))
@@ -59,7 +61,10 @@ export default {
     },
     goToWork() {
       if (this.payload.open) {
-        this.$router.push({name: 'singleWork', params: {hash: this.work.hash}})
+        this.$router.push({
+          name: 'singleWork',
+          params: { hash: this.work.hash }
+        })
       }
     }
   },

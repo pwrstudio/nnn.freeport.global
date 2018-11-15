@@ -3,7 +3,7 @@
     <video preload='auto'
            class='video-player__video'>
       <source :type='type'
-              :src='"http://ipfs.io/ipfs/" + hash' />
+              :src='"https:/cloudflare-ipfs.com/ipfs/" + hash' />
     </video>
     <progress class='video-player__progress'
               :class='{"video-player__progress--playing": playing}'
@@ -43,7 +43,9 @@ export default {
       const minutes = Math.floor(time / 60)
       const seconds = Math.floor(time - minutes * 60)
       return (
-        (minutes < 10 ? '0' + minutes : minutes) + ':' + (seconds < 10 ? '0' + seconds : seconds)
+        (minutes < 10 ? '0' + minutes : minutes) +
+        ':' +
+        (seconds < 10 ? '0' + seconds : seconds)
       )
     },
     toggleVideo() {

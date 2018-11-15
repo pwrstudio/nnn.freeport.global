@@ -36,7 +36,7 @@
 
 <script>
 import countdown from 'countdown'
-import {isPast, parse} from 'date-fns'
+import { isPast, parse } from 'date-fns'
 import ImgixClient from 'imgix-core-js'
 
 export default {
@@ -70,7 +70,9 @@ export default {
     }
   },
   mounted() {
-    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.hash)
+    const httpPromise = this.$http.get(
+      'https:/cloudflare-ipfs.com/ipfs/' + this.hash
+    )
     httpPromise.then(response => {
       this.payload = response.body
       this.payload.open = isPast(parse(this.payload.date))
@@ -94,15 +96,18 @@ export default {
       if (img) {
         let options = {}
         if (this.payload.open) {
-          options = {w: 800, auto: 'compress,format'}
+          options = { w: 800, auto: 'compress,format' }
         } else {
-          options = {w: 800, auto: 'compress,format', blur: 100, mono: 808080}
+          options = { w: 800, auto: 'compress,format', blur: 100, mono: 808080 }
         }
         const client = new ImgixClient({
           host: 'nnnfreeport.imgix.net',
           secureURLToken: 'A8qQj2zw8eqcXqEW'
         })
-        let url = client.buildURL('https://ipfs.io/ipfs/' + img.hash, options)
+        let url = client.buildURL(
+          'https:/cloudflare-ipfs.com/ipfs/' + img.hash,
+          options
+        )
         this.firstImage = url
       }
     },
@@ -119,7 +124,13 @@ export default {
       this.setIcons()
     },
     'payload.date'() {
-      countdown.setLabels('ms|s|m|h|d|w|m|y|d|s|m', 'ms|s|m|h|d|w|m|y|d|s|m', ':', ':', 'now')
+      countdown.setLabels(
+        'ms|s|m|h|d|w|m|y|d|s|m',
+        'ms|s|m|h|d|w|m|y|d|s|m',
+        ':',
+        ':',
+        'now'
+      )
       // countdown.setLabels('||:|:|:|:|:|:|:|:|:', '||:|:|:|:|:|:|:|:|:', '', '', 'now')
       this.timerId = countdown(
         new Date(this.payload.date),
@@ -134,7 +145,9 @@ export default {
         this.loaded = true
       } else {
         this.payload.content.map(c => {
-          const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + c.hash)
+          const httpPromise = this.$http.get(
+            'https:/cloudflare-ipfs.com/ipfs/' + c.hash
+          )
           httpPromise.then(response => {
             this.content.push(response.body)
             this.setFirstImage()

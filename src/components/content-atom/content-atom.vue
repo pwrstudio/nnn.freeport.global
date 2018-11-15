@@ -29,7 +29,7 @@
     <div v-else-if='payload.media === "Audio"'
          class='atom__audio'
          :id='hash'>
-      <audio-player :sources='["https://ipfs.io/ipfs/" + payload.hash]'
+      <audio-player :sources='["https:/cloudflare-ipfs.com/ipfs/" + payload.hash]'
                     :loop='false'
                     :image='getImageLink(payload.poster)'
                     :title='payload.title'
@@ -41,7 +41,7 @@
     <div v-else-if='payload.media === "Video"'
          class='atom__video'
          :id='hash'>
-      <video-player :sources='["https://ipfs.io/ipfs/" + payload.hash]'
+      <video-player :sources='["https:/cloudflare-ipfs.com/ipfs/" + payload.hash]'
                     image='/static/test.jpg'
                     :title='payload.title'
                     :hash='payload.hash'
@@ -56,7 +56,7 @@
       <span v-html='payload.title + " (" + payload.size + ")"' />
       <img v-if='payload.poster'
            :src='getImageLink(payload.poster)' />
-      <a :href='"https://ipfs.io/ipfs/" + payload.hash'
+      <a :href='"https:/cloudflare-ipfs.com/ipfs/" + payload.hash'
          class='atom__file__link'
          target=_blank>
         <i class="material-icons">get_app</i>
@@ -128,7 +128,9 @@ export default {
     }
   },
   mounted() {
-    const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.hash)
+    const httpPromise = this.$http.get(
+      'https:/cloudflare-ipfs.com/ipfs/' + this.hash
+    )
     httpPromise.then(response => {
       this.payload = response.body
       if (this.payload.media === 'Text') {
@@ -142,30 +144,40 @@ export default {
   },
   methods: {
     setIPFSText() {
-      const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
+      const httpPromise = this.$http.get(
+        'https:/cloudflare-ipfs.com/ipfs/' + this.payload.hash
+      )
       httpPromise.then(response => {
         this.text = ellipsize(response.body, 480)
       })
       httpPromise.catch(console.log)
     },
     getLink() {
-      const httpPromise = this.$http.get('https://ipfs.io/ipfs/' + this.payload.hash)
+      const httpPromise = this.$http.get(
+        'https:/cloudflare-ipfs.com/ipfs/' + this.payload.hash
+      )
       httpPromise.then(response => {
         console.log(response.body)
         this.externalLink = response.body
-        if (response.body.includes('youtube') || response.body.includes('vimeo')) {
+        if (
+          response.body.includes('youtube') ||
+          response.body.includes('vimeo')
+        ) {
           this.embed = embed(response.body)
         }
       })
       httpPromise.catch(console.log)
     },
     getImageLink(imageHash) {
-      const options = {w: 800, auto: 'compress,format'}
+      const options = { w: 800, auto: 'compress,format' }
       const client = new ImgixClient({
         host: 'nnnfreeport.imgix.net',
         secureURLToken: 'A8qQj2zw8eqcXqEW'
       })
-      let url = client.buildURL('https://ipfs.io/ipfs/' + imageHash, options)
+      let url = client.buildURL(
+        'https:/cloudflare-ipfs.com/ipfs/' + imageHash,
+        options
+      )
       return url
     },
     getSizeClass() {
