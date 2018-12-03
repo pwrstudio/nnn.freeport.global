@@ -1,0 +1,60 @@
+/* Typography */
+$line-height: 26px;
+$serif-stack: 'times new roman', times, georgia, serif;
+$sans-serif-stack: helvetica, arial, sans-serif;
+// Type sizes
+$font-size-medium: 22px;
+$line-height-medium: 26px;
+$font-size-small: 15px;
+$line-height-small: 22px;
+$font-size-xs: 12px;
+/* Color */
+$background-color: #fff;
+/* Space */
+$black: rgba(0, 0, 0, 1);
+$white: rgba(256, 256, 256, 1);
+$green: rgb(52, 202, 52);
+$red: rgb(241, 64, 64);
+$yellow: #fcff41;
+$blue: rgb(0, 172, 237);
+$border-width: 1px;
+$bar-height: 60px;
+/* Breakpoints */
+$breakpoints: (
+  'small': (
+    max-width: 900px
+  ),
+  'medium': (
+    max-width: 1000px
+  ),
+  'large': (
+    min-width: 1600px
+  ),
+  'short': (
+    max-height: 700px
+  )
+);
+
+@mixin nav {
+  position: fixed;
+  width: 50vw;
+  height: $bar-height;
+  margin-top: 0;
+  text-align: center;
+  line-height: $bar-height;
+  color: $white;
+  user-select: none;
+  text-decoration: none;
+  &:active {
+    background: $white;
+    color: $black;
+  }
+
+  @include screen-size('small') {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding-left: 10px;
+    padding-right: 10px;
+  }
+}

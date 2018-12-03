@@ -1,0 +1,52 @@
+{
+  "name": "nnn.freeport.global-2.0",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.26.0",
+    "countdown": "^2.6.0",
+    "date-fns": "^1.29.0",
+    "ellipsize": "^0.1.0",
+    "embed-video": "^2.0.4",
+    "imgix-core-js": "^1.2.0",
+    "instascan": "^1.0.0",
+    "is-webgl-enabled": "^1.0.2",
+    "mapbox-gl": "^0.52.0-beta.1",
+    "proxy-polyfill": "^0.3.0",
+    "raven-js": "^3.27.0",
+    "register-service-worker": "^1.5.2",
+    "swiper": "^4.4.2",
+    "v-tooltip": "^2.0.0-rc.33",
+    "vue": "^2.5.17",
+    "vue-ga": "^1.0.0",
+    "vue-head": "^2.1.0",
+    "vue-howler": "^0.7.0",
+    "vue-resource": "^1.5.1",
+    "vue-router": "^3.0.1",
+    "vue-socket.io": "^2.1.1-b",
+    "vuex": "^3.0.1",
+    "whatwg-fetch": "^3.0.0"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.2.0",
+    "@vue/cli-plugin-eslint": "^3.2.0",
+    "@vue/cli-plugin-pwa": "^3.2.0",
+    "@vue/cli-plugin-unit-mocha": "^3.2.0",
+    "@vue/cli-service": "^3.2.0",
+    "@vue/eslint-config-prettier": "^4.0.0",
+    "@vue/test-utils": "^1.0.0-beta.20",
+    "babel-eslint": "^10.0.1",
+    "chai": "^4.1.2",
+    "eslint": "^5.8.0",
+    "eslint-plugin-vue": "^5.0.0-0",
+    "node-sass": "^4.9.0",
+    "sass-loader": "^7.0.1",
+    "vue-template-compiler": "^2.5.17"
+  }
+}
