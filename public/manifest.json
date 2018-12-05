@@ -1,6 +1,6 @@
 {
-  "name": "nnn.freeport.global-2.0",
-  "short_name": "nnn.freeport.global-2.0",
+  "name": "nnn.freeport.global",
+  "short_name": "nnn.freeport.global",
   "icons": [
     {
       "src": "./img/icons/android-chrome-192x192.png",
