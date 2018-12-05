@@ -32,13 +32,9 @@
 
 <script>
 import { mapActions } from 'vuex'
-import contentAtom from '@/components/content-atom/content-atom'
 
 export default {
   name: 'exhibitionView',
-  components: {
-    contentAtom,
-  },
   data() {
     return {
       loaded: false,
