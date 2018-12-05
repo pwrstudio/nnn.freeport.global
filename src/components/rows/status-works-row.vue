@@ -66,7 +66,7 @@ export default {
           ts => {
             this.timeToPublish = ts.toString()
           },
-          [countdown.HOURS, countdown.MINUTES, countdown.SECONDS],
+          [countdown.DAYS, countdown.HOURS],
         )
       }
     })
@@ -153,7 +153,9 @@ export default {
         }
       }
       &--negative {
+        transition: background 0.2s ease-out;
         &:active {
+          transition: background 0s ease-out;
           background: $red;
           color: $black;
         }
