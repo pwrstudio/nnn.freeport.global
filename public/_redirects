@@ -1,0 +1,4 @@
+/*    /index.html   200
+# Redirect domain aliases to primary domain
+https://freeport.global/* https://nnn.freeport.global/:splat 301!
+http://freeport.global/* https://nnn.freeport.global/:splat 301!
