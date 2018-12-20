@@ -101,7 +101,7 @@ export default {
           options = { w: 800, auto: 'compress,format', blur: 100, mono: 808080 }
         }
         const client = new ImgixClient({
-          host: 'nnnfreeport.imgix.net',
+          domains: 'nnnfreeport.imgix.net',
           secureURLToken: 'A8qQj2zw8eqcXqEW',
         })
         let url = client.buildURL(
