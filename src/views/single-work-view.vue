@@ -3,6 +3,7 @@
     <div class="work" :class="{'work--show': loaded}">
       <!-- Output all connected content items -->
       <div class="work__inner">
+        <slideShow v-for="item in payload.slideshow" :slides='item'/>
         <contentAtom v-for="item in payload.content" :key="item.hash" :hash="item.hash"/>
       </div>
     </div>
@@ -32,19 +33,19 @@
       </div>
 
       <!-- Exhibition -->
-      <router-link :to="'/&/' + exhibition.hash" class="info-overlay__exhibition">
+      <router-link v-if='exhibition.title' :to="'/&/' + exhibition.hash" class="info-overlay__exhibition">
         <span class="info-overlay__exhibition__label" v-html="'exhibition'"/>
         <span v-html="exhibition.title"/>
       </router-link>
 
       <!-- Festival -->
-      <div class="info-overlay__location">
+      <div v-if='exhibition.festival' class="info-overlay__location">
         <span class="info-overlay__title__label" v-html="'festival'"/>
         <span>{{exhibition.festival}}</span>
       </div>
 
       <!-- Location -->
-      <div class="info-overlay__location">
+      <div v-if='exhibition.location.venue' class="info-overlay__location">
         <span class="info-overlay__title__label" v-html="'location'"/>
         <span>
           <span v-if="exhibition.location.venue">{{exhibition.location.venue}},</span>
@@ -67,6 +68,7 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import contentAtom from '@/components/content-atom/content-atom'
+import slideShow from '@/components/content-atom/slide-show'
 import singleContentOverlay from '@/components/single-content-overlay'
 import { isPast } from 'date-fns'
 
@@ -75,6 +77,7 @@ export default {
   components: {
     contentAtom,
     singleContentOverlay,
+    slideShow,
   },
   data() {
     return {
@@ -82,6 +85,12 @@ export default {
       exhibition: {
         hash: '',
         title: '',
+        festival: '',
+        location: {
+          venue: '',
+          city: '',
+          country: '',
+        },
       },
       payload: {
         artists: [],
@@ -99,7 +108,21 @@ export default {
     )
     httpPromise.then(response => {
       // Check if the work is live...
-      if (isPast(response.body.date)) {
+      // if (isPast(response.body.date)) {
+      if (1) {
+        // Get slideshows...
+        response.body.slideshow = []
+        response.body.content.forEach(c => {
+          let dups = response.body.content.filter(x => x.id === c.id)
+          if (dups.length > 1) {
+            let temparray = []
+            temparray.push(dups)
+            response.body.slideshow.push(temparray)
+            response.body.content = response.body.content.filter(
+              y => y.id !== c.id,
+            )
+          }
+        })
         this.payload = response.body
         this.SET_CURRENT_WORK(this.payload)
         this.$socket.emit('view', {
@@ -204,6 +227,7 @@ export default {
   padding: 30px;
   padding-top: 80px;
   overflow-y: auto;
+  // z-index: 10000;
 
   &__hash {
     @include box;

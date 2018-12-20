@@ -82,6 +82,15 @@
     </div>
     <!-- END: LINK -->
 
+    <!-- IMAGE SET -->
+    <div
+      v-else-if="payload.media === 'Image set'"
+      class="atom__image_set"
+      :id="hash">
+      <img :src="getImageLink(payload.hash)">
+    </div>
+    <!-- END: IMAGE SET -->
+
   </div>
 </template>
 
