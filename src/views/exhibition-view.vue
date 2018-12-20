@@ -61,9 +61,6 @@ export default {
   computed: {},
   methods: {
     ...mapActions(['SET_CURRENT_exhibition']),
-    updateScroll(event) {
-      console.log(event)
-    },
   },
 }
 </script>

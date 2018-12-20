@@ -7,209 +7,206 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex";
-import navbar from "@/components/navbar/navbar";
-import chat from "@/components/chat/chat";
-import { format } from "date-fns";
+import { mapState, mapActions } from 'vuex'
+import navbar from '@/components/navbar/navbar'
+import chat from '@/components/chat/chat'
+import { format } from 'date-fns'
 
 export default {
-  name: "app",
+  name: 'app',
   data() {
     return {
       mobile: {
         check: false,
-        os: ""
+        os: '',
       },
       meta: {
-        sitename: "NNN.FREEPORT.GLOBAL",
-        facebook: "xxxxxxxxx",
-        twitter: "@xxxxx",
-        title: "NNN.FREEPORT.GLOBAL",
+        sitename: 'NNN.FREEPORT.GLOBAL',
+        facebook: 'xxxxxxxxx',
+        twitter: '@xxxxx',
+        title: 'NNN.FREEPORT.GLOBAL',
         description:
-          "nnn.freeport.global is an alternative space for the distribution of artworks, using the backstreets, black markets and divergent parts of the internet to create, exhibit and debate the value of art.",
-        type: "website",
-        image: "http://nnn.freeport.global/static/nnnfreeport.jpg",
-        url: "https:///nnn.freeport.global",
+          'nnn.freeport.global is an alternative space for the distribution of artworks, using the backstreets, black markets and divergent parts of the internet to create, exhibit and debate the value of art.',
+        type: 'website',
+        image: 'http://nnn.freeport.global/static/nnnfreeport.jpg',
+        url: 'https:///nnn.freeport.global',
         defaults: {
-          title: "NNN.FREEPORT.GLOBAL",
+          title: 'NNN.FREEPORT.GLOBAL',
           description:
-            "nnn.freeport.global is an alternative space for the distribution of artworks, using the backstreets, black markets and divergent parts of the internet to create, exhibit and debate the value of art.",
-          image: "http://nnn.freeport.global/static/nnnfreeport.jpg",
-          type: "website"
-        }
-      }
-    };
+            'nnn.freeport.global is an alternative space for the distribution of artworks, using the backstreets, black markets and divergent parts of the internet to create, exhibit and debate the value of art.',
+          image: 'http://nnn.freeport.global/static/nnnfreeport.jpg',
+          type: 'website',
+        },
+      },
+    }
   },
   computed: {
-    ...mapState(["main"])
+    ...mapState(['main']),
   },
   components: {
     navbar,
-    chat
+    chat,
   },
   sockets: {
     enter(data) {
-      this.UPDATE_USERLIST(data.list);
+      this.UPDATE_USERLIST(data.list)
       this.WRITE_LOG({
-        time: format(new Date(), "HH:mm:ss"),
+        time: format(new Date(), 'HH:mm:ss'),
         text:
           data.user.id +
-          " (" +
+          ' (' +
           this.formatLocation(data.user.geo.city, data.user.geo.country) +
-          ") joined",
-        type: "positive"
-      });
+          ') joined',
+        type: 'positive',
+      })
     },
     leave(data) {
-      this.UPDATE_USERLIST(data.list);
+      this.UPDATE_USERLIST(data.list)
       this.WRITE_LOG({
-        time: format(new Date(), "HH:mm:ss"),
-        text: data.user.id + " left",
-        type: "negative"
-      });
+        time: format(new Date(), 'HH:mm:ss'),
+        text: data.user.id + ' left',
+        type: 'negative',
+      })
     },
     view(data) {
       this.WRITE_LOG({
-        time: format(new Date(), "HH:mm:ss"),
-        text: data.id + " opened <strong>" + data.title + "</strong>",
+        time: format(new Date(), 'HH:mm:ss'),
+        text: data.id + ' opened <strong>' + data.title + '</strong>',
         hash: data.hash,
-        type: "activity"
-      });
+        type: 'activity',
+      })
     },
     chat(data) {
       if (!this.main.chat.active) {
-        this.TOGGLE_CHAT();
+        this.TOGGLE_CHAT()
       }
-    }
+    },
   },
   mounted() {
-    const iOS =
-      /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
-    const android = navigator.userAgent.toLowerCase().indexOf("android") > -1;
+    const iOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream
+    const android = navigator.userAgent.toLowerCase().indexOf('android') > -1
     if (iOS) {
-      this.CHECK_MOBILE("iOS");
+      this.CHECK_MOBILE('iOS')
     } else if (android) {
-      this.CHECK_MOBILE("android");
+      this.CHECK_MOBILE('android')
       // Scanner redirect on phone
       // if (this.$route.path === '/') {
       //   this.$router.push({name: 'scan'})
       // }
     }
     this.WRITE_LOG({
-      time: format(new Date(), "HH:mm:ss"),
+      time: format(new Date(), 'HH:mm:ss'),
       text:
-        "Ethereum Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A",
-      type: "network"
-    });
-    this.$_setMetaTags();
-    this.$_fetchData();
+        'Ethereum Contract address: 0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A',
+      type: 'network',
+    })
+    this.$_setMetaTags()
+    this.$_fetchData()
   },
   methods: {
     ...mapActions([
-      "GET_EXHIBITION",
-      "GET_CONTAINER",
-      "UPDATE_USERLIST",
-      "WRITE_LOG",
-      "TOGGLE_CHAT",
-      "CHECK_MOBILE"
+      'GET_EXHIBITION',
+      'GET_CONTAINER',
+      'UPDATE_USERLIST',
+      'WRITE_LOG',
+      'TOGGLE_CHAT',
+      'CHECK_MOBILE',
     ]),
     $_setMetaTags(meta = {}) {
-      this.meta.title = meta.title || this.meta.defaults.title;
-      this.meta.description =
-        meta.description || this.meta.defaults.description;
-      this.meta.image = meta.image || this.meta.defaults.image;
-      this.meta.type = meta.type || this.meta.defaults.type;
-      this.meta.url = meta.url || "https://nnn.freeport.global";
-      this.$emit("updateHead");
+      this.meta.title = meta.title || this.meta.defaults.title
+      this.meta.description = meta.description || this.meta.defaults.description
+      this.meta.image = meta.image || this.meta.defaults.image
+      this.meta.type = meta.type || this.meta.defaults.type
+      this.meta.url = meta.url || 'https://nnn.freeport.global'
+      this.$emit('updateHead')
     },
     $_fetchData(routeName) {
-      this.GET_CONTAINER();
+      this.GET_CONTAINER()
     },
     formatLocation(city, country) {
       if (city) {
-        return city + ", " + country;
+        return city + ', ' + country
       } else {
-        return country;
+        return country
       }
-    }
+    },
   },
   head: {
     title() {
       return {
-        inner: this.meta.title
-      };
+        inner: this.meta.title,
+      }
     },
     meta() {
       return [
         {
-          name: "application-name",
-          content: "NNN.FREEPORT.GLOBAL"
+          name: 'application-name',
+          content: 'NNN.FREEPORT.GLOBAL',
         },
         {
-          name: "description",
-          content: this.meta.description
+          name: 'description',
+          content: this.meta.description,
         },
         // Twitter
-        { name: "twitter:card", content: "summary" },
-        { name: "twitter:title", content: this.meta.title },
+        { name: 'twitter:card', content: 'summary' },
+        { name: 'twitter:title', content: this.meta.title },
         {
-          name: "twitter:description",
-          content: this.meta.description
+          name: 'twitter:description',
+          content: this.meta.description,
         },
-        { name: "twitter:site", content: this.meta.twitter },
+        { name: 'twitter:site', content: this.meta.twitter },
         {
-          name: "twitter:creator",
-          content: this.meta.twitter
+          name: 'twitter:creator',
+          content: this.meta.twitter,
         },
         {
-          name: "twitter:image:src",
-          content: this.meta.image
+          name: 'twitter:image:src',
+          content: this.meta.image,
         },
         // Facebook / Open Graph
-        { property: "og:title", content: this.meta.title },
+        { property: 'og:title', content: this.meta.title },
         {
-          property: "og:site_name",
-          content: this.meta.defaults.title
+          property: 'og:site_name',
+          content: this.meta.defaults.title,
         },
         {
-          property: "og:description",
-          content: this.meta.description
+          property: 'og:description',
+          content: this.meta.description,
         },
-        { property: "og:type", content: this.meta.type },
-        { property: "og:url", content: this.meta.url },
-        { property: "og:image", content: this.meta.image },
+        { property: 'og:type', content: this.meta.type },
+        { property: 'og:url', content: this.meta.url },
+        { property: 'og:image', content: this.meta.image },
         // Google+ / Schema.org
-        { itemprop: "name", content: this.meta.title },
+        { itemprop: 'name', content: this.meta.title },
         {
-          itemprop: "description",
-          content: this.meta.description
+          itemprop: 'description',
+          content: this.meta.description,
         },
-        { itemprop: "image", content: this.meta.image }
-      ];
-    }
+        { itemprop: 'image', content: this.meta.image },
+      ]
+    },
   },
   watch: {
-    "main.currentWork"() {
+    'main.currentWork'() {
       const meta = {
         title: this.main.currentWork.title,
         description: this.main.currentWork.description,
-        url: "https://nnn.freeport.global/tracking/" + this.main.currentWork.id
-      };
-      this.$_setMetaTags(meta);
+        url: 'https://nnn.freeport.global/tracking/' + this.main.currentWork.id,
+      }
+      this.$_setMetaTags(meta)
     },
-    "main.container"() {
-      console.log(this.main.container.exhibitions);
-      this.main.container.exhibitions.forEach(e => this.GET_EXHIBITION(e.hash));
+    'main.container'() {
+      this.main.container.exhibitions.forEach(e => this.GET_EXHIBITION(e.hash))
     },
-    "main.rootHash"() {
+    'main.rootHash'() {
       this.WRITE_LOG({
-        time: format(new Date(), "HH:mm:ss"),
-        text: "IPFS root hash: " + this.main.rootHash,
-        type: "network"
-      });
-    }
-  }
-};
+        time: format(new Date(), 'HH:mm:ss'),
+        text: 'IPFS root hash: ' + this.main.rootHash,
+        type: 'network',
+      })
+    },
+  },
+}
 </script>
 
 <style lang='scss'>

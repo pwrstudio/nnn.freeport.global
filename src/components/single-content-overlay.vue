@@ -70,7 +70,7 @@ export default {
     getImageLink(imageHash) {
       const options = { w: 1600, auto: 'compress,format' }
       const client = new ImgixClient({
-        host: 'nnnfreeport.imgix.net',
+        domains: 'nnnfreeport.imgix.net',
         secureURLToken: 'A8qQj2zw8eqcXqEW',
       })
       let url = client.buildURL(
