@@ -47,10 +47,13 @@
     </div>
     <!-- END: VIDEO -->
 
-    <!-- FILE -->
+    <!-- FILE (PDF)-->
     <div v-if="payload.media === 'File'" class="atom__file" :id="hash">
       <span v-html="payload.title + ' (' + payload.size + ')'"/>
       <img v-if="payload.poster" :src="getImageLink(payload.poster)">
+      <object class='atom__file__embed' :data="'https://cloudflare-ipfs.com/ipfs/' + payload.hash" type="application/pdf">
+        <embed :src="'https://cloudflare-ipfs.com/ipfs/' + payload.hash" type="application/pdf"/>
+      </object>
       <a
         :href="'https://cloudflare-ipfs.com/ipfs/' + payload.hash"
         class="atom__file__link"
@@ -78,6 +81,15 @@
       </a>
     </div>
     <!-- END: LINK -->
+
+    <!-- IMAGE SET -->
+    <div
+      v-else-if="payload.media === 'Image set'"
+      class="atom__image_set"
+      :id="hash">
+      <img :src="getImageLink(payload.hash)">
+    </div>
+    <!-- END: IMAGE SET -->
 
   </div>
 </template>
@@ -271,6 +283,12 @@ export default {
     padding: 20px;
     color: white !important;
     text-decoration: none !important;
+    &__embed { 
+      display: block;
+      margin-top: 20px;
+      width: 100%;
+      height: 400px;
+    }
     &__link {
       border: 1px solid $white;
       color: $white;
