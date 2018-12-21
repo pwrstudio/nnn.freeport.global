@@ -16,9 +16,8 @@
       </div>
 
       <div class='slideshow-info'>
-        <span class='slideshow-counter'>{{index + 1}} / {{payload.slides.length}}
-          <span class='slideshow-caption' v-html='payload.slides[index].caption'/>
-        </span>
+        <span class='slideshow-counter'>( {{index + 1}} / {{payload.slides.length}} )</span>
+        <span class='slideshow-caption' v-html='payload.slides[index].caption'/>
       </div>
     </div>
     <!-- END: IMAGE SET -->
@@ -146,14 +145,16 @@ export default {
     border: none;
   }
 
-    &--small {
-    width: 400px;
+  &--small {
+    width: 500px;
   }
+
   &--medium {
     width: 600px;
   }
+
   &--large {
-    width: 800px;
+    width: 700px;
   }
 
   &__image_set {
@@ -218,8 +219,11 @@ export default {
   width: 100%;
   color: white;
   text-align: center;  
-  font-size: $font-size-small;
+  font-size: $font-size-xs;
   line-height: $line-height-small;
+  margin-bottom: 20px;
+  margin-top: 25px;
+  min-height: 60px;
   &:active {
     background: white;
     .material-icons {
@@ -231,13 +235,11 @@ export default {
     display: inline;
   }
 }
-p {
-  margin: 0 !important;
-  display: inline !important;
-  margin-block-start: 0em  !important;
-  margin-block-end: 0em  !important;
-  padding: 0;
-  background: red;
+
+.slideshow-counter {
+  color: $yellow;
+  font-size: $font-size-xs;
 }
+
 
 </style>
