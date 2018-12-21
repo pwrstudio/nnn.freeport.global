@@ -304,6 +304,7 @@ em {
 }
 
 p {
+  margin-top: 0;
   a {
     border-bottom: 2px solid $green !important;
     &:hover {
