@@ -4,6 +4,7 @@
     <!-- INFO -->
     <!-- INFO -->
     <template v-if="$route.name === 'info'">
+      <div class='blackbar'/>
       <router-link
         v-if="fromStatus"
         v-tooltip.auto="'Terminal'"
@@ -107,6 +108,7 @@
     <!-- SINGLE WORK-->
     <!-- SINGLE WORK-->
     <template v-if="$route.name === 'singleWork' && !$route.params.info">
+      <div class='blackbar'/>
       <router-link
         :to="{name: 'singleWork', params: {hash: $route.params.hash, info: 'info'}}"
         v-tooltip.auto="'About work'"
@@ -199,12 +201,26 @@ export default {
 @import "../../style/helpers/_responsive.scss";
 @import "../../style/_variables.scss";
 
+.blackbar {
+  background: $black;
+  background: red;
+  box-shadow: 0px 0px 20px lightgrey;
+  height: 60px;
+  z-index: 1000;
+  position: fixed;
+  top:0;
+  left: 0;
+  width: 100vw;
+  @include screen-size("small") {
+      box-shadow: 0px 0px 10px lightgrey;
+  }
+}
+
 .nav-button {
   overflow: hidden;
 
   &--opaque {
-    background: $black;
-  }
+    background: $black;  }
 
   &--hoverable {
     &:hover {
