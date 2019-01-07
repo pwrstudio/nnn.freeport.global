@@ -1,7 +1,6 @@
 <template>
   <div id="app" class="app">
     <navbar/>
-    <chat v-if="main.chat.active"/>
     <router-view id="main-view"/>
   </div>
 </template>
@@ -9,7 +8,6 @@
 <script>
 import { mapState, mapActions } from 'vuex'
 import navbar from '@/components/navbar/navbar'
-import chat from '@/components/chat/chat'
 import { format } from 'date-fns'
 
 export default {
@@ -45,7 +43,6 @@ export default {
   },
   components: {
     navbar,
-    chat,
   },
   sockets: {
     enter(data) {

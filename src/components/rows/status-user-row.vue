@@ -1,19 +1,15 @@
 <template>
   <tr class="status__users__table__body__row">
     <td
-      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide"
-      @click="openChat(user.id)"
-    >
-      <i class="material-icons">chat_bubble_outline</i>
+      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide">
+      <i class="material-icons">gps_fixed</i>
     </td>
     <td
-      class="status__users__table__body__row__cell status__users__table__body__row__cell--capped"
-    >
+      class="status__users__table__body__row__cell status__users__table__body__row__cell--capped">
       {{ user.id }}
     </td>
     <td
-      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide"
-    >
+      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide">
       {{ user.ip }}
     </td>
     <td class="status__users__table__body__row__cell">
@@ -101,19 +97,18 @@ export default {
         white-space: nowrap;
         text-overflow: ellipsis;
 
-        &:first-child {
-          &:active {
-            background: $yellow;
-          }
-        }
+        // &:first-child {
+        //   &:active {
+        //     background: $yellow;
+        //   }
+        // }
 
         i {
           font-size: $font-size-small;
           line-height: 20px;
           text-align: center;
           position: relative;
-          top: 5px;
-          cursor: pointer;
+          top: 2px;
         }
 
         &--mobile-hide {

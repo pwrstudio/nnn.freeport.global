@@ -7,7 +7,7 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 import VueHead from "vue-head";
-import VueSocketio from "vue-socket.io";
+import VueSocketIO from 'vue-socket.io'
 import VTooltip from "v-tooltip";
 import ga from "vue-ga";
 import Raven from "raven-js";
@@ -23,14 +23,19 @@ Vue.config.productionTip = false;
 
 Vue.use(VueHead);
 Vue.use(VTooltip);
-Vue.use(VueSocketio, "https://nnnfreeportrelay.now.sh");
+Vue.use(
+  new VueSocketIO({
+    // debug: true,
+    connection: 'https://nnnfreeportrelay.now.sh'
+  })
+);
 
 router.beforeEach((to, from, next) => {
   document.getElementsByTagName("body")[0].classList.add("loading");
   next();
 });
 
-router.afterEach((to, from) => {
+router.afterEach(() => {
   document.getElementsByTagName("body")[0].classList.remove("loading");
 });
 
