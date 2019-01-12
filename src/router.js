@@ -57,6 +57,11 @@ export default new Router({
       component: singleWorkView
     },
     {
+      path: '/:hash/~/:id',
+      name: 'slideShow',
+      component: singleWorkView
+    },
+    {
       path: '/404',
       name: 'notFound',
       component: notFound

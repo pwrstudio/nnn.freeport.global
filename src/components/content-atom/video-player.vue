@@ -3,21 +3,21 @@
     <video preload="auto" class="video-player__video">
       <source :type="type" :src="'https://cloudflare-ipfs.com/ipfs/' + hash">
     </video>
-    <progress
+    <!-- <progress
       class="video-player__progress"
       :class="{ 'video-player__progress--playing': playing }"
       max="1"
-      :value="progress"/>
+      :value="progress"/> -->
     <div class="video-player__toggle" @click="toggleVideo">
       <i v-if="playing" class="material-icons video-player__toggle__icon video-player__toggle__icon--pause">pause</i>
       <i v-else class="material-icons video-player__toggle__icon">play_arrow</i>
     </div>
     <div class="video-player__controls">
       <div class="video-player__controls__title" v-html="title"/>
-      <div class="video-player__controls__timecode">
+      <!-- <div class="video-player__controls__timecode">
         <span v-html="formatTime(video.currentTime)"></span> /
         <span v-html="formatTime(video.duration)"></span>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -26,10 +26,7 @@
 export default {
   data() {
     return {
-      video: {
-        duration: 0,
-        currentTime: 0,
-      },
+      video: {},
       playing: false,
     }
   },
@@ -64,6 +61,11 @@ export default {
       type: String,
     },
   },
+  // computed: {
+  //   progress() {
+  //     return this.currentTime / this.duration
+  //   },
+  // },
   mounted() {
     this.video = this.$el.getElementsByTagName('video')[0]
   },

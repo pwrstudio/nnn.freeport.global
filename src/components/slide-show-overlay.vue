@@ -1,14 +1,8 @@
 <template>
-  <div
-    class="atom"
-    :class="[imageSizeClass, 'atom--loaded']">
-
+  <div class='single-content'>
     <!-- IMAGE SET -->
-    <div class="atom__image_set">
-      <router-link
-        :to="{ name: 'slideShow', params: { id: payload.slides[index].id } }">
-        <img :src="getImageLink(payload.slides[index].hash)">
-      </router-link>
+    <div class="single-content__image_set">
+      <img :src="getImageLink(this.payload.slides[index].hash)">
 
       <div @click='prevSlide' class='slideshow-button slideshow-button-prev'>
         <i class='material-icons material-icons--on'>keyboard_arrow_left</i>
@@ -24,15 +18,15 @@
       </div>
     </div>
     <!-- END: IMAGE SET -->
-
   </div>
 </template>
+
 
 <script>
 import ImgixClient from 'imgix-core-js'
 
 export default {
-  name: 'slideShow',
+  name: 'slideShowOverlay',
   data() {
     return {
       payload: {
@@ -44,52 +38,67 @@ export default {
         loaded: false,
       },
       index: 0,
+      activeSlideShow: [],
     }
   },
-  props: {
-    slides: {
-      type: Array,
-      required: false,
-    },
-  },
   mounted() {
-    var collectedPromises = []
-    this.slides[0].forEach(s => {
-      const httpPromise = this.$http.get(
-        'https://cloudflare-ipfs.com/ipfs/' + s.hash,
-      )
-      collectedPromises.push(httpPromise)
-      httpPromise.then(response => {
-        this.payload.loaded = true
-        this.payload.slides.push(JSON.parse(response.bodyText))
+    // Get the content from IPFS
+    const httpPromise = this.$http.get(
+      'https://cloudflare-ipfs.com/ipfs/' + this.$route.params.hash,
+    )
+    httpPromise.then(response => {
+      // Get slideshows...
+      response.body.slideshow = []
+      response.body.content.forEach(c => {
+        let dups = response.body.content.filter(x => x.id === c.id)
+        if (dups.length > 1) {
+          let temparray = []
+          temparray.push(dups)
+          response.body.slideshow.push(temparray)
+          response.body.content = response.body.content.filter(
+            y => y.id !== c.id,
+          )
+        }
       })
-      httpPromise.catch(console.log)
-    })
+      this.payload = response.body
 
-    Promise.all(collectedPromises)
-      .then(() => {
-        this.payload.slides.forEach(s => {
-          if (!s.order) {
-            s.order = 0
-          }
+      this.payload.slides = []
+
+      // ***
+      this.activeSlideShow = this.payload.slideshow.find(
+        s => s[0][0].id === this.$route.params.id,
+      )
+
+      // ***
+      var collectedPromises = []
+      this.activeSlideShow[0].forEach(s => {
+        const httpPromise = this.$http.get(
+          'https://cloudflare-ipfs.com/ipfs/' + s.hash,
+        )
+        collectedPromises.push(httpPromise)
+        httpPromise.then(response => {
+          this.payload.loaded = true
+          this.payload.slides.push(JSON.parse(response.bodyText))
         })
-        this.payload.slides.sort(this.compare)
+        httpPromise.catch(console.log)
       })
-      .catch(err => {
-        console.log('ERROR')
-      })
-  },
-  computed: {
-    imageSizeClass() {
-      let r = Math.random()
-      if (r < 0.33) {
-        return 'atom--small'
-      } else if (r > 0.66) {
-        return 'atom--large'
-      } else {
-        return 'atom--medium'
-      }
-    },
+
+      Promise.all(collectedPromises)
+        .then(() => {
+          this.payload.slides.forEach(s => {
+            if (!s.order) {
+              s.order = 0
+            }
+          })
+          this.payload.slides.sort(this.compare)
+        })
+        .catch(err => {
+          console.log('ERROR')
+        })
+    })
+    httpPromise.catch(e => {
+      this.$router.push({ name: 'notFound' })
+    })
   },
   methods: {
     getImageLink(imageHash) {
@@ -128,37 +137,18 @@ export default {
 </script>
 
 <style scoped lang="scss">
-@import "../../style/helpers/_mixins.scss";
-@import "../../style/helpers/_responsive.scss";
-@import "../../style/_variables.scss";
+@import "../style/helpers/_mixins.scss";
+@import "../style/helpers/_responsive.scss";
+@import "../style/_variables.scss";
 
-.atom {
-  display: none;
-  margin: 20px;
-  position: relative;
-  text-decoration: none !important;
-  height: auto;
-  border: 1px solid $white;
-
-  &--loaded {
-    display: block;
-  }
-
-  &--image {
-    border: none;
-  }
-
-  &--small {
-    width: 500px;
-  }
-
-  &--medium {
-    width: 600px;
-  }
-
-  &--large {
-    width: 700px;
-  }
+.single-content {
+  position: fixed;
+  width: 100%;
+  height: 100vh;
+  background: $black;
+  background: red;
+  display: block;
+  z-index: 1000;
 
   &__image_set {
     cursor: pointer;

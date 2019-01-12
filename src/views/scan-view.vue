@@ -15,7 +15,7 @@
 
 <script>
 import { mapState } from 'vuex'
-import Instascan from 'instascan'
+import { BrowserQRCodeReader } from '@zxing/library'
 
 export default {
   name: 'scanView',
@@ -29,43 +29,37 @@ export default {
     ...mapState(['main']),
   },
   mounted() {
-    this.scanner = new Instascan.Scanner({
-      video: document.getElementById('preview'),
-      continuous: true,
-      mirror: false,
-    })
-    Instascan.Camera.getCameras()
-      .then(cameras => {
-        if (cameras[1]) {
-          this.scanner.start(cameras[1])
-        } else {
-          this.scanner.start(cameras[0])
-        }
-      })
-      .catch(e => {
-        console.log(e)
-      })
-
-    // Listen for scan events
-    this.scanner.addListener('scan', content => {
-      const scanResult = content.slice(-16)
-      const matchingWork = this.main.container.works.find(w => {
-        return w.id === scanResult
-      })
-      if (matchingWork) {
-        this.resultHash = matchingWork.hash
-        this.scanner.stop().then(() => {
-          window.setTimeout(() => {
-            this.$router.push({
-              name: 'singleWork',
-              params: { hash: this.resultHash },
+    this.scanner = new BrowserQRCodeReader()
+    this.scanner
+      .getVideoInputDevices()
+      .then(videoInputDevices => {
+        videoInputDevices.forEach(device => window.alert(`${device.label}`))
+        // Listen for scan events
+        this.scanner
+          .decodeFromInputVideoDevice(videoInputDevices[0].deviceId, 'preview')
+          .then(result => {
+            console.log(result)
+            const scanResult = result.text.slice(-16)
+            const matchingWork = this.main.container.works.find(w => {
+              return w.id === scanResult
             })
-          }, 2000)
-        })
-      } else {
-        this.$router.push({ name: 'notFound' })
-      }
-    })
+            if (matchingWork) {
+              this.resultHash = matchingWork.hash
+              this.scanner.stop().then(() => {
+                window.setTimeout(() => {
+                  this.$router.push({
+                    name: 'singleWork',
+                    params: { hash: this.resultHash },
+                  })
+                }, 2000)
+              })
+            } else {
+              this.$router.push({ name: 'notFound' })
+            }
+          })
+          .catch(err => console.error(err))
+      })
+      .catch(err => console.error(err))
   },
   beforeDestroy() {
     this.scanner.stop()

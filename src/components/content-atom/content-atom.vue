@@ -251,6 +251,10 @@ export default {
       max-width: 100%;
       max-height: 100%;
     }
+    border: 1px solid transparent;
+    &:hover {
+      border: 1px solid $green;
+    }
   }
 
   &__text {
