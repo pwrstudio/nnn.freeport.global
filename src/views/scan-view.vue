@@ -30,34 +30,35 @@ export default {
   },
   mounted() {
     this.scanner = new BrowserQRCodeReader()
+
+    // Get video devices
     this.scanner
       .getVideoInputDevices()
-      .then(videoInputDevices => {
-        videoInputDevices.forEach(device => window.alert(`${device.label}`))
-        // Listen for scan events
-        this.scanner
-          .decodeFromInputVideoDevice(videoInputDevices[0].deviceId, 'preview')
-          .then(result => {
-            console.log(result)
-            const scanResult = result.text.slice(-16)
-            const matchingWork = this.main.container.works.find(w => {
-              return w.id === scanResult
-            })
-            if (matchingWork) {
-              this.resultHash = matchingWork.hash
-              this.scanner.stop().then(() => {
-                window.setTimeout(() => {
-                  this.$router.push({
-                    name: 'singleWork',
-                    params: { hash: this.resultHash },
-                  })
-                }, 2000)
+      .then(videoInputDevices => console.log(videoInputDevices))
+      .catch(err => console.error(err))
+
+    // Listen for scan events
+    this.scanner
+      .decodeFromInputVideoDevice(undefined, 'preview')
+      .then(result => {
+        // console.log(result)
+        const scanResult = result.text.slice(-16)
+        const matchingWork = this.main.container.works.find(w => {
+          return w.id === scanResult
+        })
+        if (matchingWork) {
+          this.resultHash = matchingWork.hash
+          this.scanner.stop().then(() => {
+            window.setTimeout(() => {
+              this.$router.push({
+                name: 'singleWork',
+                params: { hash: this.resultHash },
               })
-            } else {
-              this.$router.push({ name: 'notFound' })
-            }
+            }, 2000)
           })
-          .catch(err => console.error(err))
+        } else {
+          this.$router.push({ name: 'notFound' })
+        }
       })
       .catch(err => console.error(err))
   },
