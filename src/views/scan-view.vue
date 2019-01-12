@@ -48,22 +48,17 @@ export default {
         })
         if (matchingWork) {
           this.resultHash = matchingWork.hash
-          this.scanner.stop().then(() => {
-            window.setTimeout(() => {
-              this.$router.push({
-                name: 'singleWork',
-                params: { hash: this.resultHash },
-              })
-            }, 2000)
-          })
+          window.setTimeout(() => {
+            this.$router.push({
+              name: 'singleWork',
+              params: { hash: this.resultHash },
+            })
+          }, 2000)
         } else {
           this.$router.push({ name: 'notFound' })
         }
       })
       .catch(err => console.error(err))
-  },
-  beforeDestroy() {
-    this.scanner.stop()
   },
 }
 </script>
