@@ -1,8 +1,8 @@
 <template>
-  <div class='single-content'>
+  <div class='slide-over'>
     <!-- IMAGE SET -->
-    <div class="single-content__image_set">
-      <img :src="getImageLink(this.payload.slides[index].hash)">
+    <div class="slide-over__image_set">
+      <img v-if='slides.length > 0' :src="getImageLink(this.slides[index].hash)">
 
       <div @click='prevSlide' class='slideshow-button slideshow-button-prev'>
         <i class='material-icons material-icons--on'>keyboard_arrow_left</i>
@@ -12,9 +12,11 @@
         <i class='material-icons material-icons--on'>keyboard_arrow_right</i>
       </div>
 
+      <div @click='close' class='slideshow-close'>CLOSE</div>
+
       <div class='slideshow-info'>
-        <span class='slideshow-counter'>( {{index + 1}} / {{payload.slides.length}} )</span>
-        <span class='slideshow-caption' v-html='payload.slides[index].caption'/>
+        <span class='slideshow-counter'>( {{index + 1}} / {{slides.length}} )</span>
+        <span v-if='slides.length > 0' class='slideshow-caption' v-html='slides[index].caption'/>
       </div>
     </div>
     <!-- END: IMAGE SET -->
@@ -33,12 +35,12 @@ export default {
         media: '',
         hash: '',
         title: '',
-        slides: [],
         size: 0,
         loaded: false,
       },
       index: 0,
       activeSlideShow: [],
+      slides: [],
     }
   },
   mounted() {
@@ -62,8 +64,6 @@ export default {
       })
       this.payload = response.body
 
-      this.payload.slides = []
-
       // ***
       this.activeSlideShow = this.payload.slideshow.find(
         s => s[0][0].id === this.$route.params.id,
@@ -77,20 +77,19 @@ export default {
         )
         collectedPromises.push(httpPromise)
         httpPromise.then(response => {
-          this.payload.loaded = true
-          this.payload.slides.push(JSON.parse(response.bodyText))
+          this.slides.push(JSON.parse(response.bodyText))
         })
         httpPromise.catch(console.log)
       })
 
       Promise.all(collectedPromises)
         .then(() => {
-          this.payload.slides.forEach(s => {
+          this.slides.forEach(s => {
             if (!s.order) {
               s.order = 0
             }
           })
-          this.payload.slides.sort(this.compare)
+          this.slides.sort(this.compare)
         })
         .catch(err => {
           console.log('ERROR')
@@ -102,7 +101,7 @@ export default {
   },
   methods: {
     getImageLink(imageHash) {
-      const options = { w: 800, auto: 'compress,format' }
+      const options = { w: 1200, auto: 'compress,format' }
       const client = new ImgixClient({
         domains: 'nnnfreeport.imgix.net',
         secureURLToken: 'A8qQj2zw8eqcXqEW',
@@ -119,7 +118,7 @@ export default {
       return 0
     },
     nextSlide() {
-      if (this.index === this.payload.slides.length - 1) {
+      if (this.index === this.slides.length - 1) {
         this.index = 0
       } else {
         this.index++
@@ -127,10 +126,16 @@ export default {
     },
     prevSlide() {
       if (this.index === 0) {
-        this.index = this.payload.slides.length - 1
+        this.index = this.slides.length - 1
       } else {
         this.index--
       }
+    },
+    close() {
+      this.$router.push({
+        name: 'singleWork',
+        params: { hash: this.$route.params.hash },
+      })
     },
   },
 }
@@ -141,25 +146,25 @@ export default {
 @import "../style/helpers/_responsive.scss";
 @import "../style/_variables.scss";
 
-.single-content {
+.slide-over {
   position: fixed;
   width: 100%;
   height: 100vh;
   background: $black;
-  background: red;
   display: block;
   z-index: 1000;
 
   &__image_set {
     cursor: pointer;
     max-width: 100%;
+    height: 100vh;
     padding-left: 60px;
     padding-right: 60px;
     padding-top: 30px;
     user-select: none;
     img {
       max-width: 100%;
-      max-height: 100%;
+      max-height: 80%;
       margin-right: auto;
       margin-left: auto;
       display: block;
@@ -241,5 +246,11 @@ export default {
   font-size: $font-size-xs;
 }
 
+.slideshow-close {
+  position: fixed;
+  top: 10px;
+  left: 50%;
+  color: white;
+}
 
 </style>

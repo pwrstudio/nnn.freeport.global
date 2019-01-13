@@ -37,14 +37,15 @@
     <!-- END: AUDIO -->
 
     <!-- VIDEO -->
-    <div v-else-if="payload.media === 'Video'" class="atom__video" :id="hash">
+    <router-link v-else-if="payload.media === 'Video'" class="atom__video" :to="{ name: 'singleContent', params: { singleHash: hash } }"
+      :id="hash">
       <video-player
         :sources="['https://cloudflare-ipfs.com/ipfs/' + payload.hash]"
         image="/static/test.jpg"
         :title="payload.title"
         :hash="payload.hash"
         type="video/mp4"/>
-    </div>
+    </router-link>
     <!-- END: VIDEO -->
 
     <!-- FILE (PDF)-->
