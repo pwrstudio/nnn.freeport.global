@@ -107,7 +107,7 @@
     <!-- SINGLE WORK-->
     <!-- SINGLE WORK-->
     <!-- SINGLE WORK-->
-    <template v-if="$route.name === 'singleWork' && !$route.params.info">
+    <template v-if="($route.name === 'singleWork' || $route.name === 'slideShow')  && !$route.params.info">
       <div class='blackbar'/>
       <router-link
         :to="{name: 'singleWork', params: {hash: $route.params.hash, info: 'info'}}"
@@ -218,6 +218,8 @@ export default {
 
 .nav-button {
   overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
   &--opaque {
     background: $black;  }

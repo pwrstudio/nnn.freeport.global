@@ -10,12 +10,12 @@ import VueHead from "vue-head";
 import VueSocketIO from 'vue-socket.io'
 import VTooltip from "v-tooltip";
 import ga from "vue-ga";
-import Raven from "raven-js";
-import RavenVue from "raven-js/plugins/vue";
+// import Raven from "raven-js";
+// import RavenVue from "raven-js/plugins/vue";
 
-Raven.config("https://78715195611e4cc39b7bd889c729a53c@sentry.io/278723")
-  .addPlugin(RavenVue, Vue)
-  .install();
+// Raven.config('https://78715195611e4cc39b7bd889c729a53c@sentry.io/278723')
+//   .addPlugin(RavenVue, Vue)
+//   .install();
 
 ga(router, "UA-112230518-2");
 

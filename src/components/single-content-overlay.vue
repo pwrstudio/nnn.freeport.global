@@ -15,13 +15,8 @@
              v-html='payload.caption' />
       </div>
     </div>
-    <div v-else-if='payload.media === "Audio"'
-         class='single-content__audio'>
-      <audio :src='"https://cloudflare-ipfs.com/ipfs/" + payload.hash'
-             controls/>
-    </div>
     <div v-else-if='payload.media === "Video"'
-         class='single-content__audio'>
+         class='single-content__video'>
       <video :src='"https://cloudflare-ipfs.com/ipfs/" + payload.hash'
              controls/>
     </div>
@@ -133,7 +128,23 @@ export default {
       color: $white;
     }
   }
+
+    &__video {
+    position: fixed;
+    top: 40px;
+    left: 0;
+    width: 100vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: calc(100vh - 80px);
+    overflow-x: hidden;
+    overflow-y: auto;
+    @include hide-scroll;
+  }
 }
+
+
 
 img {
   max-width: 95vw;

@@ -5,7 +5,10 @@
 
     <!-- IMAGE SET -->
     <div class="atom__image_set">
-      <img :src="getImageLink(payload.slides[index].hash)">
+      <router-link
+        :to="{ name: 'slideShow', params: { id: payload.slides[index].id } }">
+        <img :src="getImageLink(payload.slides[index].hash)">
+      </router-link>
 
       <div @click='prevSlide' class='slideshow-button slideshow-button-prev'>
         <i class='material-icons material-icons--on'>keyboard_arrow_left</i>
@@ -198,12 +201,20 @@ export default {
     }
   }
 
+    &:hover {
+    .material-icons {
+      color: $green;
+    }
+  }
+
   &:active {
     background: white;
     .material-icons {
-      color: black;
+      color: black !important;
     }
   }
+
+
 }
 
 .slideshow-button-prev {
@@ -215,7 +226,6 @@ export default {
 }
 
 .slideshow-info {
-  // height: 50px;
   width: 100%;
   color: white;
   text-align: center;  

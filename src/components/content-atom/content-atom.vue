@@ -44,6 +44,9 @@
         :title="payload.title"
         :hash="payload.hash"
         type="video/mp4"/>
+        <router-link class="atom__video__fullscreen" :to="{ name: 'singleContent', params: { singleHash: hash } }">
+          <i class='material-icons material-icons--on'>fullscreen</i>
+        </router-link>
     </div>
     <!-- END: VIDEO -->
 
@@ -251,6 +254,10 @@ export default {
       max-width: 100%;
       max-height: 100%;
     }
+    border: 1px solid transparent;
+    &:hover {
+      border: 1px solid $green;
+    }
   }
 
   &__text {
@@ -374,6 +381,26 @@ export default {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+  }
+
+  &__video {
+    max-width: 100%;
+    position: relative;
+    border: 1px solid $white;
+    padding: 10px;
+
+    &__fullscreen {
+      position: absolute; 
+      right: 10px;
+      bottom: 10px;
+      i {
+        font-size: 48px;
+      }
+
+      &:hover {
+        color: $green; 
+      }
     }
   }
 }

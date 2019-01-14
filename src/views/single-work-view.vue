@@ -3,13 +3,14 @@
     <div class="work" :class="{'work--show': loaded}">
       <!-- Output all connected content items -->
       <div class="work__inner">
-        <slideShow v-for="item in payload.slideshow" :slides='item'/>
+        <slideShow v-for="item in payload.slideshow" :key="item.id" :slides='item'/>
         <contentAtom v-for="item in payload.content" :key="item.hash" :hash="item.hash"/>
       </div>
     </div>
 
     <!-- Single content overlay -->
     <singleContentOverlay v-if="$route.name === 'singleContent'"/>
+    <slideShowOverlay v-if="$route.name === 'slideShow'"/>
 
     <!-- Roll-down info overlay -->
     <div v-if="$route.params.info" class="info-overlay">
@@ -70,6 +71,8 @@ import { mapState, mapActions } from 'vuex'
 import contentAtom from '@/components/content-atom/content-atom'
 import slideShow from '@/components/content-atom/slide-show'
 import singleContentOverlay from '@/components/single-content-overlay'
+import slideShowOverlay from '@/components/slide-show-overlay'
+
 import { isPast } from 'date-fns'
 
 export default {
@@ -77,6 +80,7 @@ export default {
   components: {
     contentAtom,
     singleContentOverlay,
+    slideShowOverlay,
     slideShow,
   },
   data() {
