@@ -1,7 +1,7 @@
 <template>
   <div class="video-player">
     <video preload="auto" class="video-player__video">
-      <source :type="type" :src="'https://cloudflare-ipfs.com/ipfs/' + hash">
+      <source :type="type" :src="'https://ipfs.io/ipfs/' + hash">
     </video>
     <!-- <progress
       class="video-player__progress"

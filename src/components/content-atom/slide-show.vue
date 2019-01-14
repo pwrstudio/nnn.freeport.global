@@ -6,6 +6,7 @@
     <!-- IMAGE SET -->
     <div class="atom__image_set">
       <router-link
+        v-if='payload.slides.length > 0'
         :to="{ name: 'slideShow', params: { id: payload.slides[index].id } }">
         <img :src="getImageLink(payload.slides[index].hash)">
       </router-link>
@@ -19,8 +20,8 @@
       </div>
 
       <div class='slideshow-info'>
-        <span class='slideshow-counter'>( {{index + 1}} / {{payload.slides.length}} )</span>
-        <span class='slideshow-caption' v-html='payload.slides[index].caption'/>
+        <span v-if='payload.slides.length > 0' class='slideshow-counter'>( {{index + 1}} / {{payload.slides.length}} )</span>
+        <span v-if='payload.slides.length > 0' class='slideshow-caption' v-html='payload.slides[index].caption'/>
       </div>
     </div>
     <!-- END: IMAGE SET -->
@@ -41,7 +42,6 @@ export default {
         title: '',
         slides: [],
         size: 0,
-        loaded: false,
       },
       index: 0,
     }
@@ -60,7 +60,6 @@ export default {
       )
       collectedPromises.push(httpPromise)
       httpPromise.then(response => {
-        this.payload.loaded = true
         this.payload.slides.push(JSON.parse(response.bodyText))
       })
       httpPromise.catch(console.log)
