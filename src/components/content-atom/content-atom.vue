@@ -37,15 +37,17 @@
     <!-- END: AUDIO -->
 
     <!-- VIDEO -->
-    <router-link v-else-if="payload.media === 'Video'" class="atom__video" :to="{ name: 'singleContent', params: { singleHash: hash } }"
-      :id="hash">
+    <div v-else-if="payload.media === 'Video'" class="atom__video" :id="hash">
       <video-player
         :sources="['https://cloudflare-ipfs.com/ipfs/' + payload.hash]"
         image="/static/test.jpg"
         :title="payload.title"
         :hash="payload.hash"
         type="video/mp4"/>
-    </router-link>
+        <router-link class="atom__video__fullscreen" :to="{ name: 'singleContent', params: { singleHash: hash } }">
+          <i class='material-icons material-icons--on'>fullscreen</i>
+        </router-link>
+    </div>
     <!-- END: VIDEO -->
 
     <!-- FILE (PDF)-->
@@ -379,6 +381,26 @@ export default {
       width: 100%;
       height: 100%;
       object-fit: cover;
+    }
+  }
+
+  &__video {
+    max-width: 100%;
+    position: relative;
+    border: 1px solid $white;
+    padding: 10px;
+
+    &__fullscreen {
+      position: absolute; 
+      right: 10px;
+      bottom: 10px;
+      i {
+        font-size: 48px;
+      }
+
+      &:hover {
+        color: $green; 
+      }
     }
   }
 }
