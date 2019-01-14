@@ -15,52 +15,58 @@
     <!-- Roll-down info overlay -->
     <div v-if="$route.params.info" class="info-overlay">
 
-      <!-- Hash -->
-      <div class="info-overlay__hash">
-        <span class="info-overlay__hash__label" v-html="'hash'"/>
-        <span v-html="$route.params.hash"/>
+      <div class='info-overlay-left'>
+        <!-- Hash -->
+        <div class="info-overlay__hash">
+          <span class="info-overlay__hash__label" v-html="'hash'"/>
+          <span v-html="$route.params.hash"/>
+        </div>
+
+        <!-- Title -->
+        <div class="info-overlay__title">
+          <span class="info-overlay__title__label" v-html="'title'"/>
+          <span v-html="payload.title"/>
+        </div>
+
+        <!-- Artist -->
+        <div class="info-overlay__artist">
+          <span class="info-overlay__artist__label" v-html="'artist'"/>
+          <span v-html="artistList"/>
+        </div>
+
+        <!-- Exhibition -->
+        <router-link v-if='exhibition.title' :to="'/&/' + exhibition.hash" class="info-overlay__exhibition">
+          <span class="info-overlay__exhibition__label" v-html="'exhibition'"/>
+          <span v-html="exhibition.title"/>
+        </router-link>
+
+        <!-- Festival -->
+        <div v-if='exhibition.festival' class="info-overlay__location">
+          <span class="info-overlay__title__label" v-html="'festival'"/>
+          <span>{{exhibition.festival}}</span>
+        </div>
+
+        <!-- Location -->
+        <div v-if='exhibition.location.venue' class="info-overlay__location">
+          <span class="info-overlay__title__label" v-html="'location'"/>
+          <span>
+            <span v-if="exhibition.location.venue">{{exhibition.location.venue}},</span>
+            <span v-if="exhibition.location.city">{{exhibition.location.city}},</span>
+            <span v-if="exhibition.location.country">{{exhibition.location.country}}</span>
+          </span>
+        </div>
       </div>
 
-      <!-- Title -->
-      <div class="info-overlay__title">
-        <span class="info-overlay__title__label" v-html="'title'"/>
-        <span v-html="payload.title"/>
-      </div>
-
-      <!-- Artist -->
-      <div class="info-overlay__artist">
-        <span class="info-overlay__artist__label" v-html="'artist'"/>
-        <span v-html="artistList"/>
-      </div>
-
-      <!-- Exhibition -->
-      <router-link v-if='exhibition.title' :to="'/&/' + exhibition.hash" class="info-overlay__exhibition">
-        <span class="info-overlay__exhibition__label" v-html="'exhibition'"/>
-        <span v-html="exhibition.title"/>
-      </router-link>
-
-      <!-- Festival -->
-      <div v-if='exhibition.festival' class="info-overlay__location">
-        <span class="info-overlay__title__label" v-html="'festival'"/>
-        <span>{{exhibition.festival}}</span>
-      </div>
-
-      <!-- Location -->
-      <div v-if='exhibition.location.venue' class="info-overlay__location">
-        <span class="info-overlay__title__label" v-html="'location'"/>
-        <span>
-          <span v-if="exhibition.location.venue">{{exhibition.location.venue}},</span>
-          <span v-if="exhibition.location.city">{{exhibition.location.city}},</span>
-          <span v-if="exhibition.location.country">{{exhibition.location.country}}</span>
-        </span>
+      <!-- QR code -->
+      <div class="info-overlay__qr">
+        <canvas id='qr-code'></canvas>
       </div>
 
       <!-- Description -->
       <div
         v-if="payload.description"
         class="info-overlay__description"
-        v-html="payload.description"
-      />
+        v-html="payload.description"/>
     </div>
 
   </div>
@@ -72,7 +78,7 @@ import contentAtom from '@/components/content-atom/content-atom'
 import slideShow from '@/components/content-atom/slide-show'
 import singleContentOverlay from '@/components/single-content-overlay'
 import slideShowOverlay from '@/components/slide-show-overlay'
-
+import QRCode from 'qrcode'
 import { isPast } from 'date-fns'
 
 export default {
@@ -128,13 +134,13 @@ export default {
           }
         })
         this.payload = response.body
+        this.loaded = true
         this.SET_CURRENT_WORK(this.payload)
         this.$socket.emit('view', {
           title: this.payload.title,
           hash: this.$route.params.hash,
         })
         this.getExhibition()
-        this.loaded = true
       } else {
         this.$router.push({ name: 'refuse' })
       }
@@ -166,6 +172,21 @@ export default {
       })
     },
   },
+  watch: {
+    '$route.params'() {
+      if (this.$route.params.info) {
+        window.setTimeout(() => {
+          QRCode.toCanvas(document.getElementById('qr-code'), this.payload.id, {
+            width: 1200,
+          })
+          // QRCode.toString(this.payload.id, function(err, string) {
+          //   if (err) throw err
+          //   console.log(string)
+          // })
+        }, 500)
+      }
+    },
+  },
 }
 </script>
 
@@ -192,8 +213,9 @@ export default {
 
   @include screen-size('medium') {
     font-size: 12px;
-    width: auto;
+    width: 15%;
   }
+
 }
 
 .work {
@@ -223,15 +245,24 @@ export default {
 
 .info-overlay {
   position: fixed;
+  display: flex;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
   background: $black;
+  flex-wrap: wrap;
   padding: 30px;
   padding-top: 80px;
   overflow-y: auto;
-  // z-index: 10000;
+
+   &-left {
+     width: 70%;
+
+    @include screen-size('medium') {
+      width: 100%;
+    }
+   }
 
   &__hash {
     @include box;
@@ -270,6 +301,29 @@ export default {
       color: $black;
     }
 
+    &__label {
+      @include label;
+    }
+  }
+
+  &__qr {
+    @include box;
+    width: calc(30% - 100px);
+    height: auto;
+    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @include screen-size('medium') {
+      display: none;
+    }
+
+    canvas {
+      width: 200px !important;
+      height: 200px !important;
+    }
+    
     &__label {
       @include label;
     }

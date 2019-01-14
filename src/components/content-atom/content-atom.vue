@@ -39,7 +39,7 @@
     <!-- VIDEO -->
     <div v-else-if="payload.media === 'Video'" class="atom__video" :id="hash">
       <video-player
-        :sources="['https://cloudflare-ipfs.com/ipfs/' + payload.hash]"
+        :sources="['https://ipfs.io/ipfs/' + payload.hash]"
         image="/static/test.jpg"
         :title="payload.title"
         :hash="payload.hash"
@@ -173,7 +173,7 @@ export default {
     getImageLink(imageHash) {
       const options = { w: 800, auto: 'compress,format' }
       const client = new ImgixClient({
-        host: 'nnnfreeport.imgix.net',
+        domains: 'nnnfreeport.imgix.net',
         secureURLToken: 'A8qQj2zw8eqcXqEW',
       })
       let url = client.buildURL(

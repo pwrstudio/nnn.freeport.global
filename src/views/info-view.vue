@@ -4,7 +4,7 @@
       <!-- Main -->
       <div class="info__inner__main">
         <video
-          src="https://cloudflare-ipfs.com/ipfs/QmfQU5sQPSAd67Fn9Jz2NUp56TURLKKFArrcCMcygDCXTZ"
+          src="https://ipfs.io/ipfs/QmfQU5sQPSAd67Fn9Jz2NUp56TURLKKFArrcCMcygDCXTZ"
           controls
           poster="https://cloudflare-ipfs.com/ipfs/QmYjRx5do6QyDEPrxYfV44g67GuRDMFX6A1X8kvdQYSBMV"
         />

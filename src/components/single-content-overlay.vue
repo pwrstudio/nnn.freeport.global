@@ -17,8 +17,7 @@
     </div>
     <div v-else-if='payload.media === "Video"'
          class='single-content__video'>
-      <video :src='"https://cloudflare-ipfs.com/ipfs/" + payload.hash'
-             controls/>
+      <video :src='"https://ipfs.io/ipfs/" + payload.hash' controls/>
     </div>
   </div>
 </template>
@@ -115,10 +114,6 @@ export default {
     left: 0;
     width: 100vw;
     height: 100vh;
-    // display: flex;
-    // flex-wrap: wrap;
-    // align-items: center;
-    // justify-content: center;
     font-size: $font-size-small;
 
     &__inner {
