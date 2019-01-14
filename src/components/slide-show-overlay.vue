@@ -2,6 +2,7 @@
   <div class='slide-over'>
     <!-- IMAGE SET -->
     <div class="slide-over__image_set">
+
       <img v-if='slides.length > 0' :src="getImageLink(this.slides[index].hash)">
 
       <div @click='prevSlide' class='slideshow-button slideshow-button-prev'>
@@ -163,14 +164,14 @@ export default {
     padding-top: 30px;
     user-select: none;
     img {
-      max-width: 100%;
-      max-height: 80%;
+      max-width: 90%;
+      max-height: 75%;
       margin-right: auto;
       margin-left: auto;
       display: block;
+      @include center;
     }
   }
-
 }
 
 .slideshow-button {
@@ -186,8 +187,8 @@ export default {
   .material-icons {
     color: white;
     height: 60px;
-    width: 50px;
-    font-size: 48px;
+    width: 70px;
+    font-size: 68px;
     line-height: 60px;
 
     @include screen-size("small") {
@@ -226,18 +227,24 @@ export default {
   text-align: center;  
   font-size: $font-size-xs;
   line-height: $line-height-small;
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-top: 25px;
   min-height: 60px;
+  @include center-horizontal;
+  bottom: 0px;
   &:active {
     background: white;
     .material-icons {
       color: black;
     }
-  }
 
+  }
   span {
     display: inline;
+    p {
+      margin-bottom: 0;
+      padding-bottom: 0;
+    }
   }
 }
 
@@ -248,9 +255,20 @@ export default {
 
 .slideshow-close {
   position: fixed;
-  top: 10px;
-  left: 50%;
+  top: 20px;
+  @include center-horizontal;
   color: white;
+  font-size: $font-size-small;
+  padding: 5px 15px;
+  border: 1px solid white;
+  &:hover {
+      border: 1px solid $green;
+  }
+  &:active {
+      border: 1px solid $white;
+      background: $white;
+      color: $black; 
+  }
 }
 
 </style>
