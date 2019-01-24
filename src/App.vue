@@ -271,13 +271,6 @@ body {
   height: 30px;
 }
 
-.satellite-marker {
-  width: 10px;
-  height: 10px;
-  border-radius: 10px;
-  background: red;
-}
-
 .exhibition-marker {
   background-image: url("assets/img/ic_gps_not_fixed_black_24px.svg");
   background-size: cover;

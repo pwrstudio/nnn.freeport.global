@@ -186,29 +186,6 @@ export default {
 @import "../../style/_variables.scss";
 @import "../../assets/fonts/nhaas.css";
 
-@mixin box {
-  border: 1px solid $white;
-  color: $white;
-  overflow: hidden;
-  padding: 20px;
-  margin-bottom: 20px;
-  width: calc(100% - 100px);
-}
-
-@mixin label {
-  display: inline-block;
-  font-size: $font-size-small;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-  width: 12ch;
-
-  @include screen-size('medium') {
-    font-size: 12px;
-    width: 15%;
-  }
-
-}
-
 .geocinema {
   height: 100vh;
   width: 100vw;
