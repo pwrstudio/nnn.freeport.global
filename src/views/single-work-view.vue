@@ -1,16 +1,23 @@
 <template>
   <div>
-    <div class="work" :class="{'work--show': loaded}">
-      <!-- Output all connected content items -->
-      <div class="work__inner">
-        <slideShow v-for="item in payload.slideshow" :key="item.id" :slides='item'/>
-        <contentAtom v-for="item in payload.content" :key="item.hash" :hash="item.hash"/>
-      </div>
-    </div>
+    <geoCinema v-if="payload.id === 'Wm86XyQAAKtZ6qPN'"/>
 
-    <!-- Single content overlay -->
-    <singleContentOverlay v-if="$route.name === 'singleContent'"/>
-    <slideShowOverlay v-if="$route.name === 'slideShow'"/>
+    <template v-else>
+      
+      <div class="work" :class="{'work--show': loaded}">
+
+        <!-- Output all connected content items -->
+        <div class="work__inner">
+          <slideShow v-for="item in payload.slideshow" :key="item.id" :slides='item'/>
+          <contentAtom v-for="item in payload.content" :key="item.hash" :hash="item.hash"/>
+        </div>
+      </div>
+
+      <!-- Single content overlay -->
+      <singleContentOverlay v-if="$route.name === 'singleContent'"/>
+      <slideShowOverlay v-if="$route.name === 'slideShow'"/>
+
+    </template>
 
     <!-- Roll-down info overlay -->
     <div v-if="$route.params.info" class="info-overlay">
@@ -78,6 +85,7 @@ import contentAtom from '@/components/content-atom/content-atom'
 import slideShow from '@/components/content-atom/slide-show'
 import singleContentOverlay from '@/components/single-content-overlay'
 import slideShowOverlay from '@/components/slide-show-overlay'
+import geoCinema from '@/components/special/geocinema'
 import QRCode from 'qrcode'
 import { isPast } from 'date-fns'
 
@@ -88,6 +96,7 @@ export default {
     singleContentOverlay,
     slideShowOverlay,
     slideShow,
+    geoCinema,
   },
   data() {
     return {
@@ -255,6 +264,7 @@ export default {
   padding: 30px;
   padding-top: 80px;
   overflow-y: auto;
+  z-index: 2;
 
    &-left {
      width: 70%;
