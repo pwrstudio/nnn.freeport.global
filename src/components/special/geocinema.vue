@@ -23,7 +23,7 @@ export default {
       map: {},
       satelliteData: [],
       poetry:
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin scelerisque posuere elit, sed efficitur metus egestas in. Lorem ipsum dolor sit amet, consectetur volutpat.',
+        'This chronic lack of a habitable world,<br>sustaining plants and animals.<br>The occurrence of the sea now spread far as allied species.',
     }
   },
   mounted() {
@@ -203,7 +203,7 @@ export default {
 
   &__poetry {
     display: block;
-    width: 35ch;
+    width: 40ch;
     max-width: 90vw;
     margin-bottom: 60px;
     font-family: 'NeueHaasGrotesk', Helvetica, sans-serif;
