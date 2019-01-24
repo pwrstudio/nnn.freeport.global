@@ -45,7 +45,7 @@ $breakpoints: (
   color: $white;
   user-select: none;
   text-decoration: none;
-  outline-none;
+  outline: none;
   &:active {
     background: $white;
     color: $black;
