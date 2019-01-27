@@ -1,6 +1,14 @@
 <template>
   <div class='geocinema'>
 
+    <div class='geocinema__loader' :class='{"active": !loaded}'>
+      <div class='geocinema__loader__inner'>
+        More than thirty earth-orbiting satellite missions are currently writing your future parameters
+        <br>...</br>
+please wait. 
+      </div>
+    </div>
+
     <div id='orbits'/>
 
     <div class='geocinema__poetry' v-html='poetry'/>
@@ -19,6 +27,7 @@ export default {
   name: 'geocinema',
   data() {
     return {
+      loaded: false,
       markers: [],
       map: {},
       satelliteData: [],
@@ -42,6 +51,11 @@ export default {
       window.setInterval(this.updateSatelliteMarkers, 1000)
     })
     socket.on('update', satelliteData => {
+      if (!this.loaded) {
+        window.setTimeout(() => {
+          this.loaded = true
+        }, 3000)
+      }
       this.satelliteData = satelliteData
       // Draw ground tracks
       window.setTimeout(this.drawGroundTracks, 2000)
@@ -211,9 +225,50 @@ export default {
     font-size: 38px;
     line-height: 1.3em;
     color: white;
+    text-align: center;
     @include screen-size('small') {
       font-size: 32px;
     }
+  }
+
+  &__loader {
+    height: 100%;
+    width: 100%;
+    left: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-top: 60px;
+    position: fixed;
+    top: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    @include hide-scroll;
+    background: rgba(0,0,0,0.9);
+    z-index: 10;
+
+    opacity: 0;
+    pointer-events: all;
+    transition: opacity 0.2s ease-out;
+
+    &.active {
+      opacity: 1;
+      pointer-events: all;
+      transition: opacity 0.2s ease-out;
+    }
+
+     &__inner {
+      width: 40ch;
+      max-width: 90vw;
+      padding: 10px;
+      background: #e2e0df;
+      font-family: 'NeueHaasGrotesk', Helvetica, sans-serif;
+      font-weight: 500;
+      font-size: 18px;
+      line-height: 1.3em;
+      text-align: center;
+
+     }
   }
 
 }
