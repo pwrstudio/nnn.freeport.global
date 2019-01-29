@@ -1,80 +1,76 @@
 <template>
-  <div class='single-content'>
-    <div v-if='payload.media === "Text"'
-         class='single-content__text'>
-      <div class='single-content__text__inner'>
-        <div v-html='payload.title' />
-        <div v-html='text' />
+  <div class="single-content">
+    <div v-if="payload.media === 'Text'" class="single-content__text">
+      <div class="single-content__text__inner">
+        <div v-html="payload.title" />
+        <div v-html="text" />
       </div>
     </div>
-    <div v-else-if='payload.media === "Image"'
-         class='single-content__image'>
-      <div class='single-content__image__inner'>
-        <img :src='getImageLink(payload.hash)' />
-        <div v-if='payload.caption'
-             v-html='payload.caption' />
+    <div v-else-if="payload.media === 'Image'" class="single-content__image">
+      <div class="single-content__image__inner">
+        <img :src="getImageLink(payload.hash)" />
+        <div v-if="payload.caption" v-html="payload.caption" />
       </div>
     </div>
-    <div v-else-if='payload.media === "Video"'
-         class='single-content__video'>
-      <video :src='"https://ipfs.io/ipfs/" + payload.hash' controls/>
+    <div v-else-if="payload.media === 'Video'" class="single-content__video">
+      <video :src="'https://ipfs.io/ipfs/' + payload.hash" controls />
     </div>
   </div>
 </template>
 
 <script>
-import ImgixClient from 'imgix-core-js'
+import ImgixClient from "imgix-core-js";
 
 export default {
-  name: 'singleContentOverlay',
+  name: "singleContentOverlay",
   data() {
     return {
       payload: {
-        media: '',
-        hash: '',
-        title: '',
+        media: "",
+        hash: "",
+        title: ""
       },
-      text: '',
-    }
+      text: ""
+    };
   },
   mounted() {
     const httpPromise = this.$http.get(
-      'https://cloudflare-ipfs.com/ipfs/' + this.$route.params.singleHash,
-    )
+      "https://cloudflare-ipfs.com/ipfs/" + this.$route.params.singleHash
+    );
     httpPromise.then(response => {
-      this.payload = response.body
-      if (this.payload.media === 'Text') {
-        this.setIPFSText()
+      this.payload = response.body;
+      if (this.payload.media === "Text") {
+        this.setIPFSText();
       }
-    })
+    });
     httpPromise.catch(err => {
-      console.log(err)
-    })
+      console.log(err);
+    });
   },
   methods: {
     setIPFSText() {
       const httpPromise = this.$http.get(
-        'https://cloudflare-ipfs.com/ipfs/' + this.payload.hash,
-      )
+        "https://cloudflare-ipfs.com/ipfs/" + this.payload.hash
+      );
       httpPromise.then(response => {
-        this.text = response.body
-      })
-      httpPromise.catch(console.log)
+        this.text = response.body;
+      });
+      httpPromise.catch(console.log);
     },
     getImageLink(imageHash) {
-      const options = { w: 1600, auto: 'compress,format' }
+      const options = { w: 1600, auto: "compress,format" };
       const client = new ImgixClient({
-        domains: 'nnnfreeport.imgix.net',
-        secureURLToken: 'A8qQj2zw8eqcXqEW',
-      })
+        domains: "nnnfreeport.imgix.net",
+        secureURLToken: "A8qQj2zw8eqcXqEW"
+      });
       let url = client.buildURL(
-        'https://cloudflare-ipfs.com/ipfs/' + imageHash,
-        options,
-      )
-      return url
-    },
-  },
-}
+        "https://cloudflare-ipfs.com/ipfs/" + imageHash,
+        options
+      );
+      return url;
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -124,7 +120,7 @@ export default {
     }
   }
 
-    &__video {
+  &__video {
     position: fixed;
     top: 40px;
     left: 0;
@@ -138,8 +134,6 @@ export default {
     @include hide-scroll;
   }
 }
-
-
 
 img {
   max-width: 95vw;

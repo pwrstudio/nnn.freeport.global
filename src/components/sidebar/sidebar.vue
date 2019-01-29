@@ -9,21 +9,21 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import sidebarBlock from '@/components/sidebar/sidebar-block.vue'
+import { mapState } from "vuex";
+import sidebarBlock from "@/components/sidebar/sidebar-block.vue";
 
 export default {
-  name: 'sidebar',
+  name: "sidebar",
   data() {
-    return {}
+    return {};
   },
   computed: {
-    ...mapState(['main']),
+    ...mapState(["main"])
   },
   components: {
-    sidebarBlock,
-  },
-}
+    sidebarBlock
+  }
+};
 </script>
 
 <style scoped lang="scss">

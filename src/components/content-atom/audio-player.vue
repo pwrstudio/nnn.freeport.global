@@ -7,9 +7,12 @@
       @click="scrub"
       :class="{ 'audio-player__progress--playing': playing }"
       max="1"
-      :value="progress" />
+      :value="progress"
+    />
     <div class="audio-player__toggle" @click="togglePlayback">
-      <i v-if="playing" class="material-icons audio-player__toggle__icon">pause</i>
+      <i v-if="playing" class="material-icons audio-player__toggle__icon"
+        >pause</i
+      >
       <i v-else class="material-icons audio-player__toggle__icon">play_arrow</i>
     </div>
     <div class="audio-player__controls">
@@ -23,13 +26,13 @@
 </template>
 
 <script>
-import VueHowler from 'vue-howler'
+import VueHowler from "vue-howler"
 
 export default {
   mixins: [VueHowler],
   mounted() {
     this.$nextTick(() => {
-      this.timelineElement = document.getElementById('timeline')
+      this.timelineElement = document.getElementById("timeline")
     })
   },
   methods: {
@@ -37,14 +40,14 @@ export default {
       const minutes = Math.floor(time / 60)
       const seconds = Math.floor(time - minutes * 60)
       return (
-        (minutes < 10 ? '0' + minutes : minutes) +
-        ':' +
-        (seconds < 10 ? '0' + seconds : seconds)
+        (minutes < 10 ? "0" + minutes : minutes) +
+        ":" +
+        (seconds < 10 ? "0" + seconds : seconds)
       )
     },
     scrub(e) {
       const progress =
-        (e.pageX - this.timelineElement.closest('.atom').offsetLeft) /
+        (e.pageX - this.timelineElement.closest(".atom").offsetLeft) /
         this.timelineElement.offsetWidth
       this.setProgress(progress)
       this.play()

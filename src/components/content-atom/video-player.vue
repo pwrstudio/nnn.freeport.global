@@ -1,7 +1,7 @@
 <template>
   <div class="video-player">
     <video preload="auto" class="video-player__video">
-      <source :type="type" :src="'https://ipfs.io/ipfs/' + hash">
+      <source :type="type" :src="'https://ipfs.io/ipfs/' + hash" />
     </video>
     <!-- <progress
       class="video-player__progress"
@@ -9,11 +9,15 @@
       max="1"
       :value="progress"/> -->
     <div class="video-player__toggle" @click="toggleVideo">
-      <i v-if="playing" class="material-icons video-player__toggle__icon video-player__toggle__icon--pause">pause</i>
+      <i
+        v-if="playing"
+        class="material-icons video-player__toggle__icon video-player__toggle__icon--pause"
+        >pause</i
+      >
       <i v-else class="material-icons video-player__toggle__icon">play_arrow</i>
     </div>
     <div class="video-player__controls">
-      <div class="video-player__controls__title" v-html="title"/>
+      <div class="video-player__controls__title" v-html="title" />
       <!-- <div class="video-player__controls__timecode">
         <span v-html="formatTime(video.currentTime)"></span> /
         <span v-html="formatTime(video.duration)"></span>
@@ -35,9 +39,9 @@ export default {
       const minutes = Math.floor(time / 60)
       const seconds = Math.floor(time - minutes * 60)
       return (
-        (minutes < 10 ? '0' + minutes : minutes) +
-        ':' +
-        (seconds < 10 ? '0' + seconds : seconds)
+        (minutes < 10 ? "0" + minutes : minutes) +
+        ":" +
+        (seconds < 10 ? "0" + seconds : seconds)
       )
     },
     toggleVideo() {
@@ -67,7 +71,7 @@ export default {
   //   },
   // },
   mounted() {
-    this.video = this.$el.getElementsByTagName('video')[0]
+    this.video = this.$el.getElementsByTagName("video")[0]
   },
 }
 </script>

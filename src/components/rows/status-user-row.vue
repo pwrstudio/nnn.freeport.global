@@ -1,15 +1,18 @@
 <template>
   <tr class="status__users__table__body__row">
     <td
-      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide">
+      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide"
+    >
       <i class="material-icons">gps_fixed</i>
     </td>
     <td
-      class="status__users__table__body__row__cell status__users__table__body__row__cell--capped">
+      class="status__users__table__body__row__cell status__users__table__body__row__cell--capped"
+    >
       {{ user.id }}
     </td>
     <td
-      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide">
+      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide"
+    >
       {{ user.ip }}
     </td>
     <td class="status__users__table__body__row__cell">
@@ -21,58 +24,58 @@
 </template>
 
 <script>
-import countdown from 'countdown'
+import countdown from "countdown";
 
 export default {
-  name: 'statusUserRow',
+  name: "statusUserRow",
   data() {
     return {
-      timeOnSite: '',
-    }
+      timeOnSite: ""
+    };
   },
   props: {
     user: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   mounted() {
     countdown.setLabels(
-      'ms| |:|h|d|w|m|y|d|s|m',
-      'ms| |:|h|d|w|m|y|d|s|m',
-      '',
-      ':',
-      '0',
+      "ms| |:|h|d|w|m|y|d|s|m",
+      "ms| |:|h|d|w|m|y|d|s|m",
+      "",
+      ":",
+      "0",
       n => {
         if (n < 10) {
-          return '0' + n.toString()
+          return "0" + n.toString();
         } else {
-          return n.toString()
+          return n.toString();
         }
-      },
-    )
+      }
+    );
     countdown(
       new Date(this.user.time),
       ts => {
         if (ts.minutes === 0) {
-          this.timeOnSite = '00:' + ts.toString()
+          this.timeOnSite = "00:" + ts.toString();
         } else {
           if (ts.seconds === 0) {
-            this.timeOnSite = '' + ts.toString() + '00'
+            this.timeOnSite = "" + ts.toString() + "00";
           } else {
-            this.timeOnSite = ts.toString()
+            this.timeOnSite = ts.toString();
           }
         }
       },
-      [countdown.HOURS, countdown.MINUTES, countdown.SECONDS],
-    )
+      [countdown.HOURS, countdown.MINUTES, countdown.SECONDS]
+    );
   },
   methods: {
     openChat(id) {
-      this.$socket.emit('chat', { id: id, msg: 'kxkxkxkxk' })
-    },
-  },
-}
+      this.$socket.emit("chat", { id: id, msg: "kxkxkxkxk" });
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">

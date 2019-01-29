@@ -1,49 +1,52 @@
 <template>
-  <div class='stack'
-       :class='{"stack--show": loaded}'>
-    <sidebar/>
+  <div class="stack" :class="{ 'stack--show': loaded }">
+    <sidebar />
 
     <!-- Full-screen work item -->
-    <div class='swiper-container'>
-      <div class='swiper-wrapper'>
-        <div class='swiper-slide'
-             v-for='work in main.container.works'
-             :key='work.hash'
-             :id='work.hash'>
-          <work :hash='work.hash' />
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div
+          class="swiper-slide"
+          v-for="work in main.container.works"
+          :key="work.hash"
+          :id="work.hash"
+        >
+          <work :hash="work.hash" />
         </div>
       </div>
     </div>
 
     <!-- Swiper nav -->
-    <div class='swiper-button-prev slideshow-button-prev'>
-      <i class='material-icons material-icons--on'>keyboard_arrow_up</i>
-      <i class='material-icons material-icons--off'>close</i>
+    <div class="swiper-button-prev slideshow-button-prev">
+      <i class="material-icons material-icons--on">keyboard_arrow_up</i>
+      <i class="material-icons material-icons--off">close</i>
     </div>
 
     <!-- Swiper nav -->
-    <div class='swiper-button-next slideshow-button-next'>
-      <i class='material-icons material-icons--on'>keyboard_arrow_down</i>
-      <i class='material-icons material-icons--off'>close</i>
+    <div class="swiper-button-next slideshow-button-next">
+      <i class="material-icons material-icons--on">keyboard_arrow_down</i>
+      <i class="material-icons material-icons--off">close</i>
     </div>
 
     <!-- Scanner nav button on mobile -->
-    <router-link :to='{name: "scan"}'
-                 class='scanner-nav'
-                 v-if='main.mobile.check && main.mobile.os !== "iOS"'>
-      <i class='material-icons material-icons--on'>center_focus_weak</i>
+    <router-link
+      :to="{ name: 'scan' }"
+      class="scanner-nav"
+      v-if="main.mobile.check && main.mobile.os !== 'iOS'"
+    >
+      <i class="material-icons material-icons--on">center_focus_weak</i>
     </router-link>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
-import sidebar from '@/components/sidebar/sidebar'
-import work from '@/components/work'
-import Swiper from 'swiper'
+import { mapState, mapActions } from "vuex"
+import sidebar from "@/components/sidebar/sidebar"
+import work from "@/components/work"
+import Swiper from "swiper"
 
 export default {
-  name: 'stackView',
+  name: "stackView",
   components: {
     work,
     sidebar,
@@ -55,7 +58,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(['main']),
+    ...mapState(["main"]),
   },
   mounted() {
     if (this.main.container.works) {
@@ -63,19 +66,19 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['SET_CURRENT_SLIDE']),
+    ...mapActions(["SET_CURRENT_SLIDE"]),
     initSwiper() {
-      this.stackSwiper = new Swiper('.swiper-container', {
+      this.stackSwiper = new Swiper(".swiper-container", {
         slidesPerView: 1,
         loop: false,
         speed: 400,
-        direction: 'vertical',
+        direction: "vertical",
         keyboard: true,
         simulateTouch: false,
         spaceBetween: 100,
         navigation: {
-          nextEl: '.swiper-button-next',
-          prevEl: '.swiper-button-prev',
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
         },
         on: {
           slideChangeTransitionEnd: this.changeSlide,
@@ -84,8 +87,8 @@ export default {
       })
     },
     changeSlide() {
-      let id = document.getElementsByClassName('swiper-slide-active')[0].id
-      this.$router.push({ name: 'stack', params: { unit: id } })
+      let id = document.getElementsByClassName("swiper-slide-active")[0].id
+      this.$router.push({ name: "stack", params: { unit: id } })
       this.SET_CURRENT_SLIDE(this.$route.params.unit)
     },
     setSlide(duration = 400) {
@@ -98,7 +101,7 @@ export default {
           this.SET_CURRENT_SLIDE(this.$route.params.unit)
         } else {
           this.$router.push({
-            name: 'stack',
+            name: "stack",
             params: {
               unit: this.main.container.works[
                 this.getRandom(this.main.container.works.length)
@@ -129,7 +132,7 @@ export default {
     $route(to, from) {
       this.setSlide()
     },
-    'main.container.works'() {
+    "main.container.works"() {
       this.$nextTick(this.initSwiper)
     },
   },
@@ -140,7 +143,7 @@ export default {
 @import "../style/helpers/_mixins.scss";
 @import "../style/helpers/_responsive.scss";
 @import "../style/_variables.scss";
-@import '../style/vendor/swiper.css';
+@import "../style/vendor/swiper.css";
 
 .stack {
   background: $black;

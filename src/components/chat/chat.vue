@@ -5,41 +5,41 @@
       <i class="material-icons" @click="TOGGLE_CHAT">clear</i>
     </div>
     <div class="chat__main">
-      <div v-for="msg in convo" :key="msg.time" v-html="msg.txt"/>
+      <div v-for="msg in convo" :key="msg.time" v-html="msg.txt" />
     </div>
 
     <div class="chat__bottom">
-      <div class="chat__input"/>
+      <div class="chat__input" />
       <div class="chat__send">send</div>
     </div>
   </div>
 </template>
 
 <script>
-import { mapState, mapActions } from 'vuex'
+import { mapState, mapActions } from "vuex";
 
 export default {
-  name: 'chat',
+  name: "chat",
   data() {
     return {
       convo: [],
-      id: '',
-    }
+      id: ""
+    };
   },
   computed: {
-    ...mapState(['main']),
+    ...mapState(["main"])
   },
   sockets: {
     chat(data) {
-      console.log(data)
-      this.convo.push({ txt: data.msg, remote: true, time: Date.now() })
-      this.id = data.id
-    },
+      console.log(data);
+      this.convo.push({ txt: data.msg, remote: true, time: Date.now() });
+      this.id = data.id;
+    }
   },
   methods: {
-    ...mapActions(['TOGGLE_CHAT']),
-  },
-}
+    ...mapActions(["TOGGLE_CHAT"])
+  }
+};
 </script>
 
 <style scoped lang="scss">

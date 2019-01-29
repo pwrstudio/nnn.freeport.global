@@ -1,45 +1,48 @@
 <template>
-  <div
-    class="atom"
-    :class="[imageSizeClass, 'atom--loaded']">
-
+  <div class="atom" :class="[imageSizeClass, 'atom--loaded']">
     <!-- IMAGE SET -->
     <div class="atom__image_set">
       <router-link
-        v-if='payload.slides.length > 0'
-        :to="{ name: 'slideShow', params: { id: payload.slides[index].id } }">
-        <img :src="getImageLink(payload.slides[index].hash)">
+        v-if="payload.slides.length > 0"
+        :to="{ name: 'slideShow', params: { id: payload.slides[index].id } }"
+      >
+        <img :src="getImageLink(payload.slides[index].hash)" />
       </router-link>
 
-      <div @click='prevSlide' class='slideshow-button slideshow-button-prev'>
-        <i class='material-icons material-icons--on'>keyboard_arrow_left</i>
+      <div @click="prevSlide" class="slideshow-button slideshow-button-prev">
+        <i class="material-icons material-icons--on">keyboard_arrow_left</i>
       </div>
 
-      <div @click='nextSlide' class='slideshow-button slideshow-button-next'>
-        <i class='material-icons material-icons--on'>keyboard_arrow_right</i>
+      <div @click="nextSlide" class="slideshow-button slideshow-button-next">
+        <i class="material-icons material-icons--on">keyboard_arrow_right</i>
       </div>
 
-      <div class='slideshow-info'>
-        <span v-if='payload.slides.length > 0' class='slideshow-counter'>( {{index + 1}} / {{payload.slides.length}} )</span>
-        <span v-if='payload.slides.length > 0' class='slideshow-caption' v-html='payload.slides[index].caption'/>
+      <div class="slideshow-info">
+        <span v-if="payload.slides.length > 0" class="slideshow-counter"
+          >( {{ index + 1 }} / {{ payload.slides.length }} )</span
+        >
+        <span
+          v-if="payload.slides.length > 0"
+          class="slideshow-caption"
+          v-html="payload.slides[index].caption"
+        />
       </div>
     </div>
     <!-- END: IMAGE SET -->
-
   </div>
 </template>
 
 <script>
-import ImgixClient from 'imgix-core-js'
+import ImgixClient from "imgix-core-js"
 
 export default {
-  name: 'slideShow',
+  name: "slideShow",
   data() {
     return {
       payload: {
-        media: '',
-        hash: '',
-        title: '',
+        media: "",
+        hash: "",
+        title: "",
         slides: [],
         size: 0,
       },
@@ -56,7 +59,7 @@ export default {
     var collectedPromises = []
     this.slides[0].forEach(s => {
       const httpPromise = this.$http.get(
-        'https://cloudflare-ipfs.com/ipfs/' + s.hash,
+        "https://cloudflare-ipfs.com/ipfs/" + s.hash,
       )
       collectedPromises.push(httpPromise)
       httpPromise.then(response => {
@@ -75,30 +78,30 @@ export default {
         this.payload.slides.sort(this.compare)
       })
       .catch(err => {
-        console.log('ERROR')
+        console.log("ERROR")
       })
   },
   computed: {
     imageSizeClass() {
       let r = Math.random()
       if (r < 0.33) {
-        return 'atom--small'
+        return "atom--small"
       } else if (r > 0.66) {
-        return 'atom--large'
+        return "atom--large"
       } else {
-        return 'atom--medium'
+        return "atom--medium"
       }
     },
   },
   methods: {
     getImageLink(imageHash) {
-      const options = { w: 800, auto: 'compress,format' }
+      const options = { w: 800, auto: "compress,format" }
       const client = new ImgixClient({
-        domains: 'nnnfreeport.imgix.net',
-        secureURLToken: 'A8qQj2zw8eqcXqEW',
+        domains: "nnnfreeport.imgix.net",
+        secureURLToken: "A8qQj2zw8eqcXqEW",
       })
       let url = client.buildURL(
-        'https://cloudflare-ipfs.com/ipfs/' + imageHash,
+        "https://cloudflare-ipfs.com/ipfs/" + imageHash,
         options,
       )
       return url
@@ -174,7 +177,6 @@ export default {
       display: block;
     }
   }
-
 }
 
 .slideshow-button {
@@ -200,7 +202,7 @@ export default {
     }
   }
 
-    &:hover {
+  &:hover {
     .material-icons {
       color: $green;
     }
@@ -212,8 +214,6 @@ export default {
       color: black !important;
     }
   }
-
-
 }
 
 .slideshow-button-prev {
@@ -227,7 +227,7 @@ export default {
 .slideshow-info {
   width: 100%;
   color: white;
-  text-align: center;  
+  text-align: center;
   font-size: $font-size-xs;
   line-height: $line-height-small;
   margin-bottom: 20px;
@@ -249,6 +249,4 @@ export default {
   color: $yellow;
   font-size: $font-size-xs;
 }
-
-
 </style>

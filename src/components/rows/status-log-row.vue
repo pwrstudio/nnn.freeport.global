@@ -2,34 +2,36 @@
   <tr
     class="status__users__table__body__row"
     :class="'status__users__table__body__row--' + msg.type"
-    @click="goToWork" >
+    @click="goToWork"
+  >
     <td
       class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide"
-      v-html="msg.time"/>
-    <td class="status__users__table__body__row__cell" v-html="msg.text"/>
+      v-html="msg.time"
+    />
+    <td class="status__users__table__body__row__cell" v-html="msg.text" />
   </tr>
 </template>
 
 <script>
 export default {
-  name: 'statusLogRow',
+  name: "statusLogRow",
   props: {
     msg: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   methods: {
     goToWork() {
-      if (this.msg.type === 'activity') {
+      if (this.msg.type === "activity") {
         this.$router.push({
-          name: 'singleWork',
-          params: { hash: this.msg.hash },
-        })
+          name: "singleWork",
+          params: { hash: this.msg.hash }
+        });
       }
-    },
-  },
-}
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">

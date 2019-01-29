@@ -4,28 +4,34 @@
     <!-- INFO -->
     <!-- INFO -->
     <template v-if="$route.name === 'info'">
-      <div class='blackbar'/>
+      <div class="blackbar" />
       <router-link
         v-if="fromStatus"
         v-tooltip.auto="'Terminal'"
         class="nav-button nav-button__left nav-button--opaque"
-        to="/">nnn.freeport.global</router-link>
+        to="/"
+        >nnn.freeport.global</router-link
+      >
       <router-link
         v-if="fromStack"
         v-tooltip.auto="'Stack'"
         class="nav-button nav-button__left nav-button--opaque"
-        :to="{name: 'stack', params: {unit: main.currentSlide}}">nnn.freeport.global</router-link>
+        :to="{ name: 'stack', params: { unit: main.currentSlide } }"
+        >nnn.freeport.global</router-link
+      >
       <router-link
         v-if="fromStatus"
         v-tooltip.auto="'Terminal'"
         class="nav-button nav-button__right nav-button--opaque"
-        to="/"><i class="material-icons">trending_up</i>
+        to="/"
+        ><i class="material-icons">trending_up</i>
       </router-link>
       <router-link
         v-if="fromStack"
         v-tooltip.auto="'Stack'"
         class="nav-button nav-button__right nav-button--opaque"
-        :to="{name: 'stack', params: {unit: main.currentSlide}}"><i class="material-icons">menu</i>
+        :to="{ name: 'stack', params: { unit: main.currentSlide } }"
+        ><i class="material-icons">menu</i>
       </router-link>
     </template>
     <!-- END: INFO -->
@@ -36,18 +42,22 @@
       <router-link
         class="nav-button nav-button__left"
         v-tooltip.auto="'About the platform'"
-        to="/info">nnn.freeport.global</router-link>
+        to="/info"
+        >nnn.freeport.global</router-link
+      >
       <router-link
         v-if="main.currentSlide"
         class="nav-button nav-button__right"
         v-tooltip.auto="'Stack'"
-        :to="{name: 'stack', params: {unit: main.currentSlide}}"><i class="material-icons">menu</i>
+        :to="{ name: 'stack', params: { unit: main.currentSlide } }"
+        ><i class="material-icons">menu</i>
       </router-link>
       <router-link
         v-else
         class="nav-button nav-button__right"
         v-tooltip.auto="'Stack'"
-        :to="{name: 'stack'}"><i class="material-icons">menu</i>
+        :to="{ name: 'stack' }"
+        ><i class="material-icons">menu</i>
       </router-link>
     </template>
     <!-- END: STATUS -->
@@ -58,18 +68,22 @@
       <router-link
         class="nav-button nav-button--opaque nav-button__left"
         v-tooltip.auto="'About the platform'"
-        to="/info">nnn.freeport.global</router-link>
+        to="/info"
+        >nnn.freeport.global</router-link
+      >
       <router-link
         v-if="main.currentSlide"
         class="nav-button nav-button--opaque nav-button__right"
         v-tooltip.auto="'Stack'"
-        :to="{name: 'stack', params: {unit: main.currentSlide}}"><i class="material-icons">menu</i>
+        :to="{ name: 'stack', params: { unit: main.currentSlide } }"
+        ><i class="material-icons">menu</i>
       </router-link>
       <router-link
         v-else
         class="nav-button nav-button--opaque nav-button__right"
         v-tooltip.auto="'Stack'"
-        :to="{name: 'stack'}"><i class="material-icons">menu</i>
+        :to="{ name: 'stack' }"
+        ><i class="material-icons">menu</i>
       </router-link>
     </template>
     <!-- END: Exhibition-->
@@ -81,8 +95,13 @@
         class="nav-button nav-button__left"
         v-tooltip.auto="'About the platform'"
         to="/info"
-      >nnn.freeport.global</router-link>
-      <router-link class="nav-button nav-button__right" v-tooltip.auto="'Terminal'" to="/">
+        >nnn.freeport.global</router-link
+      >
+      <router-link
+        class="nav-button nav-button__right"
+        v-tooltip.auto="'Terminal'"
+        to="/"
+      >
         <i class="material-icons">trending_up</i>
       </router-link>
     </template>
@@ -91,15 +110,21 @@
     <!-- SCAN -->
     <!-- SCAN -->
     <template v-if="$route.name === 'scan'">
-      <router-link class="nav-button nav-button__left" to="/info">nnn.freeport.global</router-link>
+      <router-link class="nav-button nav-button__left" to="/info"
+        >nnn.freeport.global</router-link
+      >
       <router-link
         v-if="main.currentSlide"
         class="nav-button nav-button__right"
-        :to="{name: 'stack', params: {unit: main.currentSlide}}"
+        :to="{ name: 'stack', params: { unit: main.currentSlide } }"
       >
         <i class="material-icons">menu</i>
       </router-link>
-      <router-link v-else class="nav-button nav-button__right" :to="{name: 'stack'}">
+      <router-link
+        v-else
+        class="nav-button nav-button__right"
+        :to="{ name: 'stack' }"
+      >
         <i class="material-icons">menu</i>
       </router-link>
     </template>
@@ -107,18 +132,27 @@
     <!-- SINGLE WORK-->
     <!-- SINGLE WORK-->
     <!-- SINGLE WORK-->
-    <template v-if="($route.name === 'singleWork' || $route.name === 'slideShow')  && !$route.params.info">
-      <div class='blackbar'/>
+    <template
+      v-if="
+        ($route.name === 'singleWork' || $route.name === 'slideShow') &&
+          !$route.params.info
+      "
+    >
+      <div class="blackbar" />
       <router-link
-        :to="{name: 'singleWork', params: {hash: $route.params.hash, info: 'info'}}"
+        :to="{
+          name: 'singleWork',
+          params: { hash: $route.params.hash, info: 'info' }
+        }"
         v-tooltip.auto="'About work'"
         class="nav-button nav-button__left nav-button--opaque nav-button--hoverable"
-      >{{main.currentWork.title}}</router-link>
+        >{{ main.currentWork.title }}</router-link
+      >
       <router-link
         v-if="main.currentSlide"
         class="nav-button nav-button__right nav-button--opaque nav-button--hoverable"
         v-tooltip.auto="'Stack'"
-        :to="{name: 'stack', params: {unit: main.currentSlide}}"
+        :to="{ name: 'stack', params: { unit: main.currentSlide } }"
       >
         <i class="material-icons">menu</i>
       </router-link>
@@ -126,7 +160,7 @@
         v-else
         class="nav-button nav-button__right nav-button--opaque nav-button--hoverable"
         v-tooltip.auto="'Stack'"
-        :to="{name: 'stack'}"
+        :to="{ name: 'stack' }"
       >
         <i class="material-icons">menu</i>
       </router-link>
@@ -137,13 +171,14 @@
     <!-- SINGLE WORK: INFO-->
     <template v-if="$route.name === 'singleWork' && $route.params.info">
       <router-link
-        :to="{name: 'singleWork', params: {hash: $route.params.hash}}"
+        :to="{ name: 'singleWork', params: { hash: $route.params.hash } }"
         class="nav-button nav-button__left nav-button--opaque nav-button--hoverable"
-      >{{main.currentWork.title}}</router-link>
+        >{{ main.currentWork.title }}</router-link
+      >
 
       <router-link
         class="nav-button nav-button__right nav-button--opaque nav-button--hoverable"
-        :to="{name: 'singleWork', params: {hash: $route.params.hash}}"
+        :to="{ name: 'singleWork', params: { hash: $route.params.hash } }"
       >
         <i class="material-icons">close</i>
       </router-link>
@@ -156,7 +191,9 @@
       <div
         @click="$router.go(-1)"
         class="nav-button nav-button__left nav-button--opaque nav-button--hoverable"
-      >{{main.currentWork.title}}</div>
+      >
+        {{ main.currentWork.title }}
+      </div>
       <div
         class="nav-button nav-button__right nav-button--opaque nav-button--hoverable"
         @click="$router.go(-1)"
@@ -169,31 +206,31 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex";
 
 export default {
-  name: 'navbar',
+  name: "navbar",
   data() {
     return {
       fromStatus: false,
-      fromStack: true,
-    }
+      fromStack: true
+    };
   },
   computed: {
-    ...mapState(['main']),
+    ...mapState(["main"])
   },
   watch: {
     $route(to, from) {
-      if (from.name === 'status') {
-        this.fromStatus = true
-        this.fromStack = false
+      if (from.name === "status") {
+        this.fromStatus = true;
+        this.fromStack = false;
       } else {
-        this.fromStatus = false
-        this.fromStack = true
+        this.fromStatus = false;
+        this.fromStack = true;
       }
-    },
-  },
-}
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -208,11 +245,11 @@ export default {
   height: 60px;
   z-index: 1000;
   position: fixed;
-  top:0;
+  top: 0;
   left: 0;
   width: 100vw;
   @include screen-size("small") {
-      box-shadow: 0px 0px 10px lightgrey;
+    box-shadow: 0px 0px 10px lightgrey;
   }
 }
 
@@ -222,7 +259,8 @@ export default {
   white-space: nowrap;
 
   &--opaque {
-    background: $black;  }
+    background: $black;
+  }
 
   &--hoverable {
     &:hover {

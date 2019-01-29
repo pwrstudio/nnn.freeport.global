@@ -1,56 +1,67 @@
 <template>
-  <router-link :to="'/&/' + exhibition.hash" class="status__users__table__body__row">
+  <router-link
+    :to="'/&/' + exhibition.hash"
+    class="status__users__table__body__row"
+  >
     <td class="status__users__table__body__row__cell">
       <i
         class="material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--open"
         v-if="payload.open"
-      >done</i>
+        >done</i
+      >
       <i
         class="material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--closed"
         v-else
-      >clear</i>
+        >clear</i
+      >
     </td>
-    <td class="status__users__table__body__row__cell" v-html="payload.start_date"/>
-    <td class="status__users__table__body__row__cell" v-html="payload.title"/>
-    <td class="status__users__table__body__row__cell" v-html="payload.festival"/>
+    <td
+      class="status__users__table__body__row__cell"
+      v-html="payload.start_date"
+    />
+    <td class="status__users__table__body__row__cell" v-html="payload.title" />
+    <td
+      class="status__users__table__body__row__cell"
+      v-html="payload.festival"
+    />
   </router-link>
 </template>
 
 <script>
-import { isPast, parse } from 'date-fns'
+import { isPast, parse } from "date-fns";
 
 export default {
-  name: 'statusExhibitionsRow',
+  name: "statusExhibitionsRow",
   props: {
     exhibition: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
       payload: {
-        title: '',
-        festival: '',
+        title: "",
+        festival: "",
         open: false,
         location: {
-          city: '',
-          country: '',
-        },
-      },
-    }
+          city: "",
+          country: ""
+        }
+      }
+    };
   },
   mounted() {
     const httpPromise = this.$http.get(
-      'https://cloudflare-ipfs.com/ipfs/' + this.exhibition.hash,
-    )
+      "https://cloudflare-ipfs.com/ipfs/" + this.exhibition.hash
+    );
     httpPromise.then(response => {
-      this.payload = response.body
-      this.payload.open = isPast(parse(this.payload.start_date))
-    })
-    httpPromise.catch(console.log)
-  },
-}
+      this.payload = response.body;
+      this.payload.open = isPast(parse(this.payload.start_date));
+    });
+    httpPromise.catch(console.log);
+  }
+};
 </script>
 
 <style scoped lang="scss">

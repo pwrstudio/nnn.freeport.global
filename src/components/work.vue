@@ -1,51 +1,59 @@
 <template>
-  <div class='work'
-       :class='{"work--open": payload.open, "work--closed": !payload.open, "work--open--active": green, "work--loaded": loaded}'>
-
-    <div class='work__image'
-         :style='"background-image: url(" + firstImage + ")"' />
+  <div
+    class="work"
+    :class="{
+      'work--open': payload.open,
+      'work--closed': !payload.open,
+      'work--open--active': green,
+      'work--loaded': loaded
+    }"
+  >
+    <div
+      class="work__image"
+      :style="'background-image: url(' + firstImage + ')'"
+    />
 
     <!-- OPEN-->
-    <router-link v-if='payload.open'
-                 :to='{name: "singleWork", params: {hash: hash}}'
-                 class='work__text'
-                 @mousedown.native='handleMouse'>
+    <router-link
+      v-if="payload.open"
+      :to="{ name: 'singleWork', params: { hash: hash } }"
+      class="work__text"
+      @mousedown.native="handleMouse"
+    >
       <section>
-        <div v-html='payload.title' />
-        <div v-html='artistList' />
+        <div v-html="payload.title" />
+        <div v-html="artistList" />
       </section>
     </router-link>
     <!-- END: OPEN-->
 
     <!--CLOSED -->
-    <div v-if='!payload.open'
-         class='work__text'>
+    <div v-if="!payload.open" class="work__text">
       <section>
-        <div v-html='payload.title' />
-        <div v-html='artistList' />
-        <div class='work__text__timer'
-             v-html='timeToPublish' />
-        <i class="material-icons material-icons--large"
-           v-if='showIcons'>close</i>
+        <div v-html="payload.title" />
+        <div v-html="artistList" />
+        <div class="work__text__timer" v-html="timeToPublish" />
+        <i class="material-icons material-icons--large" v-if="showIcons"
+          >close</i
+        >
       </section>
     </div>
     <!-- END: CLOSED -->
-
   </div>
 </template>
 
 <script>
-import countdown from 'countdown'
-import { isPast, parse } from 'date-fns'
-import ImgixClient from 'imgix-core-js'
+import countdown from "countdown";
+import { isPast, parse } from "date-fns";
+import ImgixClient from "imgix-core-js";
 
 export default {
-  name: 'work',
+  name: "work",
   props: {
     hash: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -53,115 +61,120 @@ export default {
       showIcons: false,
       green: false,
       payload: {
-        artists: [''],
+        artists: [""],
         content: [],
-        date: '',
-        title: '',
-        id: '',
+        date: "",
+        title: "",
+        id: "",
         open: false,
-        hash: '',
+        hash: ""
       },
-      firstImage: '',
+      firstImage: "",
       content: [],
-      timeToPublish: '',
+      timeToPublish: "",
       timerId: {},
       open: false,
-      artistList: '',
-    }
+      artistList: ""
+    };
   },
   mounted() {
     const httpPromise = this.$http.get(
-      'https://cloudflare-ipfs.com/ipfs/' + this.hash,
-    )
+      "https://cloudflare-ipfs.com/ipfs/" + this.hash
+    );
     httpPromise.then(response => {
-      this.payload = response.body
-      this.payload.open = isPast(parse(this.payload.date))
-      this.payload.hash = this.hash
-      this.setIcons()
-    })
-    httpPromise.catch(console.log)
+      this.payload = response.body;
+      this.payload.open = isPast(parse(this.payload.date));
+      this.payload.hash = this.hash;
+      this.setIcons();
+    });
+    httpPromise.catch(console.log);
   },
   methods: {
     handleMouse() {
-      this.green = true
+      this.green = true;
     },
     setIcons() {
       if (this.payload.hash === this.$route.params.unit) {
-        if (!this.payload.open) this.showIcons = true
-        else this.showIcons = false
+        if (!this.payload.open) this.showIcons = true;
+        else this.showIcons = false;
       }
     },
     setFirstImage() {
-      const img = this.content.find(c => c.media === 'Image')
+      const img = this.content.find(c => c.media === "Image");
       if (img) {
-        let options = {}
+        let options = {};
         if (this.payload.open) {
-          options = { w: 800, auto: 'compress,format' }
+          options = { w: 800, auto: "compress,format" };
         } else {
-          options = { w: 800, auto: 'compress,format', blur: 100, mono: 808080 }
+          options = {
+            w: 800,
+            auto: "compress,format",
+            blur: 100,
+            mono: 808080
+          };
         }
         const client = new ImgixClient({
-          domains: 'nnnfreeport.imgix.net',
-          secureURLToken: 'A8qQj2zw8eqcXqEW',
-        })
+          domains: "nnnfreeport.imgix.net",
+          secureURLToken: "A8qQj2zw8eqcXqEW"
+        });
         let url = client.buildURL(
-          'https://cloudflare-ipfs.com/ipfs/' + img.hash,
-          options,
-        )
-        this.firstImage = url
+          "https://cloudflare-ipfs.com/ipfs/" + img.hash,
+          options
+        );
+        this.firstImage = url;
       }
     },
     getArtistList() {
       if (this.payload.artists.length > 0) {
         return this.payload.artists.reduce(
-          (accumulator, currentValue) => accumulator + ', ' + currentValue,
-        )
+          (accumulator, currentValue) => accumulator + ", " + currentValue
+        );
       }
-    },
+    }
   },
   watch: {
     $route() {
-      this.setIcons()
+      this.setIcons();
     },
-    'payload.date'() {
+    "payload.date"() {
       countdown.setLabels(
-        'ms|s|m|h|d|w|m|y|d|s|m',
-        'ms|s|m|h|d|w|m|y|d|s|m',
-        ':',
-        ':',
-        'now',
-      )
+        "ms|s|m|h|d|w|m|y|d|s|m",
+        "ms|s|m|h|d|w|m|y|d|s|m",
+        ":",
+        ":",
+        "now"
+      );
       // countdown.setLabels('||:|:|:|:|:|:|:|:|:', '||:|:|:|:|:|:|:|:|:', '', '', 'now')
       this.timerId = countdown(
         new Date(this.payload.date),
         ts => {
-          this.timeToPublish = ts.toString()
+          this.timeToPublish = ts.toString();
         },
-        [countdown.HOURS, countdown.MINUTES, countdown.SECONDS],
-      )
+        [countdown.HOURS, countdown.MINUTES, countdown.SECONDS]
+      );
     },
-    'payload.content'() {
+    "payload.content"() {
       if (this.payload.content.length === 0) {
-        this.loaded = true
+        this.loaded = true;
       } else {
         this.payload.content.map(c => {
           const httpPromise = this.$http.get(
-            'https://cloudflare-ipfs.com/ipfs/' + c.hash,
-          )
+            "https://cloudflare-ipfs.com/ipfs/" + c.hash
+          );
           httpPromise.then(response => {
-            this.content.push(response.body)
-            this.setFirstImage()
-            this.loaded = true
-          })
-          httpPromise.catch(console.log)
-        })
+            this.content.push(response.body);
+            this.setFirstImage();
+            this.loaded = true;
+          });
+          httpPromise.catch(console.log);
+        });
       }
     },
     payload() {
-      this.artistList = this.getArtistList()
-    },
-  },
-}
+      this.artistList = this.getArtistList();
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">

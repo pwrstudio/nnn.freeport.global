@@ -7,7 +7,7 @@ import router from "./router";
 import store from "./store";
 import "./registerServiceWorker";
 import VueHead from "vue-head";
-import VueSocketIO from 'vue-socket.io'
+import VueSocketIO from "vue-socket.io";
 import VTooltip from "v-tooltip";
 import ga from "vue-ga";
 // import Raven from "raven-js";
@@ -26,7 +26,7 @@ Vue.use(VTooltip);
 Vue.use(
   new VueSocketIO({
     // debug: true,
-    connection: 'https://nnnfreeportrelay.now.sh'
+    connection: "https://nnnfreeportrelay.now.sh"
   })
 );
 

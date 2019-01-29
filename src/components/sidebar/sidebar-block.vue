@@ -1,49 +1,54 @@
 <template>
-  <router-link 
-    :to='{name: "stack", params: {unit: hash}}'
-    v-tooltip.left-start='payload.title'
-    class='sidebar-block'
-    :class='{"sidebar-block--active": (hash === $route.params.unit), "sidebar-block--open": payload.open, "sidebar-block--closed": !payload.open}'/>
+  <router-link
+    :to="{ name: 'stack', params: { unit: hash } }"
+    v-tooltip.left-start="payload.title"
+    class="sidebar-block"
+    :class="{
+      'sidebar-block--active': hash === $route.params.unit,
+      'sidebar-block--open': payload.open,
+      'sidebar-block--closed': !payload.open
+    }"
+  />
 </template>
 
 <script>
-import { isPast, parse } from 'date-fns'
+import { isPast, parse } from "date-fns";
 
 export default {
-  name: 'sidebar-block',
+  name: "sidebar-block",
   data() {
     return {
       payload: {
-        artists: [''],
+        artists: [""],
         content: [],
-        date: '',
-        title: '',
-        id: '',
+        date: "",
+        title: "",
+        id: "",
         open: false,
-        hash: '',
-      },
-    }
+        hash: ""
+      }
+    };
   },
   props: {
     hash: {
       type: String,
-      required: true,
-    },
+      required: true
+    }
   },
   mounted() {
     const httpPromise = this.$http.get(
-      'https://cloudflare-ipfs.com/ipfs/' + this.hash,
-    )
+      "https://cloudflare-ipfs.com/ipfs/" + this.hash
+    );
     httpPromise.then(response => {
-      this.payload = response.body
-      this.payload.open = isPast(parse(this.payload.date))
-      this.payload.hash = this.hash
-    })
+      this.payload = response.body;
+      this.payload.open = isPast(parse(this.payload.date));
+      this.payload.hash = this.hash;
+    });
     httpPromise.catch(err => {
-      console.log(err)
-    })
-  },
-}
+      console.log(err);
+    });
+  }
+};
 </script>
 
 <style scoped lang="scss">

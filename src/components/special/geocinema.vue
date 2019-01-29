@@ -1,22 +1,19 @@
 <template>
-  <div class='geocinema'>
-
-    <div class='geocinema__loader' :class='{"active": !loaded}'>
-      <div class='geocinema__loader__inner'>
-        More than thirty earth-orbiting satellite missions are currently writing your future parameters
-        <br>. . .<br>
-please wait. 
+  <div class="geocinema">
+    <div class="geocinema__loader" :class="{ active: !loaded }">
+      <div class="geocinema__loader__inner">
+        More than thirty earth-orbiting satellite missions are currently writing
+        your future parameters
+        <br />. . .<br />
+        please wait.
       </div>
     </div>
 
-    <div id='orbits'/>
+    <div id="orbits" />
 
-    <div class='geocinema__poetry'>{{poetry}}</div>
-
-  </div>  
+    <div class="geocinema__poetry">{{ poetry }}</div>
+  </div>
 </template>
-
-
 
 <script>
 import io from 'socket.io-client'
@@ -62,7 +59,8 @@ export default {
 
     // Get the text from poetry generator
     this.$http
-      .get('http://3.208.0.37:8888/geo_fortune')
+      // .get("http://3.208.0.37:8888/geo_fortune")
+      .get('https://nnnfreeportgeocinemaproxy-wbtmhiwlvv.now.sh')
       .then(response => {
         console.log(response)
         // this.poetry = decodeURIComponent(escape(response.body))
@@ -213,19 +211,18 @@ export default {
   align-items: center;
   @include hide-scroll;
 
-
   &__poetry {
     display: block;
     width: 40ch;
     max-width: 90vw;
     margin-bottom: 60px;
-    font-family: 'NeueHaasGrotesk', Helvetica, sans-serif;
+    font-family: "NeueHaasGrotesk", Helvetica, sans-serif;
     font-weight: 100;
     font-size: 38px;
     line-height: 1.3em;
     color: white;
     text-align: center;
-    @include screen-size('small') {
+    @include screen-size("small") {
       font-size: 32px;
     }
   }
@@ -243,7 +240,7 @@ export default {
     justify-content: center;
     align-items: center;
     @include hide-scroll;
-    background: rgba(0,0,0,0.9);
+    background: rgba(0, 0, 0, 0.9);
     z-index: 10;
 
     opacity: 0;
@@ -256,33 +253,30 @@ export default {
       transition: opacity 0.2s ease-out;
     }
 
-     &__inner {
+    &__inner {
       width: 40ch;
       max-width: 90vw;
       padding: 10px;
       background: #e2e0df;
-      font-family: 'NeueHaasGrotesk', Helvetica, sans-serif;
+      font-family: "NeueHaasGrotesk", Helvetica, sans-serif;
       font-weight: 500;
       font-size: 18px;
       line-height: 1.3em;
       text-align: center;
-
-     }
+    }
   }
-
 }
 
 #orbits {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100vw;
-    height: 100vh;
-    display: block;
-    z-index: 100;
-    background: none;
-    pointer-events: none;
-    z-index: 1;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  display: block;
+  z-index: 100;
+  background: none;
+  pointer-events: none;
+  z-index: 1;
 }
-
 </style>
