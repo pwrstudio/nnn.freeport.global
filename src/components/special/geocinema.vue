@@ -4,14 +4,14 @@
     <div class='geocinema__loader' :class='{"active": !loaded}'>
       <div class='geocinema__loader__inner'>
         More than thirty earth-orbiting satellite missions are currently writing your future parameters
-        <br>...</br>
+        <br>. . .<br>
 please wait. 
       </div>
     </div>
 
     <div id='orbits'/>
 
-    <div class='geocinema__poetry' v-html='poetry'/>
+    <div class='geocinema__poetry'>{{poetry}}</div>
 
   </div>  
 </template>
@@ -31,8 +31,7 @@ export default {
       markers: [],
       map: {},
       satelliteData: [],
-      poetry:
-        'This chronic lack of a habitable world,<br>sustaining plants and animals.<br>The occurrence of the sea now spread far as allied species.',
+      poetry: '',
     }
   },
   mounted() {
@@ -63,26 +62,26 @@ export default {
 
     // Get the text from poetry generator
     this.$http
-      .get('https://cloudflare-ipfs.com/ipfs/' + this.$route.params.hash)
+      .get('http://3.208.0.37:8888/geo_fortune')
       .then(response => {
-        //   this.poetry = response
+        console.log(response)
+        // this.poetry = decodeURIComponent(escape(response.body))
+        // this.poetry = unescape(encodeURIComponent(response.body))
+        this.poetry = response.body
       })
       .catch(e => console.log(e))
   },
   methods: {
     initMap() {
-      return new Promise((resolve, reject) => {
-        mapboxgl.accessToken =
-          'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg'
-        this.map = new mapboxgl.Map({
-          container: 'orbits',
-          // style: 'mapbox://styles/pwrstudio/cjrau64ym2mdf2smsa9jq2sdn',
-          style: 'mapbox://styles/pwrstudio/cjraus0n82scs2tq09prlmz3m',
-          center: [0, 35],
-          zoom: 1.1,
-          interactive: false,
-        })
-        resolve()
+      mapboxgl.accessToken =
+        'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg'
+      this.map = new mapboxgl.Map({
+        container: 'orbits',
+        // style: 'mapbox://styles/pwrstudio/cjrau64ym2mdf2smsa9jq2sdn',
+        style: 'mapbox://styles/pwrstudio/cjraus0n82scs2tq09prlmz3m',
+        center: [0, 35],
+        zoom: 1.1,
+        interactive: false,
       })
     },
     updateSatelliteMarkers() {
@@ -139,7 +138,7 @@ export default {
       this.markers = []
     },
     drawGroundTracks() {
-      console.log('DRAWING PATHS')
+      // console.log('DRAWING PATHS')
       var currentTime = Math.round(new Date().getTime() / 1000)
       this.satelliteData.forEach(satellite => {
         let coordinates = []
@@ -148,7 +147,7 @@ export default {
             satellite.positions[i].satlongitude > 179 ||
             satellite.positions[i].satlongitude < -179
           ) {
-            console.log('breaking:', satellite.positions[i].satlongitude)
+            // console.log('breaking:', satellite.positions[i].satlongitude)
             break
           }
           // Push every nth coordinate
