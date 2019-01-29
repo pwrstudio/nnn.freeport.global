@@ -60,7 +60,7 @@ export default {
     // Get the text from poetry generator
     this.$http
       // .get("http://3.208.0.37:8888/geo_fortune")
-      .get('https://nnnfreeportgeocinemaproxy-wbtmhiwlvv.now.sh')
+      .get('https://nnnfreeportgeocinemaproxy.now.sh')
       .then(response => {
         console.log(response)
         // this.poetry = decodeURIComponent(escape(response.body))
