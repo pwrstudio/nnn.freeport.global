@@ -1,15 +1,13 @@
-<template></template>
-
 <script>
-import { mapState } from 'vuex'
+import { mapState } from "vuex"
 
 export default {
-  name: 'tracking',
+  name: "tracking",
   computed: {
-    ...mapState(['main']),
+    ...mapState(["main"]),
   },
   watch: {
-    'main.container.works'() {
+    "main.container.works"() {
       // Try to find a matching post for the slug
       const matchingWork = this.main.container.works.find(
         w => w.id === this.$route.params.id,
@@ -18,12 +16,12 @@ export default {
       if (matchingWork) {
         // If found: go to post
         this.$router.push({
-          name: 'singleWork',
+          name: "singleWork",
           params: { hash: matchingWork.hash },
         })
       } else {
         // If not: got to 404 page
-        this.$router.push({ name: 'notFound' })
+        this.$router.push({ name: "notFound" })
       }
     },
   },

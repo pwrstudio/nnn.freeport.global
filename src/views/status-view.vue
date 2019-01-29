@@ -1,82 +1,109 @@
 <template>
-  <div class='status'>
+  <div class="status">
     <!-- 1 ROW -->
     <!-- 1 ROW -->
     <!-- 1 ROW -->
-    <div class='status__first'>
+    <div class="status__first">
       <!-- IPFS: ROOTHASH -->
-      <a href='/info#hash'
-         class='status__first__box'
-         v-tooltip.auto='"IPFS root hash"'>
+      <a
+        href="/info#hash"
+        class="status__first__box"
+        v-tooltip.auto="'IPFS root hash'"
+      >
         <div class="status__first__box__label">
           <i class="material-icons">flag</i>
         </div>
-        <span class='status__first__box__info'
-              v-html='main.rootHash' />
+        <span class="status__first__box__info" v-html="main.rootHash" />
       </a>
       <!-- Ethereum: CONTRACT ADDRESS-->
-      <a href='/info#hash'
-         class='status__first__box'
-         v-tooltip.auto='"Ethereum contract address"'>
+      <a
+        href="/info#hash"
+        class="status__first__box"
+        v-tooltip.auto="'Ethereum contract address'"
+      >
         <div class="status__first__box__label">
           <i class=" material-icons">lock_outline</i>
         </div>
-        <span class='status__first__box__info'>0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A</span>
+        <span class="status__first__box__info"
+          >0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A</span
+        >
       </a>
       <!-- Last update -->
-      <a href='https://rinkeby.etherscan.io/address/0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A'
-         target=_blank
-         class='status__first__box'
-         v-tooltip.auto='"Last update"'>
+      <a
+        href="https://rinkeby.etherscan.io/address/0x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A"
+        target="_blank"
+        class="status__first__box"
+        v-tooltip.auto="'Last update'"
+      >
         <div class="status__first__box__label">
           <i class="material-icons">query_builder</i>
         </div>
-        <span class='status__first__box__info'
-              v-html='formatDate(main.container.updated)' />
+        <span
+          class="status__first__box__info"
+          v-html="formatDate(main.container.updated)"
+        />
       </a>
     </div>
     <!-- 2 ROW -->
     <!-- 2 ROW -->
     <!-- 2 ROW -->
-    <div class='status__second'>
-      <div :class='{"mobile-show": activeMobileTab === "list"}'
-           class='status__second__table'>
+    <div class="status__second">
+      <div
+        :class="{ 'mobile-show': activeMobileTab === 'list' }"
+        class="status__second__table"
+      >
         <table>
-          <thead class='status__second__table__header'>
-            <th class='status__second__table__header__cell status__second__table__header__cell--mobile-hide' />
-            <th class='status__second__table__header__cell'>
+          <thead class="status__second__table__header">
+            <th
+              class="status__second__table__header__cell status__second__table__header__cell--mobile-hide"
+            />
+            <th class="status__second__table__header__cell">
               ID
             </th>
-            <th class='status__second__table__header__cell status__second__table__header__cell--mobile-hide'>
+            <th
+              class="status__second__table__header__cell status__second__table__header__cell--mobile-hide"
+            >
               IP
             </th>
-            <th class='status__second__table__header__cell'>
+            <th class="status__second__table__header__cell">
               <i class="material-icons">location_on</i>
             </th>
-            <th class='status__second__table__header__cell'>
+            <th class="status__second__table__header__cell">
               <i class="material-icons">timer</i>
             </th>
           </thead>
-          <tbody class='status__second__table__body'>
-            <statusUserRow v-for='user in main.userList'
-                           :key='user.id'
-                           :user='user' />
+          <tbody class="status__second__table__body">
+            <statusUserRow
+              v-for="user in main.userList"
+              :key="user.id"
+              :user="user"
+            />
           </tbody>
         </table>
       </div>
-      <div id='map'
-           :class='{"mobile-show":activeMobileTab === "map"}'
-           class='status__second__map' />
+      <div
+        id="map"
+        :class="{ 'mobile-show': activeMobileTab === 'map' }"
+        class="status__second__map"
+      />
       <!-- Mobile tabs -->
-      <div class='status__second__tabs'>
-        <div @click='activeMobileTab = "map"'
-             class='status__second__tabs__tab'
-             :class='{"status__second__tabs__tab--active": activeMobileTab === "map"}'>
+      <div class="status__second__tabs">
+        <div
+          @click="activeMobileTab = 'map'"
+          class="status__second__tabs__tab"
+          :class="{
+            'status__second__tabs__tab--active': activeMobileTab === 'map'
+          }"
+        >
           <i class="material-icons">place</i>
         </div>
-        <div @click='activeMobileTab = "list"'
-             class='status__second__tabs__tab'
-             :class='{"status__second__tabs__tab--active": activeMobileTab === "list"}'>
+        <div
+          @click="activeMobileTab = 'list'"
+          class="status__second__tabs__tab"
+          :class="{
+            'status__second__tabs__tab--active': activeMobileTab === 'list'
+          }"
+        >
           <i class="material-icons">list</i>
         </div>
       </div>
@@ -84,40 +111,60 @@
     <!-- 3 ROW -->
     <!-- 3 ROW -->
     <!-- 3 ROW -->
-    <div class='status__third'>
+    <div class="status__third">
       <!-- Log-->
-      <div class='status__third__table'>
+      <div class="status__third__table">
         <table>
-          <tbody class='status__third__table__body'>
-            <statusLogRow v-for='(msg, index) in main.log'
-                          :key='index'
-                          :msg='msg' />
+          <tbody class="status__third__table__body">
+            <statusLogRow
+              v-for="(msg, index) in main.log"
+              :key="index"
+              :msg="msg"
+            />
           </tbody>
         </table>
       </div>
       <!-- Works/exhibitions list-->
-      <div class='status__third__inventory'>
-        <div class='status__third__inventory__tabs'>
-          <div @click='activeTab = "works"'
-               class='status__third__inventory__tabs__tab'
-               :class='{"status__third__inventory__tabs__tab--active": activeTab === "works"}'
-               v-html='"Works (" + main.container.works.length  + ")"' />
-          <div @click='activeTab = "exhibitions"'
-               class='status__third__inventory__tabs__tab'
-               :class='{"status__third__inventory__tabs__tab--active": activeTab === "exhibitions"}'
-               v-html='"Exhibitions (" + main.container.exhibitions.length  + ")"' />
+      <div class="status__third__inventory">
+        <div class="status__third__inventory__tabs">
+          <div
+            @click="activeTab = 'works'"
+            class="status__third__inventory__tabs__tab"
+            :class="{
+              'status__third__inventory__tabs__tab--active':
+                activeTab === 'works'
+            }"
+            v-html="'Works (' + main.container.works.length + ')'"
+          />
+          <div
+            @click="activeTab = 'exhibitions'"
+            class="status__third__inventory__tabs__tab"
+            :class="{
+              'status__third__inventory__tabs__tab--active':
+                activeTab === 'exhibitions'
+            }"
+            v-html="'Exhibitions (' + main.container.exhibitions.length + ')'"
+          />
         </div>
-        <div v-if='activeTab === "works"'
-             class='status__third__inventory__container'>
-          <statusWorksRow v-for='work in main.container.works'
-                          :key='work.id'
-                          :work='work' />
+        <div
+          v-if="activeTab === 'works'"
+          class="status__third__inventory__container"
+        >
+          <statusWorksRow
+            v-for="work in main.container.works"
+            :key="work.id"
+            :work="work"
+          />
         </div>
-        <div v-if='activeTab === "exhibitions"'
-             class='status__third__inventory__container'>
-          <statusExhibitionsRow v-for='exhibition in main.container.exhibitions'
-                                :key='exhibition.id'
-                                :exhibition='exhibition' />
+        <div
+          v-if="activeTab === 'exhibitions'"
+          class="status__third__inventory__container"
+        >
+          <statusExhibitionsRow
+            v-for="exhibition in main.container.exhibitions"
+            :key="exhibition.id"
+            :exhibition="exhibition"
+          />
         </div>
       </div>
     </div>
@@ -125,19 +172,19 @@
 </template>
 
 <script>
-import { mapState } from 'vuex'
-import mapboxgl from 'mapbox-gl'
-import { format, parse } from 'date-fns'
-import isWebGLEnabled from 'is-webgl-enabled'
+import { mapState } from "vuex"
+import mapboxgl from "mapbox-gl"
+import { format, parse } from "date-fns"
+import isWebGLEnabled from "is-webgl-enabled"
 
-const statusUserRow = () => import('@/components/rows/status-user-row')
-const statusLogRow = () => import('@/components/rows/status-log-row')
-const statusWorksRow = () => import('@/components/rows/status-works-row')
+const statusUserRow = () => import("@/components/rows/status-user-row")
+const statusLogRow = () => import("@/components/rows/status-log-row")
+const statusWorksRow = () => import("@/components/rows/status-works-row")
 const statusExhibitionsRow = () =>
-  import('@/components/rows/status-exhibitions-row')
+  import("@/components/rows/status-exhibitions-row")
 
 export default {
-  name: 'statusView',
+  name: "statusView",
   components: {
     statusUserRow,
     statusLogRow,
@@ -148,12 +195,12 @@ export default {
     return {
       map: {},
       markers: [],
-      activeTab: 'works',
-      activeMobileTab: 'map',
+      activeTab: "works",
+      activeMobileTab: "map",
     }
   },
   computed: {
-    ...mapState(['main']),
+    ...mapState(["main"]),
   },
   methods: {
     clearMarkers() {
@@ -166,10 +213,10 @@ export default {
     initMap() {
       return new Promise((resolve, reject) => {
         mapboxgl.accessToken =
-          'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg'
+          "pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg"
         this.map = new mapboxgl.Map({
-          container: 'map',
-          style: 'mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o',
+          container: "map",
+          style: "mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o",
           center: [13.404954, 52.520008],
           zoom: 1,
         })
@@ -179,8 +226,8 @@ export default {
     setMarkers() {
       if (this.main.userList.length > this.markers.length) {
         this.main.userList.map(user => {
-          var el = document.createElement('div')
-          el.className = 'marker'
+          var el = document.createElement("div")
+          el.className = "marker"
           this.markers.push(
             new mapboxgl.Marker(el)
               .setLngLat([user.geo.ll[1], user.geo.ll[0]])
@@ -190,9 +237,9 @@ export default {
       }
     },
     makeId() {
-      let text = ''
+      let text = ""
       const possible =
-        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
 
       for (var i = 0; i < 5; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length))
@@ -201,7 +248,7 @@ export default {
       return text
     },
     formatDate(date) {
-      return format(parse(date), 'YYYY-MM-DD HH:MM')
+      return format(parse(date), "YYYY-MM-DD HH:MM")
     },
   },
   mounted() {
@@ -214,7 +261,7 @@ export default {
     }
   },
   watch: {
-    'main.userList'() {
+    "main.userList"() {
       if (isWebGLEnabled) {
         this.clearMarkers()
         this.setMarkers()
@@ -222,7 +269,7 @@ export default {
     },
     activeMobileTab() {
       this.$nextTick(() => {
-        if (this.activeMobileTab === 'map' && isWebGLEnabled) {
+        if (this.activeMobileTab === "map" && isWebGLEnabled) {
           this.$nextTick(() => {
             this.initMap().then(() => {
               this.setMarkers()
@@ -346,7 +393,7 @@ export default {
       display: none;
     }
 
-    @include screen-size('short') {
+    @include screen-size("short") {
       display: none;
     }
   }
@@ -358,7 +405,7 @@ export default {
     width: 100%;
     height: 50%;
 
-    @include screen-size('short') {
+    @include screen-size("short") {
       height: 60%;
     }
 

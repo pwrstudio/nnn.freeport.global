@@ -1,12 +1,12 @@
 <template>
-  <div class='refuse'>
-    <router-link to='/'>403</router-link>
+  <div class="refuse">
+    <router-link to="/">403</router-link>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'notFound',
+  name: "notFound",
 }
 </script>
 
@@ -14,7 +14,7 @@ export default {
 @import "../style/helpers/_mixins.scss";
 @import "../style/helpers/_responsive.scss";
 @import "../style/_variables.scss";
-@import '../style/vendor/swiper.css';
+@import "../style/vendor/swiper.css";
 
 .refuse {
   position: fixed;

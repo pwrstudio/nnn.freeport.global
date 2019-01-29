@@ -1,66 +1,73 @@
 <template>
-  <div class="exhibition" :class="{'exhibition--show': loaded}">
+  <div class="exhibition" :class="{ 'exhibition--show': loaded }">
     <!-- TITLE -->
     <div class="info-overlay__title">
-      <span class="info-overlay__title__label" v-html="'title'"/>
-      <span v-html="payload.title"/>
+      <span class="info-overlay__title__label" v-html="'title'" />
+      <span v-html="payload.title" />
     </div>
 
     <!-- FESTIVAL-->
     <div class="info-overlay__title">
-      <span class="info-overlay__title__label" v-html="'Festival'"/>
-      <span v-html="payload.festival"/>
+      <span class="info-overlay__title__label" v-html="'Festival'" />
+      <span v-html="payload.festival" />
     </div>
 
     <!-- LOCATION -->
     <div class="info-overlay__title">
-      <span class="info-overlay__title__label" v-html="'Location'"/>
-      <span>{{payload.location.venue}}, {{payload.location.city}}, {{payload.location.country}}</span>
+      <span class="info-overlay__title__label" v-html="'Location'" />
+      <span
+        >{{ payload.location.venue }}, {{ payload.location.city }},
+        {{ payload.location.country }}</span
+      >
     </div>
 
     <!-- DATES -->
     <div class="info-overlay__title">
-      <span class="info-overlay__title__label" v-html="'title'"/>
-      <span v-html="payload.start_date"/> –
-      <span v-html="payload.end_date"/>
+      <span class="info-overlay__title__label" v-html="'title'" />
+      <span v-html="payload.start_date" /> –
+      <span v-html="payload.end_date" />
     </div>
 
     <!-- DESCRIPTION -->
-    <div v-if="payload.description" class="info-overlay__description" v-html="payload.description"/>
+    <div
+      v-if="payload.description"
+      class="info-overlay__description"
+      v-html="payload.description"
+    />
   </div>
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions } from "vuex"
 
 export default {
-  name: 'exhibitionView',
+  name: "exhibitionView",
   data() {
     return {
       loaded: false,
       payload: {
         content: [],
-        data: '',
-        id: '',
-        title: '',
+        data: "",
+        id: "",
+        title: "",
       },
     }
   },
   mounted() {
     const httpPromise = this.$http.get(
-      'https://cloudflare-ipfs.com/ipfs/' + this.$route.params.exhibitionHash,
+      "https://cloudflare-ipfs.com/ipfs/" + this.$route.params.exhibitionHash,
     )
     httpPromise.then(response => {
       this.payload = response.body
       this.loaded = true
     })
     httpPromise.catch(e => {
-      this.$router.push({ name: 'notFound' })
+      this.$router.push({ name: "notFound" })
     })
   },
   computed: {},
   methods: {
-    ...mapActions(['SET_CURRENT_exhibition']),
+    ...mapActions(["SET_CURRENT_exhibition"]),
   },
 }
 </script>
@@ -85,7 +92,7 @@ export default {
   letter-spacing: 1px;
   text-transform: uppercase;
   width: 12ch;
-  @include screen-size('medium') {
+  @include screen-size("medium") {
     font-size: 12px;
     width: auto;
   }

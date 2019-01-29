@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="app">
-    <navbar/>
-    <router-view id="main-view"/>
+    <navbar />
+    <router-view id="main-view" />
   </div>
 </template>
 
@@ -72,11 +72,6 @@ export default {
         hash: data.hash,
         type: 'activity',
       })
-    },
-    chat(data) {
-      if (!this.main.chat.active) {
-        this.TOGGLE_CHAT()
-      }
     },
   },
   mounted() {
@@ -206,7 +201,7 @@ export default {
 }
 </script>
 
-<style lang='scss'>
+<style lang="scss">
 @import "./style/helpers/_mixins.scss";
 @import "./style/helpers/_responsive.scss";
 @import "./style/_variables.scss";

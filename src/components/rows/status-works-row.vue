@@ -1,35 +1,53 @@
 <template>
   <tr
     class="status__users__table__body__row"
-    :class="{'status__users__table__body__row--positive': payload.open, 'status__users__table__body__row--negative': !payload.open, }"
-    @mousedown="goToWork">
+    :class="{
+      'status__users__table__body__row--positive': payload.open,
+      'status__users__table__body__row--negative': !payload.open
+    }"
+    @mousedown="goToWork"
+  >
     <td class="status__users__table__body__row__cell">
-      <i class="material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--open"
-        v-if="payload.open">done</i>
-      <i class="material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--closed"
-        v-else>clear</i>
+      <i
+        class="material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--open"
+        v-if="payload.open"
+        >done</i
+      >
+      <i
+        class="material-icons status__users__table__body__row__cell__icon material-icons status__users__table__body__row__cell__icon--closed"
+        v-else
+        >clear</i
+      >
     </td>
-    <td class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide"/>
-    <td class="status__users__table__body__row__cell" v-html="payload.title"/>
-    <td class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide"
-      v-html="payload.artistList"/>
-    <div class='status__users__table__body__row__alert' :class="{'status__users__table__body__row__alert--active': alert}">
+    <td
+      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide"
+    />
+    <td class="status__users__table__body__row__cell" v-html="payload.title" />
+    <td
+      class="status__users__table__body__row__cell status__users__table__body__row__cell--mobile-hide"
+      v-html="payload.artistList"
+    />
+    <div
+      class="status__users__table__body__row__alert"
+      :class="{ 'status__users__table__body__row__alert--active': alert }"
+    >
       <i class="material-icons material-icons--large">close</i>
-      Open in {{timeToPublish}}</div>
+      Open in {{ timeToPublish }}
+    </div>
   </tr>
 </template>
 
 <script>
-import { isPast, parse } from 'date-fns'
-import countdown from 'countdown'
+import { isPast, parse } from "date-fns";
+import countdown from "countdown";
 
 export default {
-  name: 'statusWorksRow',
+  name: "statusWorksRow",
   props: {
     work: {
       type: Object,
-      required: true,
-    },
+      required: true
+    }
   },
   data() {
     return {
@@ -37,69 +55,69 @@ export default {
         artists: [],
         artistList: [],
         content: [],
-        data: '',
+        data: "",
         open: false,
-        id: '',
-        title: '',
+        id: "",
+        title: ""
       },
       alert: false,
-      timeToPublish: 0,
-    }
+      timeToPublish: 0
+    };
   },
   mounted() {
     const httpPromise = this.$http.get(
-      'https://cloudflare-ipfs.com/ipfs/' + this.work.hash,
-    )
+      "https://cloudflare-ipfs.com/ipfs/" + this.work.hash
+    );
     httpPromise.then(response => {
-      this.payload = response.body
-      this.payload.open = isPast(parse(this.payload.date))
+      this.payload = response.body;
+      this.payload.open = isPast(parse(this.payload.date));
       if (!this.payload.open) {
         countdown.setLabels(
-          'ms|s|m|h|d|w|m|y|d|s|m',
-          'ms|s|m|h|d|w|m|y|d|s|m',
-          ':',
-          ':',
-          'now',
-        )
+          "ms|s|m|h|d|w|m|y|d|s|m",
+          "ms|s|m|h|d|w|m|y|d|s|m",
+          ":",
+          ":",
+          "now"
+        );
         this.timerId = countdown(
           new Date(this.payload.date),
           ts => {
-            this.timeToPublish = ts.toString()
+            this.timeToPublish = ts.toString();
           },
-          [countdown.DAYS, countdown.HOURS],
-        )
+          [countdown.DAYS, countdown.HOURS]
+        );
       }
-    })
-    httpPromise.catch(console.log)
+    });
+    httpPromise.catch(console.log);
   },
   methods: {
     getArtistList() {
       if (this.payload.artists.length > 0) {
         return this.payload.artists.reduce(
-          (accumulator, currentValue) => accumulator + ', ' + currentValue,
-        )
+          (accumulator, currentValue) => accumulator + ", " + currentValue
+        );
       }
     },
     goToWork() {
       if (this.payload.open) {
         this.$router.push({
-          name: 'singleWork',
-          params: { hash: this.work.hash },
-        })
+          name: "singleWork",
+          params: { hash: this.work.hash }
+        });
       } else {
-        this.alert = true
+        this.alert = true;
         window.setTimeout(() => {
-          this.alert = false
-        }, 1000)
+          this.alert = false;
+        }, 1000);
       }
-    },
+    }
   },
   watch: {
     payload() {
-      this.payload.artistList = this.getArtistList()
-    },
-  },
-}
+      this.payload.artistList = this.getArtistList();
+    }
+  }
+};
 </script>
 
 <style scoped lang="scss">
@@ -122,11 +140,11 @@ export default {
 
       &__alert {
         @include center;
-        position: fixed; 
+        position: fixed;
         background: $red;
         opacity: 0;
         font-size: 64px;
-        line-height: 64px; 
+        line-height: 64px;
         color: black;
         // min-width: 70vw;
         padding: 100px;
