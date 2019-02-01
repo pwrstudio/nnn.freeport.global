@@ -172,19 +172,19 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
-import mapboxgl from "mapbox-gl"
-import { format, parse } from "date-fns"
-import isWebGLEnabled from "is-webgl-enabled"
+import { mapState } from 'vuex'
+import mapboxgl from 'mapbox-gl'
+import { format, parse } from 'date-fns'
+import isWebGLEnabled from 'is-webgl-enabled'
 
-const statusUserRow = () => import("@/components/rows/status-user-row")
-const statusLogRow = () => import("@/components/rows/status-log-row")
-const statusWorksRow = () => import("@/components/rows/status-works-row")
+const statusUserRow = () => import('@/components/rows/status-user-row')
+const statusLogRow = () => import('@/components/rows/status-log-row')
+const statusWorksRow = () => import('@/components/rows/status-works-row')
 const statusExhibitionsRow = () =>
-  import("@/components/rows/status-exhibitions-row")
+  import('@/components/rows/status-exhibitions-row')
 
 export default {
-  name: "statusView",
+  name: 'statusView',
   components: {
     statusUserRow,
     statusLogRow,
@@ -195,12 +195,12 @@ export default {
     return {
       map: {},
       markers: [],
-      activeTab: "works",
-      activeMobileTab: "map",
+      activeTab: 'works',
+      activeMobileTab: 'map',
     }
   },
   computed: {
-    ...mapState(["main"]),
+    ...mapState(['main']),
   },
   methods: {
     clearMarkers() {
@@ -213,10 +213,10 @@ export default {
     initMap() {
       return new Promise((resolve, reject) => {
         mapboxgl.accessToken =
-          "pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg"
+          'pk.eyJ1IjoicHdyc3R1ZGlvIiwiYSI6ImNpbTJmMWYwazAwbXV2a201dHV4M3Q0MTEifQ.haMHeGT4HNA8zI2S0BDgGg'
         this.map = new mapboxgl.Map({
-          container: "map",
-          style: "mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o",
+          container: 'map',
+          style: 'mapbox://styles/pwrstudio/cjckofn6i05vq2sqw7rfll80o',
           center: [13.404954, 52.520008],
           zoom: 1,
         })
@@ -226,8 +226,8 @@ export default {
     setMarkers() {
       if (this.main.userList.length > this.markers.length) {
         this.main.userList.map(user => {
-          var el = document.createElement("div")
-          el.className = "marker"
+          var el = document.createElement('div')
+          el.className = 'marker'
           this.markers.push(
             new mapboxgl.Marker(el)
               .setLngLat([user.geo.ll[1], user.geo.ll[0]])
@@ -237,9 +237,9 @@ export default {
       }
     },
     makeId() {
-      let text = ""
+      let text = ''
       const possible =
-        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789"
+        'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
 
       for (var i = 0; i < 5; i++) {
         text += possible.charAt(Math.floor(Math.random() * possible.length))
@@ -248,7 +248,7 @@ export default {
       return text
     },
     formatDate(date) {
-      return format(parse(date), "YYYY-MM-DD HH:MM")
+      return format(parse(date), 'YYYY-MM-DD HH:MM')
     },
   },
   mounted() {
@@ -261,7 +261,7 @@ export default {
     }
   },
   watch: {
-    "main.userList"() {
+    'main.userList'() {
       if (isWebGLEnabled) {
         this.clearMarkers()
         this.setMarkers()
@@ -269,7 +269,7 @@ export default {
     },
     activeMobileTab() {
       this.$nextTick(() => {
-        if (this.activeMobileTab === "map" && isWebGLEnabled) {
+        if (this.activeMobileTab === 'map' && isWebGLEnabled) {
           this.$nextTick(() => {
             this.initMap().then(() => {
               this.setMarkers()
@@ -516,7 +516,7 @@ export default {
         height: 90%;
         overflow-x: hidden;
         overflow-y: auto;
-
+                
         @include hide-scroll;
       }
 

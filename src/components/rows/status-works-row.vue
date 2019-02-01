@@ -38,16 +38,16 @@
 </template>
 
 <script>
-import { isPast, parse } from "date-fns";
-import countdown from "countdown";
+import { isPast, parse } from 'date-fns'
+import countdown from 'countdown'
 
 export default {
-  name: "statusWorksRow",
+  name: 'statusWorksRow',
   props: {
     work: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
@@ -55,69 +55,69 @@ export default {
         artists: [],
         artistList: [],
         content: [],
-        data: "",
+        data: '',
         open: false,
-        id: "",
-        title: ""
+        id: '',
+        title: '',
       },
       alert: false,
-      timeToPublish: 0
-    };
+      timeToPublish: 0,
+    }
   },
   mounted() {
     const httpPromise = this.$http.get(
-      "https://cloudflare-ipfs.com/ipfs/" + this.work.hash
-    );
+      'https://cloudflare-ipfs.com/ipfs/' + this.work.hash,
+    )
     httpPromise.then(response => {
-      this.payload = response.body;
-      this.payload.open = isPast(parse(this.payload.date));
+      this.payload = response.body
+      this.payload.open = isPast(parse(this.payload.date))
       if (!this.payload.open) {
         countdown.setLabels(
-          "ms|s|m|h|d|w|m|y|d|s|m",
-          "ms|s|m|h|d|w|m|y|d|s|m",
-          ":",
-          ":",
-          "now"
-        );
+          'ms|s|m|h|d|w|m|y|d|s|m',
+          'ms|s|m|h|d|w|m|y|d|s|m',
+          ':',
+          ':',
+          'now',
+        )
         this.timerId = countdown(
           new Date(this.payload.date),
           ts => {
-            this.timeToPublish = ts.toString();
+            this.timeToPublish = ts.toString()
           },
-          [countdown.DAYS, countdown.HOURS]
-        );
+          [countdown.DAYS, countdown.HOURS],
+        )
       }
-    });
-    httpPromise.catch(console.log);
+    })
+    httpPromise.catch(console.log)
   },
   methods: {
     getArtistList() {
       if (this.payload.artists.length > 0) {
         return this.payload.artists.reduce(
-          (accumulator, currentValue) => accumulator + ", " + currentValue
-        );
+          (accumulator, currentValue) => accumulator + ', ' + currentValue,
+        )
       }
     },
     goToWork() {
       if (this.payload.open) {
         this.$router.push({
-          name: "singleWork",
-          params: { hash: this.work.hash }
-        });
+          name: 'singleWork',
+          params: { hash: this.work.hash },
+        })
       } else {
-        this.alert = true;
+        this.alert = true
         window.setTimeout(() => {
-          this.alert = false;
-        }, 1000);
+          this.alert = false
+        }, 1000)
       }
-    }
+    },
   },
   watch: {
     payload() {
-      this.payload.artistList = this.getArtistList();
-    }
-  }
-};
+      this.payload.artistList = this.getArtistList()
+    },
+  },
+}
 </script>
 
 <style scoped lang="scss">
@@ -126,17 +126,15 @@ export default {
 @import "../../style/_variables.scss";
 
 .status__users__table {
-  // padding-bottom: 140px;
-
   &__body {
     &__row {
       cursor: pointer;
-      border-bottom: 2px solid $white !important;
-      font-size: $font-size-small;
+      font-size: $font-size-xs;
+      display:table-row;
 
-      // &:last-child {
-      //   margin-bottom: 140px;
-      // }
+      &:last-child {
+        margin-bottom: 200px;
+      }
 
       &__alert {
         @include center;
@@ -164,26 +162,11 @@ export default {
         }
       }
 
-      &--positive {
-        &:active {
-          background: $green;
-          color: $black;
-        }
-      }
-      &--negative {
-        transition: background 0.2s ease-out;
-        &:active {
-          transition: background 0s ease-out;
-          background: $red;
-          color: $black;
-        }
-      }
-
       &__cell {
         cursor: pointer;
         margin: 0;
-        border-bottom: 2px solid $black;
-        padding: 10px;
+        border-bottom: 1px solid grey;
+        padding: 5px;
         user-select: none;
         overflow: hidden;
 
@@ -208,6 +191,50 @@ export default {
           }
         }
       }
+
+      &--positive {
+          &:active {
+            background: $green;
+            color: $black;   
+            &__icon {
+              &--open {
+                color: $black !important;
+              }
+            }
+          }
+          &:hover {
+            background: $green;
+            color: $black;   
+            &__icon {
+              &--open {
+                color: $black;
+              }
+            } 
+          }
+        }
+
+        &--negative {
+          transition: background 0.2s ease-out;
+          &:active {
+            transition: background 0s ease-out;
+            background: $red;
+            color: $black;
+            &__icon {
+              &--closed {
+                color: $black !important;
+              }
+            }
+          }
+          &:hover {
+            background: $red;
+            color: $black;
+            &__icon {
+              &--closed {
+                color: $black !important;
+              }
+            }
+          }
+        }
     }
   }
 }
