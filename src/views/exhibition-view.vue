@@ -38,36 +38,36 @@
 </template>
 
 <script>
-import { mapActions } from "vuex"
+import { mapActions } from 'vuex'
 
 export default {
-  name: "exhibitionView",
+  name: 'exhibitionView',
   data() {
     return {
       loaded: false,
       payload: {
         content: [],
-        data: "",
-        id: "",
-        title: "",
+        data: '',
+        id: '',
+        title: '',
       },
     }
   },
   mounted() {
     const httpPromise = this.$http.get(
-      "https://cloudflare-ipfs.com/ipfs/" + this.$route.params.exhibitionHash,
+      'https://cloudflare-ipfs.com/ipfs/' + this.$route.params.exhibitionHash,
     )
     httpPromise.then(response => {
       this.payload = response.body
       this.loaded = true
     })
     httpPromise.catch(e => {
-      this.$router.push({ name: "notFound" })
+      this.$router.push({ name: 'notFound' })
     })
   },
   computed: {},
   methods: {
-    ...mapActions(["SET_CURRENT_exhibition"]),
+    ...mapActions(['SET_CURRENT_exhibition']),
   },
 }
 </script>
@@ -164,6 +164,7 @@ export default {
   &__description {
     @include box;
     margin-bottom: 180px;
+    line-height: 1.6em;
     &__label {
       @include label;
     }

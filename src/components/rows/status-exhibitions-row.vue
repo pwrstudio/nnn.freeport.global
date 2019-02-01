@@ -17,7 +17,7 @@
     </td>
     <td
       class="status__users__table__body__row__cell"
-      v-html="payload.start_date"
+      v-html="payload.start_date.slice(2)"
     />
     <td class="status__users__table__body__row__cell" v-html="payload.title" />
     <td
@@ -28,40 +28,40 @@
 </template>
 
 <script>
-import { isPast, parse } from "date-fns";
+import { isPast, parse } from 'date-fns'
 
 export default {
-  name: "statusExhibitionsRow",
+  name: 'statusExhibitionsRow',
   props: {
     exhibition: {
       type: Object,
-      required: true
-    }
+      required: true,
+    },
   },
   data() {
     return {
       payload: {
-        title: "",
-        festival: "",
+        title: '',
+        festival: '',
         open: false,
         location: {
-          city: "",
-          country: ""
-        }
-      }
-    };
+          city: '',
+          country: '',
+        },
+      },
+    }
   },
   mounted() {
     const httpPromise = this.$http.get(
-      "https://cloudflare-ipfs.com/ipfs/" + this.exhibition.hash
-    );
+      'https://cloudflare-ipfs.com/ipfs/' + this.exhibition.hash,
+    )
     httpPromise.then(response => {
-      this.payload = response.body;
-      this.payload.open = isPast(parse(this.payload.start_date));
-    });
-    httpPromise.catch(console.log);
-  }
-};
+      this.payload = response.body
+      this.payload.open = isPast(parse(this.payload.start_date))
+    })
+    httpPromise.catch(console.log)
+  },
+}
 </script>
 
 <style scoped lang="scss">
@@ -71,21 +71,33 @@ export default {
 
 .status__users__table {
   &__body {
+    background: red;
     &__row {
-      border-bottom: 2px solid $white;
-      font-size: $font-size-small;
+      font-size: $font-size-xs;
       cursor: pointer;
       display: table-row;
+      width: 100% !important;
+
+      &:active {
+        background: $white;
+        color: $black;
+      }
+      &:hover {
+        background: $white;
+        color: $black;     
+      }
 
       &__cell {
         margin: 0;
-        border-bottom: 2px solid $black;
-        padding: 10px;
+        border-bottom: 1px solid grey;
+        padding: 7px;
         user-select: none;
+
+
 
         &__icon {
           font-size: $font-size-medium;
-          line-height: 20px;
+          line-height: 16px;
           position: relative;
           top: 5px;
 
