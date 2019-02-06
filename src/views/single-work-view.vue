@@ -94,17 +94,17 @@
 </template>
 
 <script>
-import { mapState, mapActions } from "vuex"
-import contentAtom from "@/components/content-atom/content-atom"
-import slideShow from "@/components/content-atom/slide-show"
-import singleContentOverlay from "@/components/single-content-overlay"
-import slideShowOverlay from "@/components/slide-show-overlay"
-import geoCinema from "@/components/special/geocinema"
-import QRCode from "qrcode"
-import { isPast } from "date-fns"
+import { mapState, mapActions } from 'vuex'
+import contentAtom from '@/components/content-atom/content-atom'
+import slideShow from '@/components/content-atom/slide-show'
+import singleContentOverlay from '@/components/single-content-overlay'
+import slideShowOverlay from '@/components/slide-show-overlay'
+import geoCinema from '@/components/special/geocinema'
+import QRCode from 'qrcode'
+import { isPast } from 'date-fns'
 
 export default {
-  name: "singleWork",
+  name: 'singleWork',
   components: {
     contentAtom,
     singleContentOverlay,
@@ -116,28 +116,28 @@ export default {
     return {
       loaded: false,
       exhibition: {
-        hash: "",
-        title: "",
-        festival: "",
+        hash: '',
+        title: '',
+        festival: '',
         location: {
-          venue: "",
-          city: "",
-          country: "",
+          venue: '',
+          city: '',
+          country: '',
         },
       },
       payload: {
         artists: [],
         content: [],
-        data: "",
-        id: "",
-        title: "",
+        data: '',
+        id: '',
+        title: '',
       },
     }
   },
   mounted() {
     // Get the content from IPFS
     const httpPromise = this.$http.get(
-      "https://cloudflare-ipfs.com/ipfs/" + this.$route.params.hash,
+      'https://cloudflare-ipfs.com/ipfs/' + this.$route.params.hash,
     )
     httpPromise.then(response => {
       // Check if the work is live...
@@ -159,32 +159,32 @@ export default {
         this.payload = response.body
         this.loaded = true
         this.SET_CURRENT_WORK(this.payload)
-        this.$socket.emit("view", {
+        this.$socket.emit('view', {
           title: this.payload.title,
           hash: this.$route.params.hash,
         })
         this.getExhibition()
       } else {
-        this.$router.push({ name: "refuse" })
+        this.$router.push({ name: 'refuse' })
       }
     })
     httpPromise.catch(e => {
-      this.$router.push({ name: "notFound" })
+      this.$router.push({ name: 'notFound' })
     })
   },
   computed: {
-    ...mapState(["main"]),
+    ...mapState(['main']),
     artistList() {
       // Output multiple artists nicely...
       if (this.payload.artists.length > 0) {
         return this.payload.artists.reduce(
-          (accumulator, currentValue) => accumulator + ", " + currentValue,
+          (accumulator, currentValue) => accumulator + ', ' + currentValue,
         )
       }
     },
   },
   methods: {
-    ...mapActions(["SET_CURRENT_WORK"]),
+    ...mapActions(['SET_CURRENT_WORK']),
     getExhibition() {
       this.main.exhibitions.forEach(e => {
         e.works.find(w => {
@@ -196,12 +196,16 @@ export default {
     },
   },
   watch: {
-    "$route.params"() {
+    '$route.params'() {
       if (this.$route.params.info) {
         window.setTimeout(() => {
-          QRCode.toCanvas(document.getElementById("qr-code"), this.payload.id, {
-            width: 1200,
-          })
+          QRCode.toCanvas(
+            document.getElementById('qr-code'),
+            'https://nnn.freeport.global/tracking/' + this.payload.id,
+            {
+              width: 1200,
+            },
+          )
           // QRCode.toString(this.payload.id, function(err, string) {
           //   if (err) throw err
           //   console.log(string)
