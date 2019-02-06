@@ -14,19 +14,19 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
-import { BrowserQRCodeReader } from "@zxing/library"
+import { mapState } from 'vuex'
+import { BrowserQRCodeReader } from '@zxing/library'
 
 export default {
-  name: "scanView",
+  name: 'scanView',
   data() {
     return {
       scanner: {},
-      resultHash: "",
+      resultHash: '',
     }
   },
   computed: {
-    ...mapState(["main"]),
+    ...mapState(['main']),
   },
   mounted() {
     this.scanner = new BrowserQRCodeReader()
@@ -39,10 +39,14 @@ export default {
 
     // Listen for scan events
     this.scanner
-      .decodeFromInputVideoDevice(undefined, "preview")
+      .decodeFromInputVideoDevice(undefined, 'preview')
       .then(result => {
-        // console.log(result)
-        const scanResult = result.text.slice(-16)
+        console.log(result)
+        // const scanResult = result.text.slice(-16)
+        const scanResult = result.text.replace(
+          'https://nnn.freeport.global/tracking/',
+          '',
+        )
         const matchingWork = this.main.container.works.find(w => {
           return w.id === scanResult
         })
@@ -50,12 +54,12 @@ export default {
           this.resultHash = matchingWork.hash
           window.setTimeout(() => {
             this.$router.push({
-              name: "singleWork",
+              name: 'singleWork',
               params: { hash: this.resultHash },
             })
           }, 2000)
         } else {
-          this.$router.push({ name: "notFound" })
+          this.$router.push({ name: 'notFound' })
         }
       })
       .catch(err => console.error(err))
