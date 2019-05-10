@@ -123,27 +123,27 @@
 </template>
 
 <script>
-import ImgixClient from "imgix-core-js"
-import ellipsize from "ellipsize"
-import embed from "embed-video"
+import ImgixClient from 'imgix-core-js'
+import ellipsize from 'ellipsize'
+import embed from 'embed-video'
 
-import AudioPlayer from "@/components/content-atom/audio-player"
-import VideoPlayer from "@/components/content-atom/video-player"
+import AudioPlayer from '@/components/content-atom/audio-player'
+import VideoPlayer from '@/components/content-atom/video-player'
 
 export default {
-  name: "contentAtom",
+  name: 'contentAtom',
   data() {
     return {
       payload: {
-        media: "",
-        hash: "",
-        title: "",
+        media: '',
+        hash: '',
+        title: '',
         size: 0,
         loaded: false,
       },
-      text: "",
-      externalLink: "",
-      embed: "",
+      text: '',
+      externalLink: '',
+      embed: '',
       video: {
         options: {},
       },
@@ -157,13 +157,13 @@ export default {
   },
   mounted() {
     const httpPromise = this.$http.get(
-      "https://cloudflare-ipfs.com/ipfs/" + this.hash,
+      'https://cloudflare-ipfs.com/ipfs/' + this.hash,
     )
     httpPromise.then(response => {
       this.payload = response.body
-      if (this.payload.media === "Text") {
+      if (this.payload.media === 'Text') {
         this.setIPFSText()
-      } else if (this.payload.media === "External link") {
+      } else if (this.payload.media === 'External link') {
         this.getLink()
       }
       this.payload.loaded = true
@@ -173,7 +173,7 @@ export default {
   methods: {
     setIPFSText() {
       const httpPromise = this.$http.get(
-        "https://cloudflare-ipfs.com/ipfs/" + this.payload.hash,
+        'https://cloudflare-ipfs.com/ipfs/' + this.payload.hash,
       )
       httpPromise.then(response => {
         this.text = ellipsize(response.body, 480)
@@ -182,13 +182,13 @@ export default {
     },
     getLink() {
       const httpPromise = this.$http.get(
-        "https://cloudflare-ipfs.com/ipfs/" + this.payload.hash,
+        'https://cloudflare-ipfs.com/ipfs/' + this.payload.hash,
       )
       httpPromise.then(response => {
         this.externalLink = response.body
         if (
-          response.body.includes("youtube") ||
-          response.body.includes("vimeo")
+          response.body.includes('youtube') ||
+          response.body.includes('vimeo')
         ) {
           this.embed = embed(response.body)
         }
@@ -196,13 +196,13 @@ export default {
       httpPromise.catch(console.log)
     },
     getImageLink(imageHash) {
-      const options = { w: 800, auto: "compress,format" }
+      const options = { w: 800, auto: 'compress,format' }
       const client = new ImgixClient({
-        domains: "nnnfreeport.imgix.net",
-        secureURLToken: "A8qQj2zw8eqcXqEW",
+        domains: 'nnnfreeport.imgix.net',
+        secureURLToken: 'A8qQj2zw8eqcXqEW',
       })
       let url = client.buildURL(
-        "https://cloudflare-ipfs.com/ipfs/" + imageHash,
+        'https://cloudflare-ipfs.com/ipfs/' + imageHash,
         options,
       )
       return url
@@ -210,24 +210,24 @@ export default {
     getSizeClass() {
       let r = Math.random()
       if (r < 0.33) {
-        return "atom--small"
+        return 'atom--small'
       }
       if (r > 0.66) {
-        return "atom--large"
+        return 'atom--large'
       } else {
-        return "atom--medium"
+        return 'atom--medium'
       }
     },
     getImageClass() {
       if (
-        this.payload.media === "Image" ||
-        this.payload.media === "Audio" ||
-        this.payload.media === "Video" ||
-        (this.payload.media === "Link" && this.payload.poster)
+        this.payload.media === 'Image' ||
+        this.payload.media === 'Audio' ||
+        this.payload.media === 'Video' ||
+        (this.payload.media === 'Link' && this.payload.poster)
       ) {
-        return "atom--image"
+        return 'atom--image'
       } else {
-        return ""
+        return ''
       }
     },
   },
@@ -289,6 +289,15 @@ export default {
     color: white !important;
     padding: 20px;
     text-decoration: none !important;
+
+    em {
+      font-weight: normal;
+      font-style: italic;
+    }
+
+    pre {
+      font-family: "space mono", $sans-serif-stack;
+    }
 
     &__title {
       font-size: $font-size-small;

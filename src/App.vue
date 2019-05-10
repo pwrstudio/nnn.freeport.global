@@ -290,10 +290,10 @@ a {
   text-decoration: none;
 }
 
-em {
-  font-weight: bold !important;
-  font-style: normal !important;
-}
+// em {
+//   font-weight: bold !important;
+//   font-style: normal !important;
+// }
 
 p {
   margin-top: 0;
@@ -422,5 +422,15 @@ p {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+em {
+  font-weight: normal;
+  font-style: italic;
+}
+
+pre {
+  font-family: "space mono", $sans-serif-stack;
+  font-size: $font-size-small;
 }
 </style>

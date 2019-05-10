@@ -2,7 +2,7 @@
   <div class="single-content">
     <div v-if="payload.media === 'Text'" class="single-content__text">
       <div class="single-content__text__inner">
-        <div v-html="payload.title" />
+        <!-- <div v-html="payload.title" /> -->
         <div v-html="text" />
       </div>
     </div>
@@ -19,58 +19,58 @@
 </template>
 
 <script>
-import ImgixClient from "imgix-core-js";
+import ImgixClient from 'imgix-core-js'
 
 export default {
-  name: "singleContentOverlay",
+  name: 'singleContentOverlay',
   data() {
     return {
       payload: {
-        media: "",
-        hash: "",
-        title: ""
+        media: '',
+        hash: '',
+        title: '',
       },
-      text: ""
-    };
+      text: '',
+    }
   },
   mounted() {
     const httpPromise = this.$http.get(
-      "https://cloudflare-ipfs.com/ipfs/" + this.$route.params.singleHash
-    );
+      'https://cloudflare-ipfs.com/ipfs/' + this.$route.params.singleHash,
+    )
     httpPromise.then(response => {
-      this.payload = response.body;
-      if (this.payload.media === "Text") {
-        this.setIPFSText();
+      this.payload = response.body
+      if (this.payload.media === 'Text') {
+        this.setIPFSText()
       }
-    });
+    })
     httpPromise.catch(err => {
-      console.log(err);
-    });
+      console.log(err)
+    })
   },
   methods: {
     setIPFSText() {
       const httpPromise = this.$http.get(
-        "https://cloudflare-ipfs.com/ipfs/" + this.payload.hash
-      );
+        'https://cloudflare-ipfs.com/ipfs/' + this.payload.hash,
+      )
       httpPromise.then(response => {
-        this.text = response.body;
-      });
-      httpPromise.catch(console.log);
+        this.text = response.body
+      })
+      httpPromise.catch(console.log)
     },
     getImageLink(imageHash) {
-      const options = { w: 1600, auto: "compress,format" };
+      const options = { w: 1600, auto: 'compress,format' }
       const client = new ImgixClient({
-        domains: "nnnfreeport.imgix.net",
-        secureURLToken: "A8qQj2zw8eqcXqEW"
-      });
+        domains: 'nnnfreeport.imgix.net',
+        secureURLToken: 'A8qQj2zw8eqcXqEW',
+      })
       let url = client.buildURL(
-        "https://cloudflare-ipfs.com/ipfs/" + imageHash,
-        options
-      );
-      return url;
-    }
-  }
-};
+        'https://cloudflare-ipfs.com/ipfs/' + imageHash,
+        options,
+      )
+      return url
+    },
+  },
+}
 </script>
 
 <style scoped lang="scss">

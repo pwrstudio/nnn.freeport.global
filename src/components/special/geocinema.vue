@@ -3,7 +3,7 @@
     <div class="geocinema__loader" :class="{ active: !loaded }">
 
       <img class="geocinema__loader__cloud geocinema__loader__cloud--1" src='/img/cloud.png'>
-      <img class="geocinema__loader__cloud geocinema__loader__cloud--2" src='/img/cloud2.png'>
+      <img class="geocinema__loader__cloud geocinema__loader__cloud--2" src='/img/cloud4.png'>
       <img class="geocinema__loader__cloud geocinema__loader__cloud--3" src='/img/cloud3.png'>
 
       <img class='moon' id='moon--1' src='/img/moon.png'>
@@ -372,22 +372,23 @@ export default {
     text-align: center;
 
     &--main {
-      font-size: 38px;
+      font-size: 28px;
       font-weight: 100;
       line-height: 1.3em;
       max-width: 100%;
+
       @include screen-size("small") {
-        font-size: 32px;
+        font-size: 20px;
       }
     }
 
     &--header {
-      font-size: 24px;
       font-weight: 400;
       margin-left: auto;
       margin-right: auto;
-      max-width: 18ch;
+      max-width: 26ch;
       margin-bottom: 40px;
+      font-size: 16px;
     }
 
   }
@@ -416,22 +417,30 @@ export default {
       position: absolute;
       top: 0;
       left: 0;
-
+    
       &--1 {
+        height: 400px;
         animation-name: glide;
         animation-duration: 40s; 
         animation-iteration-count: infinite;
         animation-timing-function: linear;
       }
+
       &--2 {
+        top: 20%;
         animation-name: glide;
         animation-duration: 40s; 
         animation-iteration-count: infinite;
         animation-timing-function: linear;
       }
+      
       &--3 {
+        height:600px;
+        left: 10%;
+        top: 40%;
+        // height: 200px;
         animation-name: glide;
-        animation-duration: 40s; 
+        animation-duration: 30s; 
         animation-iteration-count: infinite;
         animation-timing-function: linear;
       }
