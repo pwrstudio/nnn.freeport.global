@@ -8,7 +8,7 @@ const CONTRACT_API =
   "https://api.infura.io/v1/jsonrpc/rinkeby/eth_call?params=%5B%7B%0D%0A%09%09%22to%22%3A%20%220x737A4FA0eDBcc8c29d74cd2cebA315314E2C608A%22%2C%0D%0A%09%09%22data%22%3A%20%220x6d4ce63c%22%0D%0A%09%7D%2C%0D%0A%09%22latest%22%0D%0A%5D"
 
 // Emergency solution!
-const FALLBACK_ROOTHASH = "QmUffB9SRs6oBSK1YJCT3Y85CHmyUgGQF9JS6Z5rM4xKjS"
+// const FALLBACK_ROOTHASH = "QmUffB9SRs6oBSK1YJCT3Y85CHmyUgGQF9JS6Z5rM4xKjS"
 
 const hexToString = hex => {
   let string = "";
@@ -21,7 +21,7 @@ const hexToString = hex => {
 const getRootHash = () => {
   return new Promise((resolve, reject) => {
     // Emergency solution!
-    resolve(FALLBACK_ROOTHASH)
+    // resolve(FALLBACK_ROOTHASH)
     Vue.http.get(CONTRACT_API).then(
       response => {
         let convertedHash = hexToString(response.body.result).slice(-64);
