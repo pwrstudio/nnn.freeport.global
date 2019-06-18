@@ -77,8 +77,10 @@ export default {
           return response.json();
         })
         .then(json => {
-          json.hash = hash;
-          resolve(json);
+          if(json.hash) {
+            json.hash = hash;
+            resolve(json);
+          }
         })
         .catch(ex => {
           console.log("parsing failed", ex);
