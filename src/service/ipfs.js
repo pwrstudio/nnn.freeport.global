@@ -35,6 +35,10 @@ const getRootHash = () => {
 }
 
 const callIPFS = rootHash => {
+  
+  // !!! Temporary fixed root hash
+  rootHash = FALLBACK_ROOTHASH
+  
   return new Promise((resolve, reject) => {
     const URL = "https://cloudflare-ipfs.com/ipfs/" + String(rootHash);
 
