@@ -21,7 +21,7 @@ const hexToString = hex => {
 const getRootHash = () => {
   return new Promise((resolve, reject) => {
     // Emergency solution!
-    // resolve(FALLBACK_ROOTHASH)
+    resolve(FALLBACK_ROOTHASH)
     Vue.http.get(CONTRACT_API).then(
       response => {
         let convertedHash = hexToString(response.body.result).slice(-64);
@@ -77,7 +77,7 @@ export default {
           return response.json();
         })
         .then(json => {
-          if(json.hash) {
+          if (json.hash) {
             json.hash = hash;
             resolve(json);
           }
