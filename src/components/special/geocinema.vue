@@ -84,7 +84,8 @@ export default {
 
     // Get satellite data from middleman server
     // const socket = io('localhost:9090')
-    const socket = io('https://nnnfreeportgeocinema-bxkhnnvboz.now.sh')
+    // const socket = io('https://nnnfreeportgeocinema-bxkhnnvboz.now.sh')
+    const socket = io('https://nnnfreeportgeocinema-jlwghlnooa.now.sh')
     socket.on('connect', () => {
       console.log('Connected to socket server')
       // Start 'animation' loop
@@ -93,6 +94,7 @@ export default {
 
     socket.on('update', satelliteData => {
       console.log('update')
+      console.log(satelliteData)
       if (!this.loaded) {
         window.setTimeout(() => {
           // this.loaded = true
