@@ -182,7 +182,7 @@ export default {
     // Get the text from poetry generator
     this.$http
       // .get("http://3.208.0.37:8888/geo_fortune")
-      .get('https://nnnfreeportgeocinemaproxy.now.sh')
+      .get('https://nnnfreeportgeocinemaproxy.now.sh', { timeout: 45000 })
       .then(response => {
         console.log(response)
         // this.poetry = decodeURIComponent(escape(response.body))
@@ -192,7 +192,11 @@ export default {
           this.loaded = true
         }
       })
-      .catch(e => console.log(e))
+      .catch(e => {
+        console.log('FELL TROUGH')
+        this.main = true
+        console.log(e)
+      })
   },
   methods: {
     getRandom(min, max, center) {
