@@ -10,7 +10,8 @@ const CONTRACT_API =
 // Emergency solution!
 // const FALLBACK_ROOTHASH = "QmUffB9SRs6oBSK1YJCT3Y85CHmyUgGQF9JS6Z5rM4xKjS"
 // const FALLBACK_ROOTHASH = "QmZ8NNVaYoBpe5xMC6pScUX9t6aWRaspj1TbronnQqLAPF"
-const FALLBACK_ROOTHASH = "QmeTaFxDdbqUo1wq7jJcv5JUL91UK2fgMVH8WDPobuPU7g"
+// const FALLBACK_ROOTHASH = "QmeTaFxDdbqUo1wq7jJcv5JUL91UK2fgMVH8WDPobuPU7g"
+const FALLBACK_ROOTHASH = "QmVSpjZf9ZqnQUvjyFWpScE4ExxnvxKtd2cLWhXeFsfZ9A"
 
 const hexToString = hex => {
   let string = "";
