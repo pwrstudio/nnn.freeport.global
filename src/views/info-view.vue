@@ -4,7 +4,7 @@
       <!-- Main -->
       <div class="info__inner__main">
         <video
-          src="https://ipfs.io/ipfs/QmfQU5sQPSAd67Fn9Jz2NUp56TURLKKFArrcCMcygDCXTZ"
+          src="https://ipfs.infura.io/ipfs/QmeDFpa6SfA37MBGVfFkjwwunmRNkXiT9xbpNKBf66nm3s"
           controls
           poster="https://cloudflare-ipfs.com/ipfs/QmYjRx5do6QyDEPrxYfV44g67GuRDMFX6A1X8kvdQYSBMV"
         />
@@ -74,12 +74,12 @@
 </template>
 
 <script>
-import { mapState } from "vuex"
+import { mapState } from 'vuex'
 
 export default {
-  name: "infoView",
+  name: 'infoView',
   computed: {
-    ...mapState(["main"]),
+    ...mapState(['main']),
   },
 }
 </script>
