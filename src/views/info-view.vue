@@ -4,7 +4,7 @@
       <!-- Main -->
       <div class="info__inner__main">
         <video
-          src="https://ipfs.infura.io/ipfs/QmeDFpa6SfA37MBGVfFkjwwunmRNkXiT9xbpNKBf66nm3s"
+          src="https://ipfs.infura.io/ipfs/QmRSWSUvbW314BuSBY9vFdnXMt8D3PX1FPd1Bxqt5Rz8vz"
           controls
           poster="https://cloudflare-ipfs.com/ipfs/QmYjRx5do6QyDEPrxYfV44g67GuRDMFX6A1X8kvdQYSBMV"
         />
@@ -68,6 +68,7 @@
           class="info__inner__sidebar__text"
           v-html="main.container.about.credits"
         />
+        <img width='90%' src='img/eu.jpg'>
       </div>
     </div>
   </div>
@@ -124,6 +125,7 @@ export default {
         // margin-right: auto;
         // margin-left: auto;
         max-width: 80%;
+        outline: none;
       }
 
       @include screen-size("small") {
