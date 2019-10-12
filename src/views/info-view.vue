@@ -4,7 +4,7 @@
       <!-- Main -->
       <div class="info__inner__main">
         <video
-          src="https://ipfs.infura.io/ipfs/QmRSWSUvbW314BuSBY9vFdnXMt8D3PX1FPd1Bxqt5Rz8vz"
+          src="img/nnnfreeport-logo-small.mp4"
           controls
           poster="https://cloudflare-ipfs.com/ipfs/QmYjRx5do6QyDEPrxYfV44g67GuRDMFX6A1X8kvdQYSBMV"
         />
