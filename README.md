@@ -4,8 +4,7 @@ nnn.freeport.global is commissioned as part of The New Networked Normal (NNN)Â â
 
 - - - - - - - - -
 
-https://user-images.githubusercontent.com/8209990/112987533-1da3dc80-9163-11eb-9968-2294a9662d34.mp4
-
+<video src="https://user-images.githubusercontent.com/8209990/112987533-1da3dc80-9163-11eb-9968-2294a9662d34.mp4"/>
 
 The nnn.freeport.global platform is inspired by new networked geographies like duty-free art storage sites and free-trade zones, the darknet, and other liminal spaces, to ask what challenges and opportunities these spaces pose for anonymity, authorship, and autonomy. Built as an alternative space for the sharing and distribution of content, nnn.freeport.global uses the backstreets, black markets, and divergent parts of the internet to share and debate the value of art.
 
